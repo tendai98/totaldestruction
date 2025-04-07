@@ -58,7 +58,7 @@
 /* Add a subtle downwards flow to the matrix effect */
 @keyframes matrixFlow {
   0% {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     opacity: 0;
   }
   10% {
@@ -68,13 +68,13 @@
     opacity: 1;
   }
   100% {
-    transform: translateY(5px);
+    transform: translateY(3px);
     opacity: 0;
   }
 }
 
 .text-glitch {
-  animation: textGlitch 0.3s infinite, matrixFlow 1.5s ease-in-out;
+  animation: textGlitch 0.4s infinite, matrixFlow 2s ease-in-out; /* Slowed down for smoother effect */
   white-space: pre-wrap; /* Keep text from changing width */
   display: inline-block; /* Maintain block dimensions */
   letter-spacing: 0.02em; /* Add slight spacing for better readability during animation */

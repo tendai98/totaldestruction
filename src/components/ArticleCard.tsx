@@ -14,6 +14,7 @@ interface ArticleCardProps {
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   // Track if this card should be animated
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   
   // Store original heights to maintain card dimensions
   const [titleHeight, setTitleHeight] = useState<number | null>(null);
@@ -21,14 +22,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   
   // Apply matrix effect to title and description
   const { displayText: titleText, isAnimating: titleAnimating } = 
-    useMatrixEffect(article.title, 2000, shouldAnimate ? 100 : 999999999);
+    useMatrixEffect(article.title, 3000, shouldAnimate && !isHovering ? 100 : 999999999);
   
   const { displayText: descriptionText, isAnimating: descriptionAnimating } = 
-    useMatrixEffect(article.description, 2500, shouldAnimate ? 100 : 999999999);
+    useMatrixEffect(article.description, 3500, shouldAnimate && !isHovering ? 100 : 999999999);
 
   // References for measuring elements
   const titleRef = React.useRef<HTMLHeadingElement>(null);
   const descRef = React.useRef<HTMLParagraphElement>(null);
+  const cardRef = React.useRef<HTMLDivElement>(null);
 
   // Measure original heights on first render
   useEffect(() => {
@@ -40,24 +42,33 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     }
   }, [titleHeight, descHeight]);
 
+  // Handle hover events to stop animation
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   // Set up global animation manager for all cards
   useEffect(() => {
     // Function to select a random card for animation
     const selectRandomCard = () => {
       // Each card has a small chance of being chosen
-      const shouldThisCardAnimate = Math.random() < 0.2; // 20% chance for each card
+      const shouldThisCardAnimate = Math.random() < 0.15; // Reduced chance to 15% for each card
       setShouldAnimate(shouldThisCardAnimate);
       
-      // If this card was chosen, animate it for 2 seconds then reset
+      // If this card was chosen, animate it for a longer time then reset
       if (shouldThisCardAnimate) {
         setTimeout(() => {
           setShouldAnimate(false);
-        }, 3000);
+        }, 4000); // Increased from 3000 to 4000ms
       }
     };
 
-    // Set up interval to randomly activate cards every 10 seconds
-    const interval = setInterval(selectRandomCard, 10000);
+    // Set up interval to randomly activate cards every 12 seconds (increased from 10)
+    const interval = setInterval(selectRandomCard, 12000);
     
     // Initially have a chance to start animation
     selectRandomCard();
@@ -76,7 +87,12 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const truncatedDescription = truncateText(article.description, 120);
 
   return (
-    <Card className="cyber-border mb-6 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm bg-cyber-darkgray/90 flex flex-col h-[450px]">
+    <Card 
+      ref={cardRef}
+      className="cyber-border mb-6 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm bg-cyber-darkgray/90 flex flex-col h-[450px]"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <CardHeader className="p-4 border-b border-cyber-green h-[80px]">
         <div className="flex items-start justify-between">
           <TooltipProvider>
@@ -84,9 +100,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
               <TooltipTrigger asChild>
                 <h3 
                   ref={titleRef}
-                  className={`text-xl font-bold tracking-wider ${titleAnimating ? 'text-cyber-green text-glitch' : 'text-cyber-green'} line-clamp-2 overflow-hidden`}
+                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-cyber-green text-glitch' : 'text-cyber-green'} line-clamp-2 overflow-hidden`}
                 >
-                  {titleAnimating ? titleText : truncatedTitle}
+                  {titleAnimating && !isHovering ? titleText : truncatedTitle}
                 </h3>
               </TooltipTrigger>
               {article.title.length > 60 && (
@@ -105,9 +121,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
             <TooltipTrigger asChild>
               <p 
                 ref={descRef}
-                className={`text-sm mb-4 leading-relaxed ${descriptionAnimating ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-3 overflow-hidden`}
+                className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-3 overflow-hidden`}
               >
-                {descriptionAnimating ? descriptionText : truncatedDescription}
+                {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
               </p>
             </TooltipTrigger>
             {article.description.length > 120 && (

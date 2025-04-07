@@ -95,6 +95,7 @@ export const useMatrixEffect = (
       clearInterval(animationRef.current);
     }
     
+    // Slow down the update frequency for smoother animation
     animationRef.current = setInterval(() => {
       const now = Date.now();
       const progress = Math.min(1, (now - startTime) / durationMs);
@@ -109,7 +110,7 @@ export const useMatrixEffect = (
       } else {
         setDisplayText(scrambleText(progress));
       }
-    }, 50); // Update scramble effect every 50ms for smoothness
+    }, 70); // Slower update interval (was 50ms, now 70ms) for smoother animation
     
     return () => {
       if (animationRef.current) {
