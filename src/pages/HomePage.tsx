@@ -12,16 +12,16 @@ const HomePage: React.FC = () => {
   
   // Add Matrix effects to header text and status texts
   const { displayText: logoText, isAnimating: logoAnimating } = 
-    useMatrixEffect("TOTALDESTRUCTION", 2000, 10000);
+    useMatrixEffect("DESTRUCTION", 2000, 15000);
     
   const { displayText: systemsText, isAnimating: systemsAnimating } = 
-    useMatrixEffect("SYSTEMS OPERATIONAL", 1500, 10000);
+    useMatrixEffect("SYSTEMS OPERATIONAL", 1500, 15000);
     
   const { displayText: liveDataText, isAnimating: liveDataAnimating } = 
-    useMatrixEffect("LIVE DATA", 1500, 10000);
+    useMatrixEffect("LIVE DATA", 1500, 15000);
     
   const { displayText: trackerText, isAnimating: trackerAnimating } = 
-    useMatrixEffect("TRACKER", 1500, 10000);
+    useMatrixEffect("TRACKER", 1500, 15000);
   
   return (
     <div className="min-h-screen bg-cyber-black">
@@ -29,11 +29,15 @@ const HomePage: React.FC = () => {
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#F97316] text-cyber-black flex items-center justify-center font-bold text-lg relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-white/20 after:top-1 after:left-1">
-              TD
+            <div className="w-10 h-10 md:w-12 md:h-12 relative">
+              <img 
+                src="/lovable-uploads/fba348a5-0041-47be-817f-d536c340cf44.png" 
+                alt="Total Destruction Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch relative">
-              TOTAL<span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
+              <span className="text-white">TOTAL</span><span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#F97316] shadow-neon-orange"></span>
             </Link>
           </div>
@@ -63,15 +67,15 @@ const HomePage: React.FC = () => {
                 className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
               >
                 <Map size={18} className="text-white" />
-                <span className={`hidden md:inline tracking-wider font-bold ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                <span className={`hidden md:inline tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
               </Link>
               
               <div className="hidden md:flex items-center gap-3">
                 <button className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors">
-                  <Layers size={18} />
+                  <Layers size={18} className="text-white" />
                 </button>
                 <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
-                  <BarChart2 size={18} />
+                  <BarChart2 size={18} className="text-white" />
                 </button>
                 <button className="p-2 bg-cyber-darkgray border border-cyber-red text-cyber-red hover:bg-cyber-red hover:text-cyber-black transition-colors">
                   <AlertTriangle size={18} />
@@ -91,15 +95,15 @@ const HomePage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Map size={18} />
-                <span className={`tracking-wider font-bold ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
               </Link>
               
               <div className="flex justify-between gap-2">
                 <button className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center">
-                  <Layers size={18} />
+                  <Layers size={18} className="text-white" />
                 </button>
                 <button className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center">
-                  <BarChart2 size={18} />
+                  <BarChart2 size={18} className="text-white" />
                 </button>
                 <button className="flex-1 p-3 bg-cyber-darkgray border border-cyber-red text-cyber-red hover:bg-cyber-red hover:text-cyber-black transition-colors flex items-center justify-center">
                   <AlertTriangle size={18} />

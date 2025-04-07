@@ -14,7 +14,7 @@ interface CustomWindow extends Window {
 const Articles: React.FC = () => {
   const headerText = "ENVIRONMENTAL INCIDENTS";
   const { displayText: animatedHeader, isAnimating: headerAnimating } = 
-    useMatrixEffect(headerText, 2000, 10000);
+    useMatrixEffect(headerText, 2000, 15000);
   
   // Track mouse movement to pause animations when user is active
   const [userActive, setUserActive] = useState(false);
@@ -37,13 +37,13 @@ const Articles: React.FC = () => {
     window.addEventListener('mousemove', handleActivity);
     window.addEventListener('click', handleActivity);
     window.addEventListener('keypress', handleActivity);
-    window.addEventListener('scroll', handleActivity); // Add scroll listener
+    window.addEventListener('scroll', handleActivity);
     
     return () => {
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('click', handleActivity);
       window.removeEventListener('keypress', handleActivity);
-      window.removeEventListener('scroll', handleActivity); // Remove scroll listener
+      window.removeEventListener('scroll', handleActivity);
       
       // Clear timeout on unmount
       const customWindow = window as CustomWindow;
@@ -53,7 +53,10 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316] cyber-glitch'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
+      <h1 
+        className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316] cyber-glow'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-[#F97316] after:shadow-neon-orange`}
+        style={{ minHeight: "3rem", display: "block" }}
+      >
         {animatedHeader}
       </h1>
       

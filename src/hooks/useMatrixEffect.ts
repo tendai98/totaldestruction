@@ -4,6 +4,12 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 // Characters used for the Matrix effect
 const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+{}[]|;:,.<>?/~`';
 
+// Shared animation state across all instances
+let globalAnimationActive = false;
+let globalAnimationStartTime = 0;
+const ANIMATION_DURATION = 4000; // 4 seconds for the animation
+const ANIMATION_CYCLE = 15000; // 15 seconds between animation cycles
+
 // Shared user activity state across all instances
 let userActive = false;
 let lastActivityTime = Date.now();
@@ -18,8 +24,7 @@ export const useMatrixEffect = (
   const [displayText, setDisplayText] = useState(originalText);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef<NodeJS.Timeout | null>(null);
-  const triggerRef = useRef<NodeJS.Timeout | null>(null);
-
+  
   // Function to record user activity
   const recordUserActivity = useCallback(() => {
     userActive = true;
@@ -40,7 +45,7 @@ export const useMatrixEffect = (
     window.addEventListener('click', recordUserActivity);
     window.addEventListener('keydown', recordUserActivity);
     window.addEventListener('scroll', recordUserActivity);
-    window.addEventListener('mouseover', recordUserActivity); // Add mouseover listener
+    window.addEventListener('mouseover', recordUserActivity);
     
     return () => {
       window.removeEventListener('mousemove', recordUserActivity);
@@ -52,7 +57,7 @@ export const useMatrixEffect = (
     };
   }, [recordUserActivity]);
 
-  // Function to create scrambled text with a more pronounced downward flow effect
+  // Function to create scrambled text with a consistent pattern
   const scrambleText = useCallback((progress: number) => {
     return originalText
       .split('')
@@ -60,15 +65,14 @@ export const useMatrixEffect = (
         // If character is a space, preserve it
         if (char === ' ') return ' ';
         
-        // Calculate if this character should be scrambled based on progress and position
-        // Create a wave-like pattern that flows from top to bottom
-        const positionEffect = Math.sin((idx / originalText.length) * Math.PI * 2 + progress * Math.PI * 2);
+        // Calculate if this character should be scrambled based on progress
+        // Create a wave-like pattern but consistent across all instances
         const shouldScramble = progress < 1 && 
           (progress < 0.5 ? 
             // First half of animation - characters scramble in a wave pattern
-            (idx / originalText.length + positionEffect * 0.2) < progress * 2 : 
-            // Second half - characters return to normal in reverse wave pattern
-            ((originalText.length - idx) / originalText.length - positionEffect * 0.2) > (progress - 0.5) * 2);
+            (idx / originalText.length) < progress * 2 : 
+            // Second half - characters return to normal
+            ((originalText.length - idx) / originalText.length) > (progress - 0.5) * 2);
         
         if (shouldScramble) {
           return matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
@@ -79,28 +83,28 @@ export const useMatrixEffect = (
       .join('');
   }, [originalText]);
 
-  // Function to animate the text scrambling effect
-  const animateText = useCallback(() => {
+  // Function to participate in the global animation
+  const participateInGlobalAnimation = useCallback(() => {
     // Don't animate if user is active (unless forced)
     if (userActive && !forceAnimation) {
+      setDisplayText(originalText);
+      setIsAnimating(false);
       return;
     }
     
     setIsAnimating(true);
     
-    const startTime = Date.now();
-    const endTime = startTime + durationMs;
-    
     if (animationRef.current) {
       clearInterval(animationRef.current);
     }
     
-    // Slow down the update frequency for smoother animation
+    // Update at a consistent rate to show the animation progress
     animationRef.current = setInterval(() => {
       const now = Date.now();
-      const progress = Math.min(1, (now - startTime) / durationMs);
+      const elapsedTime = now - globalAnimationStartTime;
+      const progress = Math.min(1, elapsedTime / ANIMATION_DURATION);
       
-      if (now >= endTime) {
+      if (progress >= 1 || !globalAnimationActive) {
         if (animationRef.current) {
           clearInterval(animationRef.current);
           animationRef.current = null;
@@ -110,48 +114,64 @@ export const useMatrixEffect = (
       } else {
         setDisplayText(scrambleText(progress));
       }
-    }, 70); // Slower update interval (was 50ms, now 70ms) for smoother animation
-    
-    return () => {
-      if (animationRef.current) {
-        clearInterval(animationRef.current);
-        animationRef.current = null;
-      }
-    };
-  }, [originalText, durationMs, scrambleText, forceAnimation]);
+    }, 70); // Update interval for smoother animation
+  }, [originalText, scrambleText, forceAnimation]);
 
-  // Set up interval to trigger animation periodically
+  // Set up listener for global animation state changes
   useEffect(() => {
-    // Function to check if animation should run
-    const checkAndAnimate = () => {
-      if (!userActive || forceAnimation) {
-        animateText();
+    // Function to check if a global animation cycle should start
+    const checkGlobalAnimationCycle = () => {
+      const now = Date.now();
+      
+      if (!userActive && !globalAnimationActive && (now - globalAnimationStartTime >= ANIMATION_CYCLE)) {
+        globalAnimationActive = true;
+        globalAnimationStartTime = now;
+        
+        // Schedule end of animation
+        setTimeout(() => {
+          globalAnimationActive = false;
+        }, ANIMATION_DURATION);
+        
+        // Participate in this global animation
+        participateInGlobalAnimation();
       }
     };
     
-    // Initial animation after a short delay
-    const initialDelay = setTimeout(() => {
-      checkAndAnimate();
+    // Set up initial check and interval
+    const initialCheck = setTimeout(() => {
+      checkGlobalAnimationCycle();
     }, 2000);
     
-    // Set up the recurring interval
-    triggerRef.current = setInterval(checkAndAnimate, intervalMs);
+    const intervalCheck = setInterval(checkGlobalAnimationCycle, 1000);
+    
+    // Start immediate animation if global animation is already active
+    if (globalAnimationActive) {
+      participateInGlobalAnimation();
+    }
+    
+    // Listen for global animation state changes
+    const handleAnimationStateChange = () => {
+      if (globalAnimationActive) {
+        participateInGlobalAnimation();
+      }
+    };
+    
+    window.addEventListener('globalAnimationStateChange', handleAnimationStateChange);
     
     return () => {
-      clearTimeout(initialDelay);
-      if (triggerRef.current) {
-        clearInterval(triggerRef.current);
-      }
+      clearTimeout(initialCheck);
+      clearInterval(intervalCheck);
       if (animationRef.current) {
         clearInterval(animationRef.current);
       }
+      window.removeEventListener('globalAnimationStateChange', handleAnimationStateChange);
     };
-  }, [animateText, intervalMs, forceAnimation]);
+  }, [participateInGlobalAnimation]);
 
   // Immediately stop animation when user becomes active
   useEffect(() => {
     const handleUserActivity = () => {
-      if (isAnimating && userActive) {
+      if (isAnimating && userActive && !forceAnimation) {
         if (animationRef.current) {
           clearInterval(animationRef.current);
           animationRef.current = null;
@@ -168,19 +188,35 @@ export const useMatrixEffect = (
       window.removeEventListener('scroll', handleUserActivity);
       window.removeEventListener('mouseover', handleUserActivity);
     };
-  }, [isAnimating, originalText]);
-
-  // Clean up on unmount
-  useEffect(() => {
-    return () => {
-      if (animationRef.current) {
-        clearInterval(animationRef.current);
-      }
-      if (triggerRef.current) {
-        clearInterval(triggerRef.current);
-      }
-    };
-  }, []);
+  }, [isAnimating, originalText, forceAnimation]);
 
   return { displayText, isAnimating };
 };
+
+// Initialize global animation cycle (run once on import)
+setTimeout(() => {
+  globalAnimationActive = true;
+  globalAnimationStartTime = Date.now();
+  
+  setTimeout(() => {
+    globalAnimationActive = false;
+  }, ANIMATION_DURATION);
+  
+  // Trigger event for all instances to listen
+  window.dispatchEvent(new Event('globalAnimationStateChange'));
+}, 3000);
+
+// Start periodic global animation cycles
+setInterval(() => {
+  if (!userActive) {
+    globalAnimationActive = true;
+    globalAnimationStartTime = Date.now();
+    
+    setTimeout(() => {
+      globalAnimationActive = false;
+    }, ANIMATION_DURATION);
+    
+    // Trigger event for all instances to listen
+    window.dispatchEvent(new Event('globalAnimationStateChange'));
+  }
+}, ANIMATION_CYCLE);

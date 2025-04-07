@@ -5,6 +5,11 @@
     @apply animate-flicker;
   }
   
+  .cyber-glow {
+    text-shadow: 0 0 3px rgba(249, 115, 22, 0.8), 0 0 6px rgba(249, 115, 22, 0.6), 0 0 12px rgba(249, 115, 22, 0.4);
+    @apply animate-glow;
+  }
+  
   .text-outline {
     -webkit-text-stroke: 1px rgba(249, 115, 22, 0.7);
     text-stroke: 1px rgba(249, 115, 22, 0.7);
