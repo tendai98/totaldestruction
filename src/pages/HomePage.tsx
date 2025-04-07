@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
-import { AlertTriangle, BarChart2, Database, Layers, Map, Zap, Menu, X } from 'lucide-react';
+import { AlertTriangle, BarChart2, Database, Layers, Map, Menu, X } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
@@ -35,8 +36,9 @@ const HomePage: React.FC = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch relative">
-              <span className="text-white">TOTAL</span><span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
+            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch relative">
+              <span className="text-white">TOTAL</span>
+              <span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'} inline-block w-[112px] md:w-[140px]`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#F97316] shadow-neon-orange"></span>
             </Link>
           </div>
@@ -116,20 +118,6 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-
-      {/* Status Bar - Modified with more padding at the top */}
-      <div className="bg-cyber-black border-b border-cyber-blue/30 py-1.5 pt-4">
-        <div className="container mx-auto flex items-center justify-between text-xs px-4 md:px-0">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-[#F97316]">
-              <Zap size={12} className="animate-pulse" />
-              <span className="font-mono">SYSTEM ACTIVE</span>
-            </div>
-            <div className="text-white/50 font-mono hidden sm:block">GLOBAL MONITORING: ACTIVE</div>
-          </div>
-          <div className="text-cyber-yellow font-mono animate-pulse">PRIORITY: 3 INCIDENTS</div>
-        </div>
       </div>
       
       {/* Main Content */}

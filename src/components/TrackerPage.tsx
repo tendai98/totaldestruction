@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import { Home, Zap, Menu } from 'lucide-react';
+import { Home, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
@@ -12,15 +13,11 @@ const TrackerPage: React.FC = () => {
   
   // Add Matrix effects for the logo text
   const { displayText: logoText, isAnimating: logoAnimating } = 
-    useMatrixEffect("TOTALDESTRUCTION", 2000, 10000);
-    
-  // Add Matrix effects for the tracker active text
-  const { displayText: trackerActiveText, isAnimating: trackerActiveAnimating } = 
-    useMatrixEffect("TRACKER ACTIVE", 1500, 10000);
+    useMatrixEffect("DESTRUCTION", 2000, 15000);
     
   // Add Matrix effects for the home button text
   const { displayText: homeText, isAnimating: homeAnimating } = 
-    useMatrixEffect("HOME", 1500, 10000);
+    useMatrixEffect("HOME", 1500, 15000);
 
   return (
     <div className="min-h-screen bg-cyber-black flex flex-col">
@@ -28,11 +25,16 @@ const TrackerPage: React.FC = () => {
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#F97316] text-cyber-black flex items-center justify-center font-bold text-lg relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-white/20 after:top-1 after:left-1">
-              TD
+            <div className="w-10 h-10 md:w-12 md:h-12 relative">
+              <img 
+                src="/lovable-uploads/fba348a5-0041-47be-817f-d536c340cf44.png" 
+                alt="Total Destruction Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch">
-              TOTAL<span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
+              <span className="text-white">TOTAL</span>
+              <span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'} inline-block w-[112px] md:w-[140px]`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#F97316] shadow-neon-orange"></span>
             </Link>
           </div>
@@ -50,8 +52,8 @@ const TrackerPage: React.FC = () => {
               to="/" 
               className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
             >
-              <Home size={18} />
-              <span className={`hidden md:inline tracking-wider font-bold ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+              <Home size={18} className="text-white" />
+              <span className={`hidden md:inline tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
             </Link>
           )}
         </div>
@@ -65,26 +67,12 @@ const TrackerPage: React.FC = () => {
                 className="flex items-center gap-2 mb-4 px-4 py-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full"
                 onClick={() => setMenuOpen(false)}
               >
-                <Home size={18} />
-                <span className={`tracking-wider font-bold ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+                <Home size={18} className="text-white" />
+                <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
               </Link>
             </div>
           </div>
         )}
-      </div>
-
-      {/* Status Bar - Modified with more padding at the top */}
-      <div className="bg-cyber-black border-b border-cyber-blue/30 py-1.5 pt-4">
-        <div className="container mx-auto flex items-center justify-between text-xs">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-[#F97316]">
-              <Zap size={12} className="animate-pulse" />
-              <span className={`font-mono ${trackerActiveAnimating ? 'text-glitch' : ''}`}>{trackerActiveText}</span>
-            </div>
-            <div className="text-white/50 font-mono hidden sm:block">GEOLOGICAL DATA: ACTIVE</div>
-          </div>
-          <div className="text-cyber-yellow font-mono">COORDINATES: AFRICA</div>
-        </div>
       </div>
       
       {/* Main Content */}

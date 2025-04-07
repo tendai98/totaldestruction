@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
-import { Home, Zap, Menu } from 'lucide-react';
+import { Home, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
@@ -14,10 +14,6 @@ const TrackerPage: React.FC = () => {
   // Add Matrix effects for the logo text
   const { displayText: logoText, isAnimating: logoAnimating } = 
     useMatrixEffect("DESTRUCTION", 2000, 15000);
-    
-  // Add Matrix effects for the tracker active text
-  const { displayText: trackerActiveText, isAnimating: trackerActiveAnimating } = 
-    useMatrixEffect("TRACKER ACTIVE", 1500, 15000);
     
   // Add Matrix effects for the home button text
   const { displayText: homeText, isAnimating: homeAnimating } = 
@@ -36,8 +32,9 @@ const TrackerPage: React.FC = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch">
-              <span className="text-white">TOTAL</span><span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'}`}>{logoText}</span>
+            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch">
+              <span className="text-white">TOTAL</span>
+              <span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'} inline-block w-[112px] md:w-[140px]`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyber-green shadow-neon-green"></span>
             </Link>
           </div>
@@ -76,20 +73,6 @@ const TrackerPage: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-
-      {/* Status Bar */}
-      <div className="bg-cyber-black border-b border-cyber-blue/30 py-1.5">
-        <div className="container mx-auto flex items-center justify-between text-xs">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-cyber-green">
-              <Zap size={12} className="animate-pulse" />
-              <span className={`font-mono ${trackerActiveAnimating ? 'text-glitch' : ''}`}>{trackerActiveText}</span>
-            </div>
-            <div className="text-white/50 font-mono hidden sm:block">GEOLOGICAL DATA: ACTIVE</div>
-          </div>
-          <div className="text-cyber-yellow font-mono">COORDINATES: AFRICA</div>
-        </div>
       </div>
       
       {/* Main Content */}
