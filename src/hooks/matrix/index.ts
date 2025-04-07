@@ -1,0 +1,2 @@
+
+export { useMatrixEffect } from './useMatrixEffect';
