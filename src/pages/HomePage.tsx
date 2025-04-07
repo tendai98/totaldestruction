@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
 import { BarChart2, Database, Layers, Map, Menu, X } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
-import { useMatrixEffect } from '../hooks/useMatrixEffect';
+import { useMatrixEffect } from '../hooks/matrix';
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);

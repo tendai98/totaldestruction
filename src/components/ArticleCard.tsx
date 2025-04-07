@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Article } from '../types';
 import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
-import { useMatrixEffect } from '../hooks/useMatrixEffect';
+import { useMatrixEffect } from '../hooks/matrix';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { ScrollArea } from './ui/scroll-area';
 

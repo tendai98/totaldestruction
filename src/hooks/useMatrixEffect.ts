@@ -1,3 +1,3 @@
 
-import { useMatrixEffect } from './matrix';
-export { useMatrixEffect };
+export { useMatrixEffect } from './matrix';
+

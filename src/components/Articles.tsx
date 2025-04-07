@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { Article } from '../types';
 import ArticleCard from './ArticleCard';
 import { articles } from '../data/mockData';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from './ui/pagination';
-import { useMatrixEffect } from '../hooks/useMatrixEffect';
+import { useMatrixEffect } from '../hooks/matrix';
 
 // Create a dedicated interface for the window object with our custom property
 interface CustomWindow extends Window {

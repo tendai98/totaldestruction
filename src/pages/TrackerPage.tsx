@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
 import { Home, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '../hooks/use-mobile';
-import { useMatrixEffect } from '../hooks/useMatrixEffect';
+import { useMatrixEffect } from '../hooks/matrix';
 
 const TrackerPage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
