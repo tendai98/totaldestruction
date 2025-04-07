@@ -39,9 +39,6 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
         <div className="absolute top-2 md:top-5 left-2 md:left-5 right-2 md:right-5 flex justify-between items-center">
-          <h2 className="text-cyber-green text-lg md:text-2xl font-bold tracking-wider animate-glow font-orbitron">
-            AFRICA OIL OPERATIONS
-          </h2>
           <div className="text-cyber-yellow text-xs md:text-sm font-kode-mono hidden sm:block">
             MONITORING ACTIVE: <span className="text-cyber-green animate-pulse">■</span>
           </div>
@@ -96,45 +93,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
               );
             })}
             
-            {/* Country name labels - hide on small screens */}
-            {!isMobile && Object.entries(countryPaths).map(([code, pathData]) => {
-              const countryId = countryCodeToId[code] || code;
-              const country = countries.find(c => c.id === countryId || c.code === code);
-              const countryName = country?.name || code;
-              
-              const isSelected = selectedCountry === countryId;
-              
-              // Extract all coordinates and find the approximate center
-              const coords = pathData.match(/[0-9]+(\.[0-9]+)?,\s*[0-9]+(\.[0-9]+)?/g);
-              if (!coords || coords.length === 0) return null;
-              
-              // Calculate centroid by averaging coordinates
-              let sumX = 0, sumY = 0;
-              coords.forEach(coord => {
-                const [x, y] = coord.split(',').map(Number);
-                sumX += x;
-                sumY += y;
-              });
-              
-              const centerX = sumX / coords.length;
-              const centerY = sumY / coords.length;
-              
-              return (
-                <text
-                  key={`label-${code}`}
-                  x={centerX}
-                  y={centerY}
-                  textAnchor="middle"
-                  fontSize="10"
-                  fontWeight={isSelected ? "bold" : "normal"}
-                  fill={isSelected ? "#00ff00" : "#ffffff"}
-                  opacity={isSelected ? 1 : 0.7}
-                  className="pointer-events-none font-kode-mono hidden sm:block"
-                >
-                  {countryName.substring(0, 12)}
-                </text>
-              );
-            })}
+            {/* Removed the country name labels completely */}
           </svg>
         </div>
       </div>
