@@ -64,14 +64,13 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
             
             {/* Map countries */}
             {Object.entries(countryPaths).map(([code, pathData]) => {
-              const countryId = countryCodeToId[code];
+              const countryId = countryCodeToId[code] || code; // Use code as fallback if no matching country data
               const country = countries.find(c => c.id === countryId || c.code === code);
               
-              // Skip if we don't have a match in our data
-              if (!country) return null;
-              
-              const isSelected = selectedCountry === country.id;
-              const isHovered = hoveredCountry === country.id;
+              // Default values if country not in our data
+              const countryName = country?.name || code;
+              const isSelected = selectedCountry === countryId;
+              const isHovered = hoveredCountry === countryId;
               
               return (
                 <path 
@@ -85,8 +84,8 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                     ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
                       isHovered ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
                   `}
-                  onClick={() => country && onCountrySelect(country.id)}
-                  onMouseEnter={() => country && setHoveredCountry(country.id)}
+                  onClick={() => onCountrySelect(countryId)}
+                  onMouseEnter={() => setHoveredCountry(countryId)}
                   onMouseLeave={() => setHoveredCountry(null)}
                 />
               );
@@ -94,12 +93,11 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
             
             {/* Country name labels */}
             {Object.entries(countryPaths).map(([code, pathData]) => {
-              const countryId = countryCodeToId[code];
+              const countryId = countryCodeToId[code] || code;
               const country = countries.find(c => c.id === countryId || c.code === code);
+              const countryName = country?.name || code;
               
-              if (!country) return null;
-              
-              const isSelected = selectedCountry === country.id;
+              const isSelected = selectedCountry === countryId;
               
               // Extract all coordinates and find the approximate center
               const coords = pathData.match(/[0-9]+(\.[0-9]+)?,\s*[0-9]+(\.[0-9]+)?/g);
@@ -128,7 +126,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                   opacity={isSelected ? 1 : 0.7}
                   className="pointer-events-none font-kode-mono"
                 >
-                  {country.name.substring(0, 12)}
+                  {countryName.substring(0, 12)}
                 </text>
               );
             })}
