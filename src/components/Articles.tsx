@@ -14,7 +14,7 @@ interface CustomWindow extends Window {
 const Articles: React.FC = () => {
   const headerText = "ENVIRONMENTAL INCIDENTS";
   const { displayText: animatedHeader, isAnimating: headerAnimating } = 
-    useMatrixEffect(headerText, 2000, 15000);
+    useMatrixEffect(headerText, 2000, 25000); // Updated to 25 seconds
   
   // Track mouse movement to pause animations when user is active
   const [userActive, setUserActive] = useState(false);
@@ -53,12 +53,13 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 
-        className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316] cyber-glow'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-[#F97316] after:shadow-neon-orange`}
-        style={{ minHeight: "3rem", display: "block" }}
-      >
-        {animatedHeader}
-      </h1>
+      <div className="h-[3rem] mb-8">
+        <h1 
+          className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316] cyber-glow'} tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-[#F97316] after:shadow-neon-orange`}
+        >
+          {animatedHeader}
+        </h1>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {articles.map((article) => (

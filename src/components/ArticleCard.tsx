@@ -15,12 +15,12 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   // Track if this card is being hovered
   const [isHovering, setIsHovering] = useState(false);
   
-  // Apply matrix effect to title and description with fixed heights
+  // Apply matrix effect to title and description with fixed heights and increased interval to 25 seconds
   const { displayText: titleText, isAnimating: titleAnimating } = 
-    useMatrixEffect(article.title, 3000, 15000);
+    useMatrixEffect(article.title, 3000, 25000);
   
   const { displayText: descriptionText, isAnimating: descriptionAnimating } = 
-    useMatrixEffect(article.description, 3500, 15000);
+    useMatrixEffect(article.description, 3500, 25000);
 
   // Handle hover events to stop animation
   const handleMouseEnter = () => {
@@ -52,19 +52,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 
-                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'} line-clamp-2`}
-                  style={{ 
-                    minHeight: "3rem", 
-                    maxHeight: "4rem",
-                    overflow: "hidden",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical"
-                  }}
-                >
-                  {titleAnimating && !isHovering ? titleText : truncatedTitle}
-                </h3>
+                <div className="h-[3rem] overflow-hidden w-full">
+                  <h3 className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'}`}>
+                    {titleAnimating && !isHovering ? titleText : truncatedTitle}
+                  </h3>
+                </div>
               </TooltipTrigger>
               {article.title.length > 60 && (
                 <TooltipContent className="bg-cyber-black border border-[#F97316] text-[#F97316]">
@@ -80,19 +72,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <p 
-                className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'}`}
-                style={{ 
-                  minHeight: "6rem",
-                  maxHeight: "6rem",
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: "vertical"
-                }}
-              >
-                {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
-              </p>
+              <div className="h-[6rem] overflow-hidden">
+                <p className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'}`}>
+                  {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
+                </p>
+              </div>
             </TooltipTrigger>
             {article.description.length > 180 && (
               <TooltipContent className="bg-cyber-black border border-[#F97316] text-white max-w-sm">

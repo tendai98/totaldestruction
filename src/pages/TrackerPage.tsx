@@ -11,13 +11,13 @@ const TrackerPage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  // Add Matrix effects for the logo text
+  // Add Matrix effects for the logo text with increased interval to 25 seconds
   const { displayText: logoText, isAnimating: logoAnimating } = 
-    useMatrixEffect("DESTRUCTION", 2000, 15000);
+    useMatrixEffect("DESTRUCTION", 2000, 25000);
     
   // Add Matrix effects for the home button text
   const { displayText: homeText, isAnimating: homeAnimating } = 
-    useMatrixEffect("HOME", 1500, 15000);
+    useMatrixEffect("HOME", 1500, 25000);
 
   return (
     <div className="min-h-screen bg-cyber-black flex flex-col">
@@ -32,9 +32,12 @@ const TrackerPage: React.FC = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch">
+            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch flex items-center">
               <span className="text-white">TOTAL</span>
-              <span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'} inline-block w-[112px] md:w-[140px]`}>{logoText}</span>
+              {/* Fixed width container for DESTRUCTION to prevent layout shifts during animation */}
+              <div className="inline-block w-[140px] md:w-[180px] overflow-hidden">
+                <span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'}`}>{logoText}</span>
+              </div>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyber-green shadow-neon-green"></span>
             </Link>
           </div>
@@ -53,7 +56,10 @@ const TrackerPage: React.FC = () => {
               className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
             >
               <Home size={18} className="text-white" />
-              <span className={`hidden md:inline tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+              {/* Fixed width container for HOME text during animation */}
+              <div className="hidden md:inline-block w-[60px] overflow-hidden">
+                <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+              </div>
             </Link>
           )}
         </div>
@@ -68,7 +74,10 @@ const TrackerPage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Home size={18} className="text-white" />
-                <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+                {/* Fixed width container for HOME text during animation */}
+                <div className="inline-block w-[60px] overflow-hidden">
+                  <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+                </div>
               </Link>
             </div>
           </div>

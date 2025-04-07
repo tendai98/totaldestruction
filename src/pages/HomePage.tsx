@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
-import { AlertTriangle, BarChart2, Database, Layers, Map, Menu, X } from 'lucide-react';
+import { BarChart2, Database, Layers, Map, Menu, X } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
@@ -10,18 +10,12 @@ const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  // Add Matrix effects to header text and status texts
+  // Add Matrix effects to header text with increased interval to 25 seconds
   const { displayText: logoText, isAnimating: logoAnimating } = 
-    useMatrixEffect("DESTRUCTION", 2000, 15000);
-    
-  const { displayText: systemsText, isAnimating: systemsAnimating } = 
-    useMatrixEffect("SYSTEMS OPERATIONAL", 1500, 15000);
-    
-  const { displayText: liveDataText, isAnimating: liveDataAnimating } = 
-    useMatrixEffect("LIVE DATA", 1500, 15000);
+    useMatrixEffect("DESTRUCTION", 2000, 25000);
     
   const { displayText: trackerText, isAnimating: trackerAnimating } = 
-    useMatrixEffect("TRACKER", 1500, 15000);
+    useMatrixEffect("TRACKER", 1500, 25000);
   
   return (
     <div className="min-h-screen bg-cyber-black">
@@ -36,9 +30,12 @@ const HomePage: React.FC = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch relative">
+            <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch relative flex items-center">
               <span className="text-white">TOTAL</span>
-              <span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'} inline-block w-[112px] md:w-[140px]`}>{logoText}</span>
+              {/* Fixed width container for DESTRUCTION to prevent layout shifts during animation */}
+              <div className="inline-block w-[140px] md:w-[180px] overflow-hidden">
+                <span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
+              </div>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#F97316] shadow-neon-orange"></span>
             </Link>
           </div>
@@ -53,22 +50,15 @@ const HomePage: React.FC = () => {
             </button>
           ) : (
             <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-2 text-cyber-blue text-xs bg-cyber-black/40 px-3 py-1.5 border border-cyber-blue">
-                <Database size={14} />
-                <span className={`font-mono ${systemsAnimating ? 'text-glitch' : ''}`}>{systemsText}</span>
-              </div>
-              
-              <div className="hidden md:flex items-center gap-2 bg-cyber-black/40 px-3 py-1.5 border border-[#F97316]">
-                <div className="h-2 w-2 bg-[#F97316] rounded-full animate-pulse"></div>
-                <span className={`text-xs text-white/70 font-mono ${liveDataAnimating ? 'text-glitch' : ''}`}>{liveDataText}</span>
-              </div>
-              
               <Link 
                 to="/tracker" 
                 className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
               >
                 <Map size={18} className="text-white" />
-                <span className={`hidden md:inline tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                {/* Fixed width container for TRACKER text during animation */}
+                <div className="hidden md:inline-block w-[80px] overflow-hidden">
+                  <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                </div>
               </Link>
               
               <div className="hidden md:flex items-center gap-3">
@@ -77,9 +67,6 @@ const HomePage: React.FC = () => {
                 </button>
                 <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
                   <BarChart2 size={18} className="text-white" />
-                </button>
-                <button className="p-2 bg-cyber-darkgray border border-cyber-red text-cyber-red hover:bg-cyber-red hover:text-cyber-black transition-colors">
-                  <AlertTriangle size={18} />
                 </button>
               </div>
             </div>
@@ -96,7 +83,10 @@ const HomePage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Map size={18} />
-                <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                {/* Fixed width container for tracker text during animation */}
+                <div className="inline-block w-[80px] overflow-hidden">
+                  <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                </div>
               </Link>
               
               <div className="flex justify-between gap-2">
@@ -106,14 +96,6 @@ const HomePage: React.FC = () => {
                 <button className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center">
                   <BarChart2 size={18} className="text-white" />
                 </button>
-                <button className="flex-1 p-3 bg-cyber-darkgray border border-cyber-red text-cyber-red hover:bg-cyber-red hover:text-cyber-black transition-colors flex items-center justify-center">
-                  <AlertTriangle size={18} />
-                </button>
-              </div>
-              
-              <div className="flex items-center gap-2 text-cyber-blue text-xs bg-cyber-black/40 px-3 py-2 border border-cyber-blue">
-                <Database size={14} />
-                <span className={`font-mono ${systemsAnimating ? 'text-glitch' : ''}`}>{systemsText}</span>
               </div>
             </div>
           </div>

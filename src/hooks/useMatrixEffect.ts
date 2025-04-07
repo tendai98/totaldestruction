@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Characters used for the Matrix effect
@@ -8,7 +7,7 @@ const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
 let globalAnimationActive = false;
 let globalAnimationStartTime = 0;
 const ANIMATION_DURATION = 4000; // 4 seconds for the animation
-const ANIMATION_CYCLE = 15000; // 15 seconds between animation cycles
+const ANIMATION_CYCLE = 25000; // Changed from 15000 to 25000 milliseconds (25 seconds between animation cycles)
 
 // Shared user activity state across all instances
 let userActive = false;
@@ -18,7 +17,7 @@ const ACTIVITY_TIMEOUT = 5000; // Consider user inactive after 5 seconds of no a
 export const useMatrixEffect = (
   originalText: string,
   durationMs: number = 2000,
-  intervalMs: number = 10000,
+  intervalMs: number = 25000, // Updated default interval to 25 seconds
   forceAnimation: boolean = false
 ) => {
   const [displayText, setDisplayText] = useState(originalText);
