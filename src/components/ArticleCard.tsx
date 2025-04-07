@@ -82,9 +82,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     return text.substring(0, maxLength) + '...';
   };
 
-  // Truncated versions for display
+  // Truncated versions for display - increase description length from 120 to 180
   const truncatedTitle = truncateText(article.title, 60);
-  const truncatedDescription = truncateText(article.description, 120);
+  const truncatedDescription = truncateText(article.description, 180);
 
   return (
     <Card 
@@ -122,13 +122,13 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
             <TooltipTrigger asChild>
               <p 
                 ref={descRef}
-                className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-3 overflow-hidden`}
-                style={{ maxHeight: '4.5rem' }} // Set a max-height to prevent overflow
+                className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-4 overflow-hidden`}
+                style={{ maxHeight: '6rem' }} // Increased max-height from 4.5rem to 6rem
               >
                 {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
               </p>
             </TooltipTrigger>
-            {article.description.length > 120 && (
+            {article.description.length > 180 && (
               <TooltipContent className="bg-cyber-black border border-cyber-green text-white max-w-sm">
                 <p>{article.description}</p>
               </TooltipContent>
