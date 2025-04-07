@@ -12,7 +12,7 @@ const ACTIVITY_TIMEOUT = 5000; // Consider user inactive after 5 seconds of no a
 export const useMatrixEffect = (
   originalText: string,
   durationMs: number = 2000,
-  intervalMs: number = 10000, // Changed to 10 seconds
+  intervalMs: number = 10000,
   forceAnimation: boolean = false
 ) => {
   const [displayText, setDisplayText] = useState(originalText);
@@ -40,6 +40,7 @@ export const useMatrixEffect = (
     window.addEventListener('click', recordUserActivity);
     window.addEventListener('keydown', recordUserActivity);
     window.addEventListener('scroll', recordUserActivity);
+    window.addEventListener('mouseover', recordUserActivity); // Add mouseover listener
     
     return () => {
       window.removeEventListener('mousemove', recordUserActivity);
@@ -47,10 +48,11 @@ export const useMatrixEffect = (
       window.removeEventListener('click', recordUserActivity);
       window.removeEventListener('keydown', recordUserActivity);
       window.removeEventListener('scroll', recordUserActivity);
+      window.removeEventListener('mouseover', recordUserActivity);
     };
   }, [recordUserActivity]);
 
-  // Function to create scrambled text
+  // Function to create scrambled text with a more pronounced downward flow effect
   const scrambleText = useCallback((progress: number) => {
     return originalText
       .split('')
@@ -58,11 +60,15 @@ export const useMatrixEffect = (
         // If character is a space, preserve it
         if (char === ' ') return ' ';
         
-        // Calculate if this character should be scrambled based on progress
-        // Early characters scramble first and return to normal last
+        // Calculate if this character should be scrambled based on progress and position
+        // Create a wave-like pattern that flows from top to bottom
+        const positionEffect = Math.sin((idx / originalText.length) * Math.PI * 2 + progress * Math.PI * 2);
         const shouldScramble = progress < 1 && 
-          (progress < 0.5 ? idx / originalText.length < progress * 2 : 
-           (originalText.length - idx) / originalText.length > (progress - 0.5) * 2);
+          (progress < 0.5 ? 
+            // First half of animation - characters scramble in a wave pattern
+            (idx / originalText.length + positionEffect * 0.2) < progress * 2 : 
+            // Second half - characters return to normal in reverse wave pattern
+            ((originalText.length - idx) / originalText.length - positionEffect * 0.2) > (progress - 0.5) * 2);
         
         if (shouldScramble) {
           return matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
@@ -140,6 +146,28 @@ export const useMatrixEffect = (
       }
     };
   }, [animateText, intervalMs, forceAnimation]);
+
+  // Immediately stop animation when user becomes active
+  useEffect(() => {
+    const handleUserActivity = () => {
+      if (isAnimating && userActive) {
+        if (animationRef.current) {
+          clearInterval(animationRef.current);
+          animationRef.current = null;
+        }
+        setDisplayText(originalText);
+        setIsAnimating(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleUserActivity);
+    window.addEventListener('mouseover', handleUserActivity);
+    
+    return () => {
+      window.removeEventListener('scroll', handleUserActivity);
+      window.removeEventListener('mouseover', handleUserActivity);
+    };
+  }, [isAnimating, originalText]);
 
   // Clean up on unmount
   useEffect(() => {

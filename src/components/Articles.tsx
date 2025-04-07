@@ -6,6 +6,13 @@ import { articles } from '../data/mockData';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from './ui/pagination';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
+// Declare a type for the global timeout to fix TypeScript errors
+declare global {
+  interface Window {
+    userActivityTimeout?: NodeJS.Timeout;
+  }
+}
+
 const Articles: React.FC = () => {
   const headerText = "ENVIRONMENTAL INCIDENTS";
   const { displayText: animatedHeader, isAnimating: headerAnimating } = 
@@ -29,11 +36,13 @@ const Articles: React.FC = () => {
     window.addEventListener('mousemove', handleActivity);
     window.addEventListener('click', handleActivity);
     window.addEventListener('keypress', handleActivity);
+    window.addEventListener('scroll', handleActivity); // Add scroll listener
     
     return () => {
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('click', handleActivity);
       window.removeEventListener('keypress', handleActivity);
+      window.removeEventListener('scroll', handleActivity); // Remove scroll listener
       clearTimeout(window.userActivityTimeout);
     };
   }, []);
