@@ -6,11 +6,9 @@ import { articles } from '../data/mockData';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from './ui/pagination';
 import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
-// Declare a type for the global timeout to fix TypeScript errors
-declare global {
-  interface Window {
-    userActivityTimeout?: NodeJS.Timeout;
-  }
+// Create a dedicated interface for the window object with our custom property
+interface CustomWindow extends Window {
+  userActivityTimeout?: number;
 }
 
 const Articles: React.FC = () => {
@@ -26,9 +24,12 @@ const Articles: React.FC = () => {
     const handleActivity = () => {
       setUserActive(true);
       
+      // Cast window to our custom interface to access the custom property
+      const customWindow = window as CustomWindow;
+      
       // Reset after 5 seconds of inactivity
-      clearTimeout(window.userActivityTimeout);
-      window.userActivityTimeout = setTimeout(() => {
+      clearTimeout(customWindow.userActivityTimeout);
+      customWindow.userActivityTimeout = setTimeout(() => {
         setUserActive(false);
       }, 5000);
     };
@@ -43,7 +44,10 @@ const Articles: React.FC = () => {
       window.removeEventListener('click', handleActivity);
       window.removeEventListener('keypress', handleActivity);
       window.removeEventListener('scroll', handleActivity); // Remove scroll listener
-      clearTimeout(window.userActivityTimeout);
+      
+      // Clear timeout on unmount
+      const customWindow = window as CustomWindow;
+      clearTimeout(customWindow.userActivityTimeout);
     };
   }, []);
 
