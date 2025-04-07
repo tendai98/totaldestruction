@@ -93,7 +93,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <CardHeader className="p-4 border-b border-cyber-green h-[80px]">
+      <CardHeader className="p-4 border-b border-cyber-green h-[80px] overflow-hidden">
         <div className="flex items-start justify-between">
           <TooltipProvider>
             <Tooltip>
@@ -101,6 +101,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                 <h3 
                   ref={titleRef}
                   className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-cyber-green text-glitch' : 'text-cyber-green'} line-clamp-2 overflow-hidden`}
+                  style={{ maxHeight: '3rem' }} // Set a max-height to prevent overflow
                 >
                   {titleAnimating && !isHovering ? titleText : truncatedTitle}
                 </h3>
@@ -115,13 +116,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         </div>
       </CardHeader>
       
-      <CardContent className="p-4 border-b border-dashed border-cyber-green/30 flex-1">
+      <CardContent className="p-4 border-b border-dashed border-cyber-green/30 flex-1 overflow-hidden">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <p 
                 ref={descRef}
                 className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-3 overflow-hidden`}
+                style={{ maxHeight: '4.5rem' }} // Set a max-height to prevent overflow
               >
                 {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
               </p>

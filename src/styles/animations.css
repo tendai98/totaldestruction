@@ -75,9 +75,12 @@
 
 .text-glitch {
   animation: textGlitch 0.4s infinite, matrixFlow 2s ease-in-out; /* Slowed down for smoother effect */
-  white-space: pre-wrap; /* Keep text from changing width */
+  white-space: nowrap; /* Prevent text from wrapping, stay on one line */
   display: inline-block; /* Maintain block dimensions */
   letter-spacing: 0.02em; /* Add slight spacing for better readability during animation */
+  overflow: hidden; /* Ensure text doesn't overflow */
+  text-overflow: ellipsis; /* Add ellipsis to overflowing text */
+  max-width: 100%; /* Ensure text doesn't exceed container width */
 }
 
 /* Flicker animation for cyber-glitch elements */
