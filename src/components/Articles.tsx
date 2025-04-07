@@ -4,12 +4,17 @@ import { Article } from '../types';
 import ArticleCard from './ArticleCard';
 import { articles } from '../data/mockData';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from './ui/pagination';
+import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
 const Articles: React.FC = () => {
+  const headerText = "ENVIRONMENTAL INCIDENTS";
+  const { displayText: animatedHeader, isAnimating: headerAnimating } = 
+    useMatrixEffect(headerText, 2000, 10000);
+
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold text-cyber-green mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow">
-        ENVIRONMENTAL INCIDENTS
+      <h1 className={`text-4xl font-bold ${headerAnimating ? 'text-glitch' : 'text-cyber-green'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
+        {animatedHeader}
       </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

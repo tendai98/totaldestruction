@@ -4,10 +4,24 @@ import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
 import { AlertTriangle, BarChart2, Database, Layers, Map, Zap, Menu, X } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
+import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  
+  // Add Matrix effects to header text and status texts
+  const { displayText: logoText, isAnimating: logoAnimating } = 
+    useMatrixEffect("TOTALDESTRUCTION", 2000, 10000);
+    
+  const { displayText: systemsText, isAnimating: systemsAnimating } = 
+    useMatrixEffect("SYSTEMS OPERATIONAL", 1500, 10000);
+    
+  const { displayText: liveDataText, isAnimating: liveDataAnimating } = 
+    useMatrixEffect("LIVE DATA", 1500, 10000);
+    
+  const { displayText: trackerText, isAnimating: trackerAnimating } = 
+    useMatrixEffect("TRACKER", 1500, 10000);
   
   return (
     <div className="min-h-screen bg-cyber-black">
@@ -19,7 +33,7 @@ const HomePage: React.FC = () => {
               TD
             </div>
             <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch relative">
-              TOTAL<span className="text-cyber-green">DESTRUCTION</span>
+              TOTAL<span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'}`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyber-green shadow-neon-green"></span>
             </Link>
           </div>
@@ -36,12 +50,12 @@ const HomePage: React.FC = () => {
             <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-2 text-cyber-blue text-xs bg-cyber-black/40 px-3 py-1.5 border border-cyber-blue">
                 <Database size={14} />
-                <span className="font-mono">SYSTEMS OPERATIONAL</span>
+                <span className={`font-mono ${systemsAnimating ? 'text-glitch' : ''}`}>{systemsText}</span>
               </div>
               
               <div className="hidden md:flex items-center gap-2 bg-cyber-black/40 px-3 py-1.5 border border-cyber-green">
                 <div className="h-2 w-2 bg-cyber-green rounded-full animate-pulse"></div>
-                <span className="text-xs text-white/70 font-mono">LIVE DATA</span>
+                <span className={`text-xs text-white/70 font-mono ${liveDataAnimating ? 'text-glitch' : ''}`}>{liveDataText}</span>
               </div>
               
               <Link 
@@ -49,7 +63,7 @@ const HomePage: React.FC = () => {
                 className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-green text-cyber-green px-4 py-2 hover:bg-cyber-green hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-green/30 after:top-1 after:left-1 after:-z-10"
               >
                 <Map size={18} />
-                <span className="hidden md:inline tracking-wider font-bold">TRACKER</span>
+                <span className={`hidden md:inline tracking-wider font-bold ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
               </Link>
               
               <div className="hidden md:flex items-center gap-3">
@@ -77,7 +91,7 @@ const HomePage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Map size={18} />
-                <span className="tracking-wider font-bold">TRACKER</span>
+                <span className={`tracking-wider font-bold ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
               </Link>
               
               <div className="flex justify-between gap-2">
@@ -94,7 +108,7 @@ const HomePage: React.FC = () => {
               
               <div className="flex items-center gap-2 text-cyber-blue text-xs bg-cyber-black/40 px-3 py-2 border border-cyber-blue">
                 <Database size={14} />
-                <span className="font-mono">SYSTEMS OPERATIONAL</span>
+                <span className={`font-mono ${systemsAnimating ? 'text-glitch' : ''}`}>{systemsText}</span>
               </div>
             </div>
           </div>

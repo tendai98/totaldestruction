@@ -5,10 +5,23 @@ import Dashboard from '../components/Dashboard';
 import { Home, Zap, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '../hooks/use-mobile';
+import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
 const TrackerPage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  
+  // Add Matrix effects for the logo text
+  const { displayText: logoText, isAnimating: logoAnimating } = 
+    useMatrixEffect("TOTALDESTRUCTION", 2000, 10000);
+    
+  // Add Matrix effects for the tracker active text
+  const { displayText: trackerActiveText, isAnimating: trackerActiveAnimating } = 
+    useMatrixEffect("TRACKER ACTIVE", 1500, 10000);
+    
+  // Add Matrix effects for the home button text
+  const { displayText: homeText, isAnimating: homeAnimating } = 
+    useMatrixEffect("HOME", 1500, 10000);
 
   return (
     <div className="min-h-screen bg-cyber-black flex flex-col">
@@ -20,7 +33,7 @@ const TrackerPage: React.FC = () => {
               TD
             </div>
             <Link to="/" className="text-xl md:text-2xl font-bold text-white tracking-widest cyber-glitch">
-              TOTAL<span className="text-cyber-green">DESTRUCTION</span>
+              TOTAL<span className={`${logoAnimating ? 'text-glitch' : 'text-cyber-green'}`}>{logoText}</span>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyber-green shadow-neon-green"></span>
             </Link>
           </div>
@@ -39,7 +52,7 @@ const TrackerPage: React.FC = () => {
               className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
             >
               <Home size={18} />
-              <span className="hidden md:inline tracking-wider font-bold">HOME</span>
+              <span className={`hidden md:inline tracking-wider font-bold ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
             </Link>
           )}
         </div>
@@ -54,7 +67,7 @@ const TrackerPage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Home size={18} />
-                <span className="tracking-wider font-bold">HOME</span>
+                <span className={`tracking-wider font-bold ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
               </Link>
             </div>
           </div>
@@ -67,7 +80,7 @@ const TrackerPage: React.FC = () => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-cyber-green">
               <Zap size={12} className="animate-pulse" />
-              <span className="font-mono">TRACKER ACTIVE</span>
+              <span className={`font-mono ${trackerActiveAnimating ? 'text-glitch' : ''}`}>{trackerActiveText}</span>
             </div>
             <div className="text-white/50 font-mono hidden sm:block">GEOLOGICAL DATA: ACTIVE</div>
           </div>

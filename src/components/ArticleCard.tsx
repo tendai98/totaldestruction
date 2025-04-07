@@ -13,12 +13,30 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   // Track if this card should be animated
   const [shouldAnimate, setShouldAnimate] = useState(false);
   
+  // Store original heights to maintain card dimensions
+  const [titleHeight, setTitleHeight] = useState<number | null>(null);
+  const [descHeight, setDescHeight] = useState<number | null>(null);
+  
   // Apply matrix effect to title and description
   const { displayText: titleText, isAnimating: titleAnimating } = 
     useMatrixEffect(article.title, 2000, shouldAnimate ? 100 : 999999999);
   
   const { displayText: descriptionText, isAnimating: descriptionAnimating } = 
     useMatrixEffect(article.description, 2500, shouldAnimate ? 100 : 999999999);
+
+  // References for measuring elements
+  const titleRef = React.useRef<HTMLHeadingElement>(null);
+  const descRef = React.useRef<HTMLParagraphElement>(null);
+
+  // Measure original heights on first render
+  useEffect(() => {
+    if (titleRef.current && !titleHeight) {
+      setTitleHeight(titleRef.current.clientHeight);
+    }
+    if (descRef.current && !descHeight) {
+      setDescHeight(descRef.current.clientHeight);
+    }
+  }, [titleHeight, descHeight]);
 
   // Set up global animation manager for all cards
   useEffect(() => {
@@ -36,8 +54,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       }
     };
 
-    // Set up interval to randomly activate cards every 30 seconds
-    const interval = setInterval(selectRandomCard, 30000);
+    // Set up interval to randomly activate cards every 10 seconds (reduced from 30s)
+    const interval = setInterval(selectRandomCard, 10000);
     
     // Initially have a chance to start animation
     selectRandomCard();
@@ -49,14 +67,22 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     <Card className="cyber-border mb-6 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm bg-cyber-darkgray/90">
       <CardHeader className="p-4 border-b border-cyber-green">
         <div className="flex items-start justify-between">
-          <h3 className={`text-xl font-bold tracking-wider ${titleAnimating ? 'text-cyber-green animate-pulse' : 'text-cyber-green'}`}>
+          <h3 
+            ref={titleRef}
+            className={`text-xl font-bold tracking-wider ${titleAnimating ? 'text-cyber-green text-glitch' : 'text-cyber-green'}`}
+            style={titleHeight ? { minHeight: `${titleHeight}px` } : undefined}
+          >
             {titleText}
           </h3>
         </div>
       </CardHeader>
       
       <CardContent className="p-4 border-b border-dashed border-cyber-green/30">
-        <p className={`text-sm mb-4 leading-relaxed ${descriptionAnimating ? 'text-cyber-blue font-mono' : 'text-white/80'}`}>
+        <p 
+          ref={descRef}
+          className={`text-sm mb-4 leading-relaxed ${descriptionAnimating ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'}`}
+          style={descHeight ? { minHeight: `${descHeight}px` } : undefined}
+        >
           {descriptionText}
         </p>
         

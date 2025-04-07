@@ -31,7 +31,7 @@
   pointer-events: none;
 }
 
-/* Matrix text scramble effect */
+/* Matrix text scramble effect - enhanced version */
 @keyframes textGlitch {
   0% {
     text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
@@ -57,4 +57,25 @@
 
 .text-glitch {
   animation: textGlitch 0.3s infinite;
+  white-space: pre-wrap; /* Keep text from changing width */
+  display: inline-block; /* Maintain block dimensions */
+}
+
+/* Flicker animation for cyber-glitch elements */
+@keyframes flicker {
+  0% { opacity: 1; }
+  3% { opacity: 0.8; }
+  6% { opacity: 1; }
+  7% { opacity: 0.9; }
+  8% { opacity: 1; }
+  9% { opacity: 0.8; }
+  10% { opacity: 1; }
+  60% { opacity: 1; }
+  61% { opacity: 0.7; }
+  62% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.animate-flicker {
+  animation: flicker 10s infinite;
 }
