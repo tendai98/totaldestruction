@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Article } from '../types';
 import ArticleCard from './ArticleCard';
 import { articles } from '../data/mockData';
@@ -10,10 +10,37 @@ const Articles: React.FC = () => {
   const headerText = "ENVIRONMENTAL INCIDENTS";
   const { displayText: animatedHeader, isAnimating: headerAnimating } = 
     useMatrixEffect(headerText, 2000, 10000);
+  
+  // Track mouse movement to pause animations when user is active
+  const [userActive, setUserActive] = useState(false);
+  
+  // Set up user activity tracking
+  useEffect(() => {
+    const handleActivity = () => {
+      setUserActive(true);
+      
+      // Reset after 5 seconds of inactivity
+      clearTimeout(window.userActivityTimeout);
+      window.userActivityTimeout = setTimeout(() => {
+        setUserActive(false);
+      }, 5000);
+    };
+    
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('click', handleActivity);
+    window.addEventListener('keypress', handleActivity);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('click', handleActivity);
+      window.removeEventListener('keypress', handleActivity);
+      clearTimeout(window.userActivityTimeout);
+    };
+  }, []);
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className={`text-4xl font-bold ${headerAnimating ? 'text-glitch' : 'text-cyber-green'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
+      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-cyber-green'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
         {animatedHeader}
       </h1>
       
