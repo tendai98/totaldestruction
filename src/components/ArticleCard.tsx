@@ -100,7 +100,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
               <TooltipTrigger asChild>
                 <h3 
                   ref={titleRef}
-                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316]'} line-clamp-2 overflow-hidden`}
+                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glitch'} line-clamp-2 overflow-hidden`}
                   style={{ maxHeight: '4rem' }} // Increased from 3rem to 4rem
                 >
                   {titleAnimating && !isHovering ? titleText : truncatedTitle}

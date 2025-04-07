@@ -53,7 +53,7 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316]'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
+      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316] cyber-glitch'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
         {animatedHeader}
       </h1>
       
