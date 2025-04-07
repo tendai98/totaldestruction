@@ -11,10 +11,6 @@ interface ArticleCardProps {
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
     <Card className="cyber-border mb-6 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm bg-cyber-darkgray/90">
-      <div className="absolute -right-2 -top-2">
-        <AlertTriangle size={20} className="text-cyber-red fill-cyber-black animate-pulse" />
-      </div>
-      
       <CardHeader className="p-4 border-b border-cyber-green">
         <div className="flex items-start justify-between">
           <h3 className="text-xl font-bold tracking-wider text-cyber-green">{article.title}</h3>
