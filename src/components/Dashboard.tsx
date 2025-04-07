@@ -19,11 +19,11 @@ const Dashboard: React.FC = () => {
   };
   
   return (
-    <div className="relative min-h-screen flex flex-col bg-cyber-black">
-      {/* Main Content - Map on top, options below on mobile, side by side on desktop */}
-      <div className="flex-1 flex flex-col md:flex-row">
-        {/* Map Container - Full width on mobile, left side on desktop */}
-        <div className="flex-1 relative overflow-hidden border-r border-cyber-blue/30 min-h-[60vh] md:min-h-screen">
+    <div className="relative h-[calc(100vh-72px)] flex flex-col bg-cyber-black overflow-hidden">
+      {/* Main Content - Map and sidebar in a fixed-size container */}
+      <div className="flex-1 flex flex-col md:flex-row h-full">
+        {/* Map Container - Always maintain size */}
+        <div className={`relative ${selectedCountry ? 'w-full md:w-[60%]' : 'w-full'} h-full transition-all duration-300`}>
           <Map 
             onCountrySelect={handleCountrySelect}
             selectedCountry={selectedCountry}
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            {!isMobile && (
+            {!isMobile && !selectedCountry && (
               <div className="cyber-border p-3 bg-cyber-black/70 backdrop-blur-sm">
                 <div className="text-xs text-cyber-yellow font-kode-mono">SELECT A REGION TO VIEW INCIDENT DATA</div>
               </div>
@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
         
         {/* Options Panel - Below on mobile, right side on desktop */}
         {!selectedCountry && (
-          <div className="w-full md:w-96 bg-cyber-darkgray/50 p-4 overflow-y-auto border-l border-cyber-blue/20">
+          <div className="w-full md:w-[40%] bg-cyber-darkgray/50 p-4 overflow-y-auto border-l border-cyber-blue/20 max-h-[40vh] md:max-h-full">
             <div className="mb-6">
               <h2 className="text-xl text-[#F97316] mb-2 font-bold tracking-wider font-orbitron">REGION INFORMATION</h2>
               <p className="text-white/70 text-sm mb-4">Select a country on the map to view environmental incident reports.</p>

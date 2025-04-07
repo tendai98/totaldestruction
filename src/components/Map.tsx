@@ -35,7 +35,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   }, {} as Record<string, string>);
   
   return (
-    <div className="relative w-full h-full min-h-[50vh] md:min-h-[700px]">
+    <div className="relative w-full h-full">
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
         <div className="absolute top-2 md:top-5 left-2 md:left-5 right-2 md:right-5 flex justify-between items-center">
@@ -52,12 +52,11 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
         )}
         
         {/* Africa SVG map */}
-        <div className="absolute inset-0 flex items-center justify-center scanning-effect overflow-auto touch-auto">
+        <div className="absolute inset-0 flex items-center justify-center scanning-effect">
           <svg 
             viewBox="0 0 1000 1001" 
-            className="w-full h-full max-w-4xl"
+            className="w-full h-full max-h-[calc(100vh-72px)]"
             preserveAspectRatio="xMidYMid meet"
-            style={{ touchAction: 'pan-y' }}
           >
             {/* Background for better visibility */}
             <rect x="0" y="0" width="1000" height="1001" fill="#121212" opacity="0.5" />
@@ -92,8 +91,6 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                 />
               );
             })}
-            
-            {/* Removed the country name labels completely */}
           </svg>
         </div>
       </div>
