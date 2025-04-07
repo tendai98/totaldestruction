@@ -53,7 +53,7 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-cyber-green'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
+      <h1 className={`text-4xl font-bold ${headerAnimating && !userActive ? 'text-glitch' : 'text-[#F97316]'} mb-8 tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-40 after:h-1 after:bg-cyber-yellow`}>
         {animatedHeader}
       </h1>
       
@@ -70,7 +70,7 @@ const Articles: React.FC = () => {
               <PaginationLink className="bg-cyber-darkgray text-cyber-blue border border-cyber-blue">1</PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink className="bg-cyber-darkgray text-cyber-green border border-cyber-green">2</PaginationLink>
+              <PaginationLink className="bg-cyber-darkgray text-[#F97316] border border-[#F97316]">2</PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink className="bg-cyber-darkgray text-cyber-red border border-cyber-red">3</PaginationLink>

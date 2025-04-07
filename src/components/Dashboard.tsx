@@ -32,9 +32,9 @@ const Dashboard: React.FC = () => {
           {/* HUD Overlay */}
           <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end pointer-events-none">
             <div className="cyber-border p-3 bg-cyber-black/70 backdrop-blur-sm">
-              <div className="text-xs text-cyber-green mb-1 font-kode-mono">SYSTEM STATUS</div>
+              <div className="text-xs text-[#F97316] mb-1 font-kode-mono">SYSTEM STATUS</div>
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-cyber-green rounded-full animate-pulse"></div>
+                <div className="h-2 w-2 bg-[#F97316] rounded-full animate-pulse"></div>
                 <span className="text-xs text-white/70 font-kode-mono">SCANNERS ACTIVE</span>
               </div>
             </div>
@@ -51,12 +51,12 @@ const Dashboard: React.FC = () => {
         {!selectedCountry && (
           <div className="w-full md:w-96 bg-cyber-darkgray/50 p-4 overflow-y-auto border-l border-cyber-blue/20">
             <div className="mb-6">
-              <h2 className="text-xl text-cyber-green mb-2 font-bold tracking-wider font-orbitron">REGION INFORMATION</h2>
+              <h2 className="text-xl text-[#F97316] mb-2 font-bold tracking-wider font-orbitron">REGION INFORMATION</h2>
               <p className="text-white/70 text-sm mb-4">Select a country on the map to view environmental incident reports.</p>
               
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="cyber-border-green p-3 flex flex-col items-center">
-                  <div className="text-3xl text-cyber-green font-bold">{articles.length}</div>
+                <div className="cyber-border p-3 flex flex-col items-center">
+                  <div className="text-3xl text-[#F97316] font-bold">{articles.length}</div>
                   <div className="text-xs text-white/70">TOTAL INCIDENTS</div>
                 </div>
                 <div className="cyber-border-red p-3 flex flex-col items-center">
@@ -69,7 +69,7 @@ const Dashboard: React.FC = () => {
                 <h3 className="text-cyber-blue text-sm mb-2 font-kode-mono">REGION STATS</h3>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="text-white/70">MONITORING:</div>
-                  <div className="text-cyber-green">ACTIVE</div>
+                  <div className="text-[#F97316]">ACTIVE</div>
                   <div className="text-white/70">LAST UPDATE:</div>
                   <div className="text-white">12MIN AGO</div>
                   <div className="text-white/70">RISK LEVEL:</div>
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
                     <span className="text-white/70">HOVERED</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-cyber-green opacity-70"></div>
+                    <div className="w-3 h-3 bg-[#F97316] opacity-70"></div>
                     <span className="text-white/70">SELECTED</span>
                   </div>
                 </div>

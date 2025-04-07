@@ -60,7 +60,7 @@ const config = {
         'cyber-black': '#0D0208',
         'cyber-darkgray': '#1A1A1D',
         'cyber-red': '#FF073A',
-        'cyber-green': '#39FF14',
+        'cyber-orange': '#F97316',
         'cyber-blue': '#00FFFF',
         'cyber-yellow': '#FFFF00',
         'sidebar': {
@@ -98,10 +98,10 @@ const config = {
         },
         "glow": {
           "0%, 100%": {
-            textShadow: "0 0 2px rgba(57, 255, 20, 0.7), 0 0 5px rgba(57, 255, 20, 0.5)"
+            textShadow: "0 0 2px rgba(249, 115, 22, 0.7), 0 0 5px rgba(249, 115, 22, 0.5)"
           },
           "50%": {
-            textShadow: "0 0 5px rgba(57, 255, 20, 0.9), 0 0 10px rgba(57, 255, 20, 0.7)"
+            textShadow: "0 0 5px rgba(249, 115, 22, 0.9), 0 0 10px rgba(249, 115, 22, 0.7)"
           }
         }
       },
@@ -112,7 +112,7 @@ const config = {
         "glow": "glow 2s ease-in-out infinite",
       },
       boxShadow: {
-        'neon-green': '0 0 5px 2px rgba(57, 255, 20, 0.5)',
+        'neon-orange': '0 0 5px 2px rgba(249, 115, 22, 0.5)',
         'neon-red': '0 0 5px 2px rgba(255, 7, 58, 0.5)',
         'neon-blue': '0 0 5px 2px rgba(0, 255, 255, 0.5)',
       }
