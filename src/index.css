@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -70,12 +69,16 @@
   }
   
   h1, h2, h3, h4 {
-    @apply font-['VT323',_monospace];
+    @apply font-['Orbitron',_sans-serif];
     letter-spacing: 0.05em;
   }
   
   button, a.btn {
-    @apply font-['Press_Start_2P',_cursive] tracking-wider;
+    @apply font-['Orbitron',_sans-serif] tracking-wider;
+  }
+
+  p, span, div {
+    @apply font-['Kode_Mono',_monospace];
   }
 }
 
