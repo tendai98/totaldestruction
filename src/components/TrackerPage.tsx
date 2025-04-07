@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
@@ -74,8 +73,8 @@ const TrackerPage: React.FC = () => {
         )}
       </div>
 
-      {/* Status Bar */}
-      <div className="bg-cyber-black border-b border-cyber-blue/30 py-1.5">
+      {/* Status Bar - Modified with more padding at the top */}
+      <div className="bg-cyber-black border-b border-cyber-blue/30 py-1.5 pt-4">
         <div className="container mx-auto flex items-center justify-between text-xs">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-[#F97316]">
