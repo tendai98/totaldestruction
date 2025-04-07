@@ -1,0 +1,32 @@
+
+/* 80s-style horizontal scanline animation */
+@keyframes scan {
+  0% {
+    background-position: 0 -100vh;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+.scanning-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanning-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(57, 255, 20, 0.03) 0.5%,
+    transparent 1%
+  );
+  animation: scan 10s linear infinite;
+  pointer-events: none;
+}
