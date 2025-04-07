@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { countries } from '../data/mockData';
 import { loadSvgMap } from '../utils/svgLoader';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface MapProps {
   onCountrySelect: (countryId: string) => void;
@@ -12,6 +13,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [countryPaths, setCountryPaths] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     const loadMap = async () => {
@@ -33,14 +35,14 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   }, {} as Record<string, string>);
   
   return (
-    <div className="relative w-full h-full min-h-[700px]">
+    <div className="relative w-full h-full min-h-[50vh] md:min-h-[700px]">
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
-        <div className="absolute top-5 left-5 right-5 flex justify-between items-center">
-          <h2 className="text-cyber-green text-2xl font-bold tracking-wider animate-glow font-orbitron">
+        <div className="absolute top-2 md:top-5 left-2 md:left-5 right-2 md:right-5 flex justify-between items-center">
+          <h2 className="text-cyber-green text-lg md:text-2xl font-bold tracking-wider animate-glow font-orbitron">
             AFRICA OIL OPERATIONS
           </h2>
-          <div className="text-cyber-yellow text-sm font-kode-mono">
+          <div className="text-cyber-yellow text-xs md:text-sm font-kode-mono hidden sm:block">
             MONITORING ACTIVE: <span className="text-cyber-green animate-pulse">■</span>
           </div>
         </div>
@@ -48,16 +50,17 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
         {/* Loading indicator */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center text-cyber-green">
-            <div className="text-xl font-kode-mono">LOADING MAP DATA...</div>
+            <div className="text-lg md:text-xl font-kode-mono">LOADING MAP DATA...</div>
           </div>
         )}
         
         {/* Africa SVG map */}
-        <div className="absolute inset-0 flex items-center justify-center scanning-effect">
+        <div className="absolute inset-0 flex items-center justify-center scanning-effect overflow-auto touch-auto">
           <svg 
             viewBox="0 0 1000 1001" 
             className="w-full h-full max-w-4xl"
             preserveAspectRatio="xMidYMid meet"
+            style={{ touchAction: 'pan-y' }}
           >
             {/* Background for better visibility */}
             <rect x="0" y="0" width="1000" height="1001" fill="#121212" opacity="0.5" />
@@ -76,23 +79,25 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                 <path 
                   key={code}
                   d={pathData}
-                  stroke={isSelected ? "#00ff00" : isHovered ? "#00aaff" : "#333"}
-                  strokeWidth={isSelected ? 2 : isHovered ? 1.5 : 1}
+                  stroke={isSelected ? "#00ff00" : isHovered && !isMobile ? "#00aaff" : "#333"}
+                  strokeWidth={isSelected ? 2 : isHovered && !isMobile ? 1.5 : 1}
                   strokeLinejoin="round"
                   className={`
                     cursor-pointer transition-all duration-300
                     ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
-                      isHovered ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
+                      isHovered && !isMobile ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
                   `}
                   onClick={() => onCountrySelect(countryId)}
-                  onMouseEnter={() => setHoveredCountry(countryId)}
-                  onMouseLeave={() => setHoveredCountry(null)}
+                  onMouseEnter={() => !isMobile && setHoveredCountry(countryId)}
+                  onMouseLeave={() => !isMobile && setHoveredCountry(null)}
+                  onTouchStart={() => isMobile && setHoveredCountry(countryId)}
+                  onTouchEnd={() => isMobile && setHoveredCountry(null)}
                 />
               );
             })}
             
-            {/* Country name labels */}
-            {Object.entries(countryPaths).map(([code, pathData]) => {
+            {/* Country name labels - hide on small screens */}
+            {!isMobile && Object.entries(countryPaths).map(([code, pathData]) => {
               const countryId = countryCodeToId[code] || code;
               const country = countries.find(c => c.id === countryId || c.code === code);
               const countryName = country?.name || code;
@@ -124,7 +129,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                   fontWeight={isSelected ? "bold" : "normal"}
                   fill={isSelected ? "#00ff00" : "#ffffff"}
                   opacity={isSelected ? 1 : 0.7}
-                  className="pointer-events-none font-kode-mono"
+                  className="pointer-events-none font-kode-mono hidden sm:block"
                 >
                   {countryName.substring(0, 12)}
                 </text>
@@ -134,18 +139,18 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
         </div>
       </div>
       
-      {/* HUD Overlay */}
+      {/* HUD Overlay - Simplified for mobile */}
       <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end pointer-events-none">
-        <div className="cyber-border p-3 bg-cyber-black/70 backdrop-blur-sm">
-          <div className="text-xs text-cyber-green mb-1 font-kode-mono">SYSTEM STATUS</div>
+        <div className="cyber-border p-2 md:p-3 bg-cyber-black/70 backdrop-blur-sm">
+          <div className="text-xs text-cyber-green mb-1 font-kode-mono">STATUS</div>
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 bg-cyber-green rounded-full animate-pulse"></div>
-            <span className="text-xs text-white/70 font-kode-mono">SCANNERS ACTIVE</span>
+            <span className="text-xs text-white/70 font-kode-mono">ACTIVE</span>
           </div>
         </div>
         
-        <div className="cyber-border p-3 bg-cyber-black/70 backdrop-blur-sm">
-          <div className="text-xs text-cyber-yellow font-kode-mono">SELECT A REGION TO VIEW INCIDENT DATA</div>
+        <div className="cyber-border p-2 md:p-3 bg-cyber-black/70 backdrop-blur-sm hidden md:block">
+          <div className="text-xs text-cyber-yellow font-kode-mono">SELECT A REGION</div>
         </div>
       </div>
     </div>

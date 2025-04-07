@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ArticleCard from './ArticleCard';
 import { Article } from '../types';
 import { X, AlertTriangle } from 'lucide-react';
 import { countries } from '../data/mockData';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface SidebarProps {
   articles: Article[];
@@ -13,6 +14,20 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ articles, selectedCountry, onClose }) => {
   const country = countries.find(c => c.id === selectedCountry);
+  const isMobile = useIsMobile();
+  
+  // Prevent body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (isMobile && selectedCountry) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [selectedCountry, isMobile]);
 
   if (!selectedCountry) {
     return null;
@@ -32,6 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ articles, selectedCountry, onClose })
         <button 
           onClick={onClose}
           className="bg-cyber-darkgray hover:bg-cyber-red text-white p-2 rounded-sm transition-colors"
+          aria-label="Close sidebar"
         >
           <X size={20} />
         </button>

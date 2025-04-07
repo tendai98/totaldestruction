@@ -14,3 +14,28 @@
 .font-kode-mono {
   font-family: 'Kode Mono', monospace;
 }
+
+/* Responsive utilities */
+.mobile-only {
+  @apply block md:hidden;
+}
+
+.desktop-only {
+  @apply hidden md:block;
+}
+
+/* Improved responsiveness for mobile devices */
+@media (max-width: 640px) {
+  .cyber-border, .cyber-border-red, .cyber-border-green, .cyber-border-blue, .cyber-border-yellow {
+    /* Smaller borders on mobile */
+    border-width: 1px;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) {
+  /* Enhance tap targets for mobile */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}

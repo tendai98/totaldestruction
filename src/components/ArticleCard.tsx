@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Article } from '../types';
-import { ExternalLink, AlertTriangle } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 
 interface ArticleCardProps {
@@ -14,14 +14,13 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       <CardHeader className="p-4 border-b border-cyber-green">
         <div className="flex items-start justify-between">
           <h3 className="text-xl font-bold tracking-wider text-cyber-green">{article.title}</h3>
-          <AlertTriangle size={20} className="text-cyber-yellow ml-2 flex-shrink-0 animate-pulse" />
         </div>
       </CardHeader>
       
       <CardContent className="p-4 border-b border-dashed border-cyber-green/30">
         <p className="text-sm text-white/80 mb-4 leading-relaxed">{article.description}</p>
         
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
           <div className="flex flex-col">
             <span className="text-cyber-blue">SOURCE:</span>
             <span className="text-white font-mono">{article.source}</span>
