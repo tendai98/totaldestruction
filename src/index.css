@@ -1,159 +1,90 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-
-    --primary: 142 70.6% 45.3%;
-    --primary-foreground: 144.9 80.4% 10%;
-
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 142 70.6% 45.3%;
-
-    --radius: 0.5rem;
-    
-    --sidebar-background: 240 10% 3.9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 142 70.6% 45.3%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 142 70.6% 45.3%;
+    --ring: 240 4.9% 83.9%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
-  
   body {
-    @apply bg-cyber-black text-foreground font-mono;
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
 
-  /* Cyberpunk specific styles */
+@layer components {
   .cyber-border {
-    @apply border border-cyber-green relative;
-    box-shadow: 0 0 5px theme('colors.cyber.green');
-    clip-path: polygon(
-      0 5px, 
-      5px 0, 
-      100% 0, 
-      100% calc(100% - 5px), 
-      calc(100% - 5px) 100%, 
-      0 100%
-    );
+    @apply border-2 border-cyber-green border-opacity-70 shadow-neon-green;
   }
-
+  
   .cyber-border-red {
-    @apply border border-cyber-red relative;
-    box-shadow: 0 0 5px theme('colors.cyber.red');
-    clip-path: polygon(
-      0 5px, 
-      5px 0, 
-      100% 0, 
-      100% calc(100% - 5px), 
-      calc(100% - 5px) 100%, 
-      0 100%
-    );
+    @apply border-2 border-cyber-red border-opacity-70 shadow-neon-red;
   }
-
+  
   .cyber-border-blue {
-    @apply border border-cyber-blue relative;
-    box-shadow: 0 0 5px theme('colors.cyber.blue');
-    clip-path: polygon(
-      0 5px, 
-      5px 0, 
-      100% 0, 
-      100% calc(100% - 5px), 
-      calc(100% - 5px) 100%, 
-      0 100%
-    );
+    @apply border-2 border-cyber-blue border-opacity-70 shadow-neon-blue;
   }
 
   .cyber-grid {
-    background-image: 
-      linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+    @apply bg-cyber-black;
   }
-  
+}
+
+@layer utilities {
   .cyber-glitch {
-    text-shadow: 
-      0.05em 0 0 rgba(255, 49, 49, 0.75),
-      -0.025em -0.05em 0 rgba(0, 255, 255, 0.75),
-      0.025em 0.05em 0 rgba(57, 255, 20, 0.75);
-    animation: glitch 500ms infinite;
-  }
-  
-  @keyframes glitch {
-    0% {
-      text-shadow: 
-        0.05em 0 0 rgba(255, 49, 49, 0.75),
-        -0.025em -0.05em 0 rgba(0, 255, 255, 0.75),
-        0.025em 0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    14% {
-      text-shadow: 
-        0.05em 0 0 rgba(255, 49, 49, 0.75),
-        -0.025em -0.05em 0 rgba(0, 255, 255, 0.75),
-        0.025em 0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    15% {
-      text-shadow: 
-        -0.05em -0.025em 0 rgba(255, 49, 49, 0.75),
-        0.025em 0.025em 0 rgba(0, 255, 255, 0.75),
-        -0.05em -0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    49% {
-      text-shadow: 
-        -0.05em -0.025em 0 rgba(255, 49, 49, 0.75),
-        0.025em 0.025em 0 rgba(0, 255, 255, 0.75),
-        -0.05em -0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    50% {
-      text-shadow: 
-        0.025em 0.05em 0 rgba(255, 49, 49, 0.75),
-        0.05em 0 0 rgba(0, 255, 255, 0.75),
-        0 -0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    99% {
-      text-shadow: 
-        0.025em 0.05em 0 rgba(255, 49, 49, 0.75),
-        0.05em 0 0 rgba(0, 255, 255, 0.75),
-        0 -0.05em 0 rgba(57, 255, 20, 0.75);
-    }
-    100% {
-      text-shadow: 
-        -0.025em 0 0 rgba(255, 49, 49, 0.75),
-        -0.025em -0.025em 0 rgba(0, 255, 255, 0.75),
-        -0.025em -0.05em 0 rgba(57, 255, 20, 0.75);
-    }
+    text-shadow: 0 0 2px rgba(57, 255, 20, 0.7), 0 0 5px rgba(57, 255, 20, 0.5);
+    @apply animate-flicker;
   }
 }
