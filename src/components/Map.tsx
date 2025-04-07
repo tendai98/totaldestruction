@@ -25,7 +25,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   }, []);
   
   return (
-    <div className="relative w-full h-full min-h-[600px]">
+    <div className="relative w-full h-full min-h-[700px]">
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
         <div className="absolute top-5 left-5 right-5 flex justify-between items-center">
@@ -45,12 +45,15 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
         )}
         
         {/* Africa SVG map */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4">
+        <div className="absolute inset-0 flex items-center justify-center">
           <svg 
             viewBox="0 0 1000 1001" 
-            className="w-full h-full"
-            style={{ maxHeight: "600px" }}
+            className="w-full h-full max-w-4xl"
+            preserveAspectRatio="xMidYMid meet"
           >
+            {/* Background for better visibility */}
+            <rect x="0" y="0" width="1000" height="1001" fill="#121212" opacity="0.3" />
+            
             {/* Map countries */}
             {Object.keys(countryPaths).length > 0 && countries.map((country) => {
               const pathData = countryPaths[country.code];
@@ -63,8 +66,8 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                   <path 
                     key={country.id}
                     d={pathData}
-                    stroke="#333"
-                    strokeWidth={1}
+                    stroke={isSelected ? "#00ff00" : isHovered ? "#00aaff" : "#333"}
+                    strokeWidth={isSelected ? 2 : isHovered ? 1.5 : 1}
                     strokeLinejoin="round"
                     className={`
                       cursor-pointer transition-all duration-300
@@ -93,8 +96,8 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                     cy={400 + Math.random() * 200} 
                     r={isSelected || isHovered ? 15 : 10}
                     className={`
-                      ${isSelected ? 'fill-cyber-green stroke-white stroke-1 animate-pulse' : 
-                        isHovered ? 'fill-cyber-blue stroke-white stroke-1' : 'fill-cyber-red'}
+                      ${isSelected ? 'fill-cyber-green stroke-white stroke-2 animate-pulse' : 
+                        isHovered ? 'fill-cyber-blue stroke-white stroke-1' : 'fill-cyber-red opacity-50'}
                       transition-all duration-300
                     `}
                   />
@@ -103,13 +106,51 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                     y={(400 + Math.random() * 200) - 20} 
                     textAnchor="middle" 
                     className={`
-                      text-xs ${isSelected || isHovered ? 'text-white' : 'text-gray-500'}
+                      text-xs ${isSelected || isHovered ? 'text-white' : 'text-gray-400'}
                       transition-colors duration-300
                     `}
                   >
                     {country.name}
                   </text>
                 </g>
+              );
+            })}
+
+            {/* Country name labels for better visibility */}
+            {Object.keys(countryPaths).length > 0 && countries.filter(c => countryPaths[c.code]).map((country) => {
+              const isSelected = selectedCountry === country.id;
+              // Calculate centroid (this is very approximate)
+              // For a production app, you would pre-calculate centroids
+              const pathData = countryPaths[country.code];
+              if (!pathData) return null;
+              
+              // Extract all coordinates and find the average
+              const coords = pathData.match(/[0-9]+(\.[0-9]+)?,\s*[0-9]+(\.[0-9]+)?/g);
+              if (!coords || coords.length === 0) return null;
+              
+              let sumX = 0, sumY = 0;
+              coords.forEach(coord => {
+                const [x, y] = coord.split(',').map(Number);
+                sumX += x;
+                sumY += y;
+              });
+              
+              const centerX = sumX / coords.length;
+              const centerY = sumY / coords.length;
+              
+              return (
+                <text
+                  key={`label-${country.id}`}
+                  x={centerX}
+                  y={centerY}
+                  textAnchor="middle"
+                  fontSize="10"
+                  fill={isSelected ? "#00ff00" : "#ffffff"}
+                  opacity={isSelected ? 1 : 0.7}
+                  className="pointer-events-none"
+                >
+                  {country.name}
+                </text>
               );
             })}
           </svg>
