@@ -47,12 +47,12 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <CardHeader className="p-4 border-b border-[#F97316] h-[100px] overflow-hidden">
+      <CardHeader className="p-4 border-b border-[#F97316] h-[120px] overflow-hidden">
         <div className="flex items-start justify-between">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="h-[3rem] overflow-hidden w-full">
+                <div className="h-[4rem] overflow-hidden w-full">
                   <h3 className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'}`}>
                     {titleAnimating && !isHovering ? titleText : truncatedTitle}
                   </h3>
@@ -130,3 +130,4 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 };
 
 export default ArticleCard;
+
