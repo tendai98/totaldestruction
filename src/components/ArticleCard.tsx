@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Article } from '../types';
 import { ExternalLink } from 'lucide-react';
@@ -52,7 +51,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="h-[4rem] overflow-hidden w-full">
+                <div className="h-[5.5rem] flex items-end overflow-hidden w-full pb-1">
                   <h3 className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'}`}>
                     {titleAnimating && !isHovering ? titleText : truncatedTitle}
                   </h3>
@@ -130,4 +129,3 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 };
 
 export default ArticleCard;
-
