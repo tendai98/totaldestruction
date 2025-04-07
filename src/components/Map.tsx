@@ -25,7 +25,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   }, []);
   
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full min-h-[600px]">
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
         <div className="absolute top-5 left-5 right-5 flex justify-between items-center">
@@ -49,9 +49,10 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
           <svg 
             viewBox="0 0 1000 1001" 
             className="w-full h-full"
+            style={{ maxHeight: "600px" }}
           >
             {/* Map countries */}
-            {countries.map((country) => {
+            {Object.keys(countryPaths).length > 0 && countries.map((country) => {
               const pathData = countryPaths[country.code];
               const isSelected = selectedCountry === country.id;
               const isHovered = hoveredCountry === country.id;
