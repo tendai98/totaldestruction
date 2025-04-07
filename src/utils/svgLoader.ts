@@ -13,11 +13,15 @@ export const loadSvgMap = async (): Promise<Record<string, string>> => {
     const countryPaths: Record<string, string> = {};
     
     pathElements.forEach((path) => {
+      // Try to get the country code from different attributes
       const id = path.getAttribute('id');
+      const dataId = path.getAttribute('data-id');
+      const code = dataId || id;
+      
       const pathData = path.getAttribute('d');
       
-      if (id && pathData) {
-        countryPaths[id] = pathData;
+      if (code && pathData) {
+        countryPaths[code] = pathData;
       }
     });
     
