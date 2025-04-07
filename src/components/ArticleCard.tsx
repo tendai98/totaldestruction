@@ -93,21 +93,21 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <CardHeader className="p-4 border-b border-cyber-green h-[80px] overflow-hidden">
+      <CardHeader className="p-4 border-b border-[#F97316] h-[80px] overflow-hidden">
         <div className="flex items-start justify-between">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <h3 
                   ref={titleRef}
-                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-cyber-green text-glitch' : 'text-cyber-green'} line-clamp-2 overflow-hidden`}
+                  className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316]'} line-clamp-2 overflow-hidden`}
                   style={{ maxHeight: '3rem' }} // Set a max-height to prevent overflow
                 >
                   {titleAnimating && !isHovering ? titleText : truncatedTitle}
                 </h3>
               </TooltipTrigger>
               {article.title.length > 60 && (
-                <TooltipContent className="bg-cyber-black border border-cyber-green text-cyber-green">
+                <TooltipContent className="bg-cyber-black border border-[#F97316] text-[#F97316]">
                   <p>{article.title}</p>
                 </TooltipContent>
               )}
@@ -116,7 +116,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         </div>
       </CardHeader>
       
-      <CardContent className="p-4 border-b border-dashed border-cyber-green/30 flex-1 overflow-hidden">
+      <CardContent className="p-4 border-b border-dashed border-[#F97316]/30 flex-1 overflow-hidden">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -129,7 +129,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
               </p>
             </TooltipTrigger>
             {article.description.length > 180 && (
-              <TooltipContent className="bg-cyber-black border border-cyber-green text-white max-w-sm">
+              <TooltipContent className="bg-cyber-black border border-[#F97316] text-white max-w-sm">
                 <p>{article.description}</p>
               </TooltipContent>
             )}
@@ -148,7 +148,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         </div>
       </CardContent>
       
-      <div className="p-4 border-b border-dashed border-cyber-green/30 h-[70px] overflow-hidden">
+      <div className="p-4 border-b border-dashed border-[#F97316]/30 h-[70px] overflow-hidden">
         <ScrollArea className="h-full">
           <div className="flex gap-2 min-w-max">
             {article.tags.map(tag => (
@@ -164,7 +164,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       </div>
       
       <CardFooter className="p-4 bg-cyber-black/50 flex justify-between items-center mt-auto">
-        <div className="h-1 w-1/3 bg-cyber-green animate-pulse rounded-full"></div>
+        <div className="h-1 w-1/3 bg-[#F97316] animate-pulse rounded-full"></div>
         
         <a 
           href={article.url} 
