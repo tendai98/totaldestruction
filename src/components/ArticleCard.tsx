@@ -93,7 +93,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <CardHeader className="p-4 border-b border-[#F97316] h-[80px] overflow-hidden">
+      <CardHeader className="p-4 border-b border-[#F97316] h-[100px] overflow-hidden">
         <div className="flex items-start justify-between">
           <TooltipProvider>
             <Tooltip>
@@ -101,7 +101,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                 <h3 
                   ref={titleRef}
                   className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316]'} line-clamp-2 overflow-hidden`}
-                  style={{ maxHeight: '3rem' }} // Set a max-height to prevent overflow
+                  style={{ maxHeight: '4rem' }} // Increased from 3rem to 4rem
                 >
                   {titleAnimating && !isHovering ? titleText : truncatedTitle}
                 </h3>
@@ -123,7 +123,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
               <p 
                 ref={descRef}
                 className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'} line-clamp-4 overflow-hidden`}
-                style={{ maxHeight: '6rem' }} // Increased max-height from 4.5rem to 6rem
+                style={{ maxHeight: '6rem' }}
               >
                 {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
               </p>
