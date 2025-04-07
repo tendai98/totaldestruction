@@ -8,7 +8,7 @@ import { useMatrixEffect } from '../hooks/useMatrixEffect';
 
 // Create a dedicated interface for the window object with our custom property
 interface CustomWindow extends Window {
-  userActivityTimeout?: number;
+  userActivityTimeout?: NodeJS.Timeout;
 }
 
 const Articles: React.FC = () => {
