@@ -92,7 +92,7 @@ export const useMapGlitchEffect = (
         // Change color more frequently during the animation
         const colorChangeInterval = setInterval(() => {
           setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
-        }, 300); // Change color every 300ms
+        }, 100); // Super fast color change every 100ms to match the CSS animation
         
         // Clear the glitching effect after the animation duration
         const timer = setTimeout(() => {
