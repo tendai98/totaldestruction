@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { countries } from '../data/mockData';
 import { loadSvgMap } from '../utils/svgLoader';
 import { useIsMobile } from '../hooks/use-mobile';
-import { MAP_GLITCH_INTERVAL } from '../hooks/matrix/constants';
+import { getGlobalAnimationState } from '../hooks/matrix/globalState';
 
 interface MapProps {
   onCountrySelect: (countryId: string) => void;
@@ -54,26 +54,38 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
     }
     
     setGlitchingCountries(randomCodes);
-    
-    // Reset glitching after a short duration
-    setTimeout(() => {
-      setGlitchingCountries([]);
-    }, 2000);
   }, [countryPaths, countryCodeToId]);
 
-  // Set up interval for the country glitching effect
+  // Listen for global animation state changes to sync with text effects
   useEffect(() => {
-    if (isLoading) return;
+    // Handler for global animation state changes
+    const handleAnimationStateChange = () => {
+      const { active } = getGlobalAnimationState();
+      if (active && !isLoading) {
+        // Start glitching effect when global animation starts
+        selectRandomCountries();
+        
+        // Clear the glitching effect after 2 seconds
+        const timer = setTimeout(() => {
+          setGlitchingCountries([]);
+        }, 2000);
+        
+        return () => clearTimeout(timer);
+      } else {
+        // Clear glitching if animation stops
+        setGlitchingCountries([]);
+      }
+    };
     
-    // Initial random selection
-    selectRandomCountries();
+    // Check animation state initially
+    handleAnimationStateChange();
     
-    // Set up interval
-    const interval = setInterval(() => {
-      selectRandomCountries();
-    }, MAP_GLITCH_INTERVAL);
+    // Set up listener for animation state changes
+    window.addEventListener('globalAnimationStateChange', handleAnimationStateChange);
     
-    return () => clearInterval(interval);
+    return () => {
+      window.removeEventListener('globalAnimationStateChange', handleAnimationStateChange);
+    };
   }, [isLoading, selectRandomCountries]);
   
   return (
