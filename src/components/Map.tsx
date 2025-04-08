@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import { countries } from '../data/mockData';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMapData } from '../hooks/useMapData';
-import { selectCountryCluster, useMapGlitchEffect } from '../utils/mapEffects';
+import { selectRandomCountries, useMapGlitchEffect } from '../utils/mapEffects';
 import CountryPath from './map/CountryPath';
 import MapHUD from './map/MapHUD';
 
@@ -17,13 +17,13 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   const isMobile = useIsMobile();
   const { countryPaths, isLoading, countryCodeToId } = useMapData();
   
-  // Function to select country cluster - wrapped with useCallback for dependency array
-  const selectClusterCallback = useCallback(() => {
-    return selectCountryCluster(countryPaths, countryCodeToId);
+  // Function to select random countries - wrapped with useCallback for dependency array
+  const selectRandomCountriesCallback = useCallback(() => {
+    return selectRandomCountries(countryPaths, countryCodeToId);
   }, [countryPaths, countryCodeToId]);
   
   // Use our custom hook for the glitch effect
-  const { glitchingCountries, currentGlitchStyle } = useMapGlitchEffect(isLoading, selectClusterCallback);
+  const { glitchingCountries, currentGlitchStyle } = useMapGlitchEffect(isLoading, selectRandomCountriesCallback);
   
   return (
     <div className="relative w-full h-full">

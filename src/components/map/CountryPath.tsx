@@ -38,7 +38,7 @@ const CountryPath: React.FC<CountryPathProps> = ({
       className={`
         cursor-pointer transition-colors duration-200
         ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
-          isGlitching ? `fill-${currentGlitchStyle.fill} opacity-90 animate-fastGlitch` :
+          isGlitching ? `fill-${currentGlitchStyle.fill} opacity-90 animate-fastGlitch ${isGlitching ? 'animate-shake' : ''}` :
           isHovered && !isMobile ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
       `}
       onClick={() => onCountrySelect(countryId)}
