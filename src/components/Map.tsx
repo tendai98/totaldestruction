@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { countries } from '../data/mockData';
 import { loadSvgMap } from '../utils/svgLoader';
 import { useIsMobile } from '../hooks/use-mobile';
+import { MAP_GLITCH_INTERVAL } from '../hooks/matrix/constants';
 
 interface MapProps {
   onCountrySelect: (countryId: string) => void;
@@ -13,6 +14,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [countryPaths, setCountryPaths] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [glitchingCountries, setGlitchingCountries] = useState<string[]>([]);
   const isMobile = useIsMobile();
   
   useEffect(() => {
@@ -33,6 +35,46 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
     }
     return acc;
   }, {} as Record<string, string>);
+  
+  // Function to select random countries for glitching effect
+  const selectRandomCountries = useCallback(() => {
+    if (Object.keys(countryPaths).length === 0) return;
+    
+    const allCodes = Object.keys(countryPaths);
+    const randomCodes: string[] = [];
+    
+    // Select 4 random country codes
+    for (let i = 0; i < 4; i++) {
+      if (allCodes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allCodes.length);
+        const code = allCodes[randomIndex];
+        randomCodes.push(countryCodeToId[code] || code);
+        allCodes.splice(randomIndex, 1); // Remove selected code to avoid duplicates
+      }
+    }
+    
+    setGlitchingCountries(randomCodes);
+    
+    // Reset glitching after a short duration
+    setTimeout(() => {
+      setGlitchingCountries([]);
+    }, 2000);
+  }, [countryPaths, countryCodeToId]);
+
+  // Set up interval for the country glitching effect
+  useEffect(() => {
+    if (isLoading) return;
+    
+    // Initial random selection
+    selectRandomCountries();
+    
+    // Set up interval
+    const interval = setInterval(() => {
+      selectRandomCountries();
+    }, MAP_GLITCH_INTERVAL);
+    
+    return () => clearInterval(interval);
+  }, [isLoading, selectRandomCountries]);
   
   return (
     <div className="relative w-full h-full">
@@ -70,17 +112,19 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
               const countryName = country?.name || code;
               const isSelected = selectedCountry === countryId;
               const isHovered = hoveredCountry === countryId;
+              const isGlitching = glitchingCountries.includes(countryId);
               
               return (
                 <path 
                   key={code}
                   d={pathData}
-                  stroke={isSelected ? "#00ff00" : isHovered && !isMobile ? "#00aaff" : "#333"}
-                  strokeWidth={isSelected ? 2 : isHovered && !isMobile ? 1.5 : 1}
+                  stroke={isSelected ? "#00ff00" : isGlitching ? "#ff00ff" : isHovered && !isMobile ? "#00aaff" : "#333"}
+                  strokeWidth={isSelected ? 2 : isGlitching ? 2 : isHovered && !isMobile ? 1.5 : 1}
                   strokeLinejoin="round"
                   className={`
                     cursor-pointer transition-all duration-300
                     ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
+                      isGlitching ? 'fill-cyber-orange stroke-[#ff00ff] opacity-80 text-glitch' :
                       isHovered && !isMobile ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
                   `}
                   onClick={() => onCountrySelect(countryId)}
