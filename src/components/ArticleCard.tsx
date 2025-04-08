@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useState } from 'react';
 import { Article } from '../types';
 import { ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
@@ -11,24 +12,12 @@ interface ArticleCardProps {
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
-  // Track if this card is being hovered
-  const [isHovering, setIsHovering] = useState(false);
-  
-  // Apply matrix effect to title and description with fixed heights and increased interval to 25 seconds
+  // Apply matrix effect to title and description with fixed heights and reduced interval to 15 seconds
   const { displayText: titleText, isAnimating: titleAnimating } = 
-    useMatrixEffect(article.title, 3000, 25000);
+    useMatrixEffect(article.title, 3000, 15000);
   
   const { displayText: descriptionText, isAnimating: descriptionAnimating } = 
-    useMatrixEffect(article.description, 3500, 25000);
-
-  // Handle hover events to stop animation
-  const handleMouseEnter = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovering(false);
-  };
+    useMatrixEffect(article.description, 3500, 15000);
 
   // Function to truncate text and add ellipsis
   const truncateText = (text: string, maxLength: number) => {
@@ -43,8 +32,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
     <Card 
       className="cyber-border mb-6 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm bg-cyber-darkgray/90 flex flex-col h-[450px]"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <CardHeader className="p-4 border-b border-[#F97316] h-[120px] overflow-hidden">
         <div className="flex items-start justify-between">
@@ -52,8 +39,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="h-[5.5rem] flex items-end overflow-hidden w-full pb-1">
-                  <h3 className={`text-xl font-bold tracking-wider ${titleAnimating && !isHovering ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'}`}>
-                    {titleAnimating && !isHovering ? titleText : truncatedTitle}
+                  <h3 className={`text-xl font-bold tracking-wider ${titleAnimating ? 'text-[#F97316] text-glitch' : 'text-[#F97316] cyber-glow'}`}>
+                    {titleAnimating ? titleText : truncatedTitle}
                   </h3>
                 </div>
               </TooltipTrigger>
@@ -72,8 +59,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="h-[6rem] overflow-hidden">
-                <p className={`text-sm mb-4 leading-relaxed ${descriptionAnimating && !isHovering ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'}`}>
-                  {descriptionAnimating && !isHovering ? descriptionText : truncatedDescription}
+                <p className={`text-sm mb-4 leading-relaxed ${descriptionAnimating ? 'text-cyber-blue font-mono text-glitch' : 'text-white/80'}`}>
+                  {descriptionAnimating ? descriptionText : truncatedDescription}
                 </p>
               </div>
             </TooltipTrigger>
@@ -98,7 +85,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       </CardContent>
       
       <div className="p-4 border-b border-dashed border-[#F97316]/30 h-[70px] overflow-hidden">
-        <ScrollArea className="h-full">
+        <ScrollArea className="h-full" orientation="horizontal">
           <div className="flex gap-2 min-w-max">
             {article.tags.map(tag => (
               <span 
