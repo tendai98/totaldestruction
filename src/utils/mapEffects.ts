@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { getGlobalAnimationState } from '../hooks/matrix/globalState';
 
 export interface GlitchColorStyle {
