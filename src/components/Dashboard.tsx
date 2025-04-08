@@ -22,8 +22,8 @@ const Dashboard: React.FC = () => {
     <div className="relative h-[calc(100vh-72px)] flex flex-col bg-cyber-black overflow-hidden">
       {/* Main Content - Map and sidebar in a fixed-size container */}
       <div className="flex-1 flex flex-col md:flex-row h-full">
-        {/* Map Container - Always maintain size */}
-        <div className={`relative ${selectedCountry ? 'w-full md:w-[60%]' : 'w-full'} h-full transition-all duration-300`}>
+        {/* Map Container - Always maintain size, but on mobile when sidebar is open, only show top half */}
+        <div className={`relative w-full h-full transition-all duration-300 ${isMobile && selectedCountry ? 'h-[50vh]' : 'h-full'}`}>
           <Map 
             onCountrySelect={handleCountrySelect}
             selectedCountry={selectedCountry}

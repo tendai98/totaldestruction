@@ -12,6 +12,7 @@ interface MapLoadingProps {
 const MapLoading: React.FC<MapLoadingProps> = ({ isLoading }) => {
   const [binaryStream1, setBinaryStream1] = useState<string>('');
   const [binaryStream2, setBinaryStream2] = useState<string>('');
+  const [showLoading, setShowLoading] = useState(false);
 
   // Generate random binary string
   const generateBinaryString = (length: number): string => {
@@ -19,11 +20,28 @@ const MapLoading: React.FC<MapLoadingProps> = ({ isLoading }) => {
   };
 
   useEffect(() => {
-    if (!isLoading) return;
+    if (!isLoading) {
+      setShowLoading(false);
+      return;
+    }
     
-    // Initial values
-    setBinaryStream1(generateBinaryString(40));
-    setBinaryStream2(generateBinaryString(40));
+    // Add delay before showing loading screen
+    const loadingTimer = setTimeout(() => {
+      setShowLoading(true);
+      
+      // Initial values
+      setBinaryStream1(generateBinaryString(40));
+      setBinaryStream2(generateBinaryString(40));
+    }, 5000); // 5 second delay
+    
+    return () => {
+      clearTimeout(loadingTimer);
+      setShowLoading(false);
+    };
+  }, [isLoading]);
+  
+  useEffect(() => {
+    if (!showLoading) return;
     
     // Stream simulation for first line
     const interval1 = setInterval(() => {
@@ -47,12 +65,12 @@ const MapLoading: React.FC<MapLoadingProps> = ({ isLoading }) => {
       clearInterval(interval1);
       clearInterval(interval2);
     };
-  }, [isLoading]);
+  }, [showLoading]);
 
-  if (!isLoading) return null;
+  if (!isLoading || !showLoading) return null;
 
   return (
-    <Dialog open={isLoading} modal={true}>
+    <Dialog open={showLoading} modal={true}>
       <DialogContent className="bg-cyber-black border border-cyber-green text-cyber-green p-6 max-w-md">
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-kode-mono tracking-wider text-center">SYSTEM INITIALIZING</h2>
