@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { countries } from '../data/mockData';
 import { useIsMobile } from '../hooks/use-mobile';
@@ -6,6 +5,7 @@ import { useMapData } from '../hooks/useMapData';
 import { selectRandomCountries, useMapGlitchEffect } from '../utils/mapEffects';
 import CountryPath from './map/CountryPath';
 import MapHUD from './map/MapHUD';
+import MapLoading from './map/MapLoading';
 
 interface MapProps {
   onCountrySelect: (countryId: string) => void;
@@ -27,6 +27,9 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   
   return (
     <div className="relative w-full h-full">
+      {/* Binary stream loading dialog */}
+      <MapLoading isLoading={isLoading} />
+      
       {/* Map background with grid effect */}
       <div className="absolute inset-0 cyber-grid">
         <MapHUD 
