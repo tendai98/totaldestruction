@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { countries } from '../data/mockData';
 import { loadSvgMap } from '../utils/svgLoader';
@@ -79,23 +78,34 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
       }
     }
     
-    // Change the glitch color for variation
-    setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
-    setGlitchingCountries(cluster);
+    return cluster;
   }, [countryPaths, countryCodeToId]);
 
   // Listen for global animation state changes to sync with text effects
   useEffect(() => {
+    // Remember the current glitching countries between animation cycles
+    let currentGlitchingCountries: string[] = [];
+    
     // Handler for global animation state changes
     const handleAnimationStateChange = () => {
       const { active } = getGlobalAnimationState();
       if (active && !isLoading) {
-        // Start glitching effect when global animation starts
-        selectCountryCluster();
+        // Only select new countries if we don't have any yet
+        if (currentGlitchingCountries.length === 0) {
+          const newCluster = selectCountryCluster() || [];
+          currentGlitchingCountries = newCluster;
+        }
         
-        // Clear the glitching effect after 2 seconds
+        // Update the glitch color for variation between cycles
+        setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
+        
+        // Apply the glitching effect
+        setGlitchingCountries(currentGlitchingCountries);
+        
+        // Clear the glitching effect after the animation duration
         const timer = setTimeout(() => {
           setGlitchingCountries([]);
+          // Keep the currentGlitchingCountries in memory so the next cycle will use the same countries
         }, 2000);
         
         return () => clearTimeout(timer);
@@ -169,7 +179,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                   className={`
                     cursor-pointer transition-all duration-300
                     ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
-                      isGlitching ? `fill-${currentGlitchStyle.fill} opacity-80 text-glitch` :
+                      isGlitching ? `fill-${currentGlitchStyle.fill} opacity-80 animate-borderGlitch` :
                       isHovered && !isMobile ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
                   `}
                   onClick={() => onCountrySelect(countryId)}

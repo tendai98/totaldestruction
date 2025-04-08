@@ -107,6 +107,11 @@
   }
 }
 
+.animate-borderGlitch {
+  stroke-dasharray: 20;
+  animation: borderGlitch 1s linear infinite;
+}
+
 /* Flicker animation for cyber-glitch elements */
 @keyframes flicker {
   0% { opacity: 1; }
