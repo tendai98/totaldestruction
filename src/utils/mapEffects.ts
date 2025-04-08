@@ -7,11 +7,13 @@ export interface GlitchColorStyle {
   fill: string;
 }
 
-// Glitch color options
+// Updated glitch color options with brighter colors
 export const glitchColors: GlitchColorStyle[] = [
-  { stroke: '#ff00ff', fill: 'cyber-orange' }, // Magenta + Orange
-  { stroke: '#00ffff', fill: 'cyber-red' },    // Cyan + Red
-  { stroke: '#ffff00', fill: 'cyber-blue' },   // Yellow + Blue
+  { stroke: '#ff00ff', fill: 'cyber-orange' },   // Bright magenta + orange
+  { stroke: '#00ffff', fill: 'cyber-red' },      // Bright cyan + red  
+  { stroke: '#ffff00', fill: 'cyber-blue' },     // Bright yellow + blue
+  { stroke: '#ff5500', fill: 'cyber-green' },    // Bright orange + green
+  { stroke: '#00ff00', fill: 'cyber-blue' },     // Bright green + blue
 ];
 
 // Function to select a cluster of neighboring countries for glitching effect
@@ -81,19 +83,28 @@ export const useMapGlitchEffect = (
           currentGlitchingCountries = newCluster;
         }
         
-        // Update the glitch color for variation between cycles
+        // Update the glitch color for variation between cycles - faster color changes
         setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
         
         // Apply the glitching effect
         setGlitchingCountries(currentGlitchingCountries);
         
+        // Change color more frequently during the animation
+        const colorChangeInterval = setInterval(() => {
+          setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
+        }, 300); // Change color every 300ms
+        
         // Clear the glitching effect after the animation duration
         const timer = setTimeout(() => {
+          clearInterval(colorChangeInterval);
           setGlitchingCountries([]);
           // Keep the currentGlitchingCountries in memory so the next cycle will use the same countries
         }, 2000);
         
-        return () => clearTimeout(timer);
+        return () => {
+          clearTimeout(timer);
+          clearInterval(colorChangeInterval);
+        };
       } else {
         // Clear glitching if animation stops
         setGlitchingCountries([]);
