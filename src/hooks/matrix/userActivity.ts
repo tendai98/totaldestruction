@@ -1,6 +1,6 @@
 
 import { ACTIVITY_TIMEOUT } from './constants';
-import { setUserActive } from './globalState';
+import { setUserActive, getGlobalAnimationState } from './globalState';
 
 /**
  * Records user activity and resets inactivity timeout
@@ -10,7 +10,7 @@ export const recordUserActivity = () => {
   
   // Reset user active flag after timeout
   setTimeout(() => {
-    const { lastActivityTime } = require('./globalState').getGlobalAnimationState();
+    const { lastActivityTime } = getGlobalAnimationState();
     if (Date.now() - lastActivityTime >= ACTIVITY_TIMEOUT) {
       setUserActive(false);
     }

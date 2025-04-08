@@ -85,7 +85,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       </CardContent>
       
       <div className="p-4 border-b border-dashed border-[#F97316]/30 h-[70px] overflow-hidden">
-        <ScrollArea className="h-full" orientation="horizontal">
+        <ScrollArea className="h-full">
           <div className="flex gap-2 min-w-max">
             {article.tags.map(tag => (
               <span 
