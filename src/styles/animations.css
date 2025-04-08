@@ -83,6 +83,30 @@
   max-width: 100%; /* Ensure text doesn't exceed container width */
 }
 
+/* Country map glitching effect */
+@keyframes borderGlitch {
+  0% { 
+    stroke-dashoffset: 0;
+    stroke-width: 2px;
+  }
+  25% {
+    stroke-dashoffset: 10; 
+    stroke-width: 2.5px;
+  }
+  50% { 
+    stroke-dashoffset: 5;
+    stroke-width: 2px;
+  }
+  75% { 
+    stroke-dashoffset: 15;
+    stroke-width: 2.5px;
+  }
+  100% { 
+    stroke-dashoffset: 0;
+    stroke-width: 2px;
+  }
+}
+
 /* Flicker animation for cyber-glitch elements */
 @keyframes flicker {
   0% { opacity: 1; }

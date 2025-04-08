@@ -15,7 +15,15 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
   const [countryPaths, setCountryPaths] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [glitchingCountries, setGlitchingCountries] = useState<string[]>([]);
+  const [glitchColorIndex, setGlitchColorIndex] = useState(0);
   const isMobile = useIsMobile();
+  
+  // Glitch color options
+  const glitchColors = [
+    { stroke: '#ff00ff', fill: 'cyber-orange' }, // Magenta + Orange
+    { stroke: '#00ffff', fill: 'cyber-red' },    // Cyan + Red
+    { stroke: '#ffff00', fill: 'cyber-blue' },   // Yellow + Blue
+  ];
   
   useEffect(() => {
     const loadMap = async () => {
@@ -36,24 +44,44 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
     return acc;
   }, {} as Record<string, string>);
   
-  // Function to select random countries for glitching effect
-  const selectRandomCountries = useCallback(() => {
+  // Function to select a cluster of neighboring countries for glitching effect
+  const selectCountryCluster = useCallback(() => {
     if (Object.keys(countryPaths).length === 0) return;
     
     const allCodes = Object.keys(countryPaths);
-    const randomCodes: string[] = [];
     
-    // Select 4 random country codes
-    for (let i = 0; i < 4; i++) {
-      if (allCodes.length > 0) {
-        const randomIndex = Math.floor(Math.random() * allCodes.length);
-        const code = allCodes[randomIndex];
-        randomCodes.push(countryCodeToId[code] || code);
-        allCodes.splice(randomIndex, 1); // Remove selected code to avoid duplicates
+    // Select a random starting country
+    const startIndex = Math.floor(Math.random() * allCodes.length);
+    const startCode = allCodes[startIndex];
+    const startId = countryCodeToId[startCode] || startCode;
+    
+    // Create a cluster by selecting nearby countries (based on code proximity as a simple heuristic)
+    const cluster: string[] = [startId];
+    const codeArray = allCodes.slice();
+    
+    // Sort by "proximity" to the start code (just using string similarity as a rough approximation)
+    codeArray.sort((a, b) => {
+      if (a === startCode) return -1;
+      if (b === startCode) return 1;
+      
+      // Simple string similarity metric
+      const aDiff = Math.abs(a.charCodeAt(0) - startCode.charCodeAt(0));
+      const bDiff = Math.abs(b.charCodeAt(0) - startCode.charCodeAt(0));
+      return aDiff - bDiff;
+    });
+    
+    // Take the first few countries in the sorted array to form a cluster
+    for (let i = 0; i < Math.min(5, codeArray.length); i++) {
+      const code = codeArray[i];
+      const id = countryCodeToId[code] || code;
+      if (!cluster.includes(id)) {
+        cluster.push(id);
       }
     }
     
-    setGlitchingCountries(randomCodes);
+    // Change the glitch color for variation
+    setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
+    setGlitchingCountries(cluster);
   }, [countryPaths, countryCodeToId]);
 
   // Listen for global animation state changes to sync with text effects
@@ -63,7 +91,7 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
       const { active } = getGlobalAnimationState();
       if (active && !isLoading) {
         // Start glitching effect when global animation starts
-        selectRandomCountries();
+        selectCountryCluster();
         
         // Clear the glitching effect after 2 seconds
         const timer = setTimeout(() => {
@@ -86,7 +114,10 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
     return () => {
       window.removeEventListener('globalAnimationStateChange', handleAnimationStateChange);
     };
-  }, [isLoading, selectRandomCountries]);
+  }, [isLoading, selectCountryCluster]);
+  
+  // Get current glitch style
+  const currentGlitchStyle = glitchColors[glitchColorIndex];
   
   return (
     <div className="relative w-full h-full">
@@ -130,13 +161,15 @@ const Map: React.FC<MapProps> = ({ onCountrySelect, selectedCountry }) => {
                 <path 
                   key={code}
                   d={pathData}
-                  stroke={isSelected ? "#00ff00" : isGlitching ? "#ff00ff" : isHovered && !isMobile ? "#00aaff" : "#333"}
+                  stroke={isSelected ? "#00ff00" : 
+                          isGlitching ? currentGlitchStyle.stroke : 
+                          isHovered && !isMobile ? "#00aaff" : "#333"}
                   strokeWidth={isSelected ? 2 : isGlitching ? 2 : isHovered && !isMobile ? 1.5 : 1}
                   strokeLinejoin="round"
                   className={`
                     cursor-pointer transition-all duration-300
                     ${isSelected ? 'fill-cyber-green stroke-cyber-green opacity-70' : 
-                      isGlitching ? 'fill-cyber-orange stroke-[#ff00ff] opacity-80 text-glitch' :
+                      isGlitching ? `fill-${currentGlitchStyle.fill} opacity-80 text-glitch` :
                       isHovered && !isMobile ? 'fill-cyber-blue stroke-cyber-blue opacity-50' : 'fill-cyber-red opacity-40'}
                   `}
                   onClick={() => onCountrySelect(countryId)}
