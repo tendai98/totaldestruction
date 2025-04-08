@@ -7,13 +7,16 @@ export interface GlitchColorStyle {
   fill: string;
 }
 
-// Updated glitch color options with brighter colors
+// TV-effect bright colors
 export const glitchColors: GlitchColorStyle[] = [
-  { stroke: '#ff00ff', fill: 'cyber-orange' },   // Bright magenta + orange
-  { stroke: '#00ffff', fill: 'cyber-red' },      // Bright cyan + red  
-  { stroke: '#ffff00', fill: 'cyber-blue' },     // Bright yellow + blue
-  { stroke: '#ff5500', fill: 'cyber-green' },    // Bright orange + green
-  { stroke: '#00ff00', fill: 'cyber-blue' },     // Bright green + blue
+  { stroke: '#ff00ff', fill: 'cyber-orange' },   // Bright magenta
+  { stroke: '#00ffff', fill: 'cyber-red' },      // Bright cyan
+  { stroke: '#ffff00', fill: 'cyber-blue' },     // Bright yellow
+  { stroke: '#33ff33', fill: 'cyber-green' },    // Bright lime green
+  { stroke: '#ff3366', fill: 'cyber-blue' },     // Hot pink
+  { stroke: '#3366ff', fill: 'cyber-orange' },   // Bright blue
+  { stroke: '#ff6600', fill: 'cyber-green' },    // Bright orange
+  { stroke: '#66ff00', fill: 'cyber-red' }       // Chartreuse
 ];
 
 // Function to select a cluster of neighboring countries for glitching effect
@@ -84,15 +87,15 @@ export const useMapGlitchEffect = (
         }
         
         // Update the glitch color for variation between cycles - faster color changes
-        setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
+        setGlitchColorIndex(Math.floor(Math.random() * glitchColors.length));
         
         // Apply the glitching effect
         setGlitchingCountries(currentGlitchingCountries);
         
-        // Change color more frequently during the animation
+        // Random color changes during the animation - TV effect
         const colorChangeInterval = setInterval(() => {
-          setGlitchColorIndex((prevIndex) => (prevIndex + 1) % glitchColors.length);
-        }, 100); // Super fast color change every 100ms to match the CSS animation
+          setGlitchColorIndex(Math.floor(Math.random() * glitchColors.length));
+        }, 40); // Ultra fast random color change every 40ms for TV effect
         
         // Clear the glitching effect after the animation duration
         const timer = setTimeout(() => {
