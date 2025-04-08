@@ -103,7 +103,7 @@
 }
 
 .animate-fastGlitch {
-  animation: fastGlitch 0.5s linear infinite;
+  animation: fastGlitch 0.1s linear infinite; /* Changed from 0.5s to 0.1s for faster flashing */
 }
 
 /* Country border glitch animation - REMOVED space-cut border style */
