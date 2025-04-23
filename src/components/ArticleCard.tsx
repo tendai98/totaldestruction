@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Article } from '../types';
 import { ExternalLink } from 'lucide-react';
@@ -85,18 +84,31 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       </CardContent>
       
       <div className="p-4 border-b border-dashed border-[#F97316]/30 h-[70px] overflow-hidden">
-        <ScrollArea className="h-full">
-          <div className="flex gap-2 min-w-max">
-            {article.tags.map(tag => (
-              <span 
-                key={tag} 
-                className="text-xs px-2 py-1 bg-cyber-black border border-cyber-red text-cyber-red rounded-sm whitespace-nowrap"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </ScrollArea>
+        {/* Make tags horizontally scrollable */}
+        <div 
+          className="
+            flex gap-2 min-w-0 
+            overflow-x-auto 
+            scrollbar-thin 
+            scrollbar-thumb-cyber-red/70
+            scrollbar-track-cyber-darkgray/70
+            pr-2
+            -mx-1
+          "
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'thin'
+          }}
+        >
+          {article.tags.map(tag => (
+            <span 
+              key={tag} 
+              className="text-xs px-2 py-1 bg-cyber-black border border-cyber-red text-cyber-red rounded-sm whitespace-nowrap flex-shrink-0"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
       
       <CardFooter className="p-4 bg-cyber-black/50 flex justify-between items-center mt-auto">
