@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
-import { BarChart2, Database, Layers, Map, Menu, X } from 'lucide-react';
+import { BarChart2, Database, Layers, Map, Menu, X, Book } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 
@@ -57,9 +58,12 @@ const HomePage: React.FC = () => {
               </Link>
               
               <div className="hidden md:flex items-center gap-3">
-                <button className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors">
-                  <Layers size={18} className="text-white" />
-                </button>
+                <Link 
+                  to="/about" 
+                  className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                >
+                  <Book size={18} className="text-white" />
+                </Link>
                 <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
                   <BarChart2 size={18} className="text-white" />
                 </button>
@@ -83,9 +87,13 @@ const HomePage: React.FC = () => {
               </Link>
               
               <div className="flex justify-between gap-2">
-                <button className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center">
-                  <Layers size={18} className="text-white" />
-                </button>
+                <Link
+                  to="/about"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Book size={18} className="text-white" />
+                </Link>
                 <button className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center">
                   <BarChart2 size={18} className="text-white" />
                 </button>
