@@ -9,7 +9,6 @@ const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  // Add Matrix effects to header text with increased interval to 25 seconds
   const { displayText: logoText, isAnimating: logoAnimating } = 
     useMatrixEffect("DESTRUCTION", 2000, 25000);
     
@@ -18,7 +17,6 @@ const HomePage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-cyber-black">
-      {/* Header Bar */}
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -31,7 +29,6 @@ const HomePage: React.FC = () => {
             </div>
             <Link to="/" className="text-xl md:text-2xl font-bold tracking-widest cyber-glitch relative flex items-center">
               <span className="text-white">TOTAL</span>
-              {/* Fixed width container for DESTRUCTION to prevent layout shifts during animation */}
               <div className="inline-block w-[140px] md:w-[180px] overflow-hidden">
                 <span className={`${logoAnimating ? 'text-glitch' : 'text-[#F97316]'}`}>{logoText}</span>
               </div>
@@ -54,7 +51,6 @@ const HomePage: React.FC = () => {
                 className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
               >
                 <Map size={18} className="text-white" />
-                {/* Fixed width container for TRACKER text during animation */}
                 <div className="hidden md:inline-block w-[80px] overflow-hidden">
                   <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
                 </div>
@@ -72,7 +68,6 @@ const HomePage: React.FC = () => {
           )}
         </div>
         
-        {/* Mobile menu */}
         {isMobile && menuOpen && (
           <div className="absolute top-[72px] left-0 right-0 bg-cyber-black/95 backdrop-blur-md z-50 border-b border-[#F97316]">
             <div className="container mx-auto py-4 px-4 space-y-4">
@@ -82,7 +77,6 @@ const HomePage: React.FC = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <Map size={18} />
-                {/* Fixed width container for tracker text during animation */}
                 <div className="inline-block w-[80px] overflow-hidden">
                   <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
                 </div>
@@ -101,19 +95,17 @@ const HomePage: React.FC = () => {
         )}
       </div>
       
-      {/* Main Content */}
       <div className="cyber-grid py-6 md:py-10 px-4 md:px-0">
         <Articles />
       </div>
       
-      {/* Footer */}
       <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-4 text-center">
         <div className="container mx-auto px-4 md:px-0">
           <p className="text-white/50 text-xs font-mono">TOTAL<span className="text-[#F97316]">DESTRUCTION</span> // ENVIRONMENTAL MONITORING SYSTEM V1.0</p>
           <p className="mt-2 text-cyber-blue text-xs font-mono">COPYRIGHT © 2025 // DATA LAST UPDATED: 04-07-2025</p>
           
           <div className="mt-4 flex flex-wrap justify-center gap-4 md:gap-6 text-xs">
-            <a href="#" className="text-white/70 hover:text-[#F97316] transition-colors">ABOUT</a>
+            <Link to="/about" className="text-white/70 hover:text-[#F97316] transition-colors font-bold">ABOUT</Link>
             <a href="#" className="text-white/70 hover:text-[#F97316] transition-colors">CONTACT</a>
             <a href="#" className="text-white/70 hover:text-[#F97316] transition-colors">PRIVACY</a>
             <a href="#" className="text-white/70 hover:text-[#F97316] transition-colors">TERMS</a>
