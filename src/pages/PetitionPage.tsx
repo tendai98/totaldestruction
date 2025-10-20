@@ -103,8 +103,7 @@ const PetitionPage = () => {
           {/* Header */}
           <div className="mb-8">
             <p className="text-white/50 mb-4 font-mono">20 October 2025</p>
-            <p className="text-white/70 mb-2">To:</p>
-            <p className="text-white font-semibold mb-1">President Patrice Motsepe</p>
+            <p className="text-white/70 mb-2">To: President Patrice Motsepe</p>
             <p className="text-white font-semibold mb-6">Confederation of African Football (CAF)</p>
             <h1 className="text-3xl font-bold text-[#F97316] mb-6 cyber-glitch">
               Terminate CAF's Sponsorship Deal with Total Energies — For the Sake of Our Future
