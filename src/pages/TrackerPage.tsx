@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
-import { Home, Menu, Book } from 'lucide-react';
+import { Home, Menu, Book, FileText } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 
@@ -59,8 +59,15 @@ const TrackerPage: React.FC = () => {
               </Link>
               
               <Link 
+                to="/petition" 
+                className="ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+              >
+                <FileText size={18} className="text-white" />
+              </Link>
+              
+              <Link 
                 to="/about" 
-                className="ml-2 p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
               >
                 <Book size={18} className="text-white" />
               </Link>
@@ -80,6 +87,15 @@ const TrackerPage: React.FC = () => {
                 <div className="inline-block w-[60px] overflow-hidden">
                   <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
                 </div>
+              </Link>
+              
+              <Link 
+                to="/petition"
+                className="flex items-center gap-2 mb-4 px-4 py-2 border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors w-full"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FileText size={18} className="text-white" />
+                <span>Sign Petition</span>
               </Link>
               
               <Link 

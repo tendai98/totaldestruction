@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
-import { BarChart2, Database, Layers, Map, Menu, X, Book } from 'lucide-react';
+import { BarChart2, Database, Layers, Map, Menu, X, Book, FileText } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
+import { PetitionDialog } from '../components/PetitionDialog';
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,6 +19,7 @@ const HomePage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-cyber-black">
+      <PetitionDialog />
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -59,6 +61,12 @@ const HomePage: React.FC = () => {
               
               <div className="hidden md:flex items-center gap-3">
                 <Link 
+                  to="/petition" 
+                  className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                >
+                  <FileText size={18} className="text-white" />
+                </Link>
+                <Link 
                   to="/about" 
                   className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
                 >
@@ -87,6 +95,13 @@ const HomePage: React.FC = () => {
               </Link>
               
               <div className="flex justify-between gap-2">
+                <Link
+                  to="/petition"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FileText size={18} className="text-white" />
+                </Link>
                 <Link
                   to="/about"
                   className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
