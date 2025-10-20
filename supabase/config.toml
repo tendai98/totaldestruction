@@ -1,1 +1,4 @@
 project_id = "krnwvhvsrnulysmggyiq"
+
+[functions.save-signature]
+verify_jwt = false

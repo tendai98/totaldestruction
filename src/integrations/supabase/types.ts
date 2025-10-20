@@ -14,7 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      signatures: {
+        Row: {
+          id: string
+          signature_data: Json
+          signed_at: string | null
+        }
+        Insert: {
+          id?: string
+          signature_data: Json
+          signed_at?: string | null
+        }
+        Update: {
+          id?: string
+          signature_data?: Json
+          signed_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

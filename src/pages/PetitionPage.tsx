@@ -1,27 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SignatureCanvas } from "@/components/SignatureCanvas";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Point {
   x: number;
   y: number;
 }
 
+interface StoredSignature {
+  id: string;
+  signature_data: Point[][];
+  signed_at: string;
+}
+
 const PetitionPage = () => {
   const [showSignature, setShowSignature] = useState(false);
-  const [signatures, setSignatures] = useState<Point[][][]>([]);
+  const [signatures, setSignatures] = useState<StoredSignature[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const handleSaveSignature = (signatureData: Point[][]) => {
-    setSignatures(prev => [...prev, signatureData]);
-    setShowSignature(false);
-    
-    // Log the signature data as JSON
-    console.log("Signature captured:", JSON.stringify(signatureData));
-    
-    toast.success("Signature added successfully!");
+  // Load signatures from database
+  useEffect(() => {
+    loadSignatures();
+  }, []);
+
+  const loadSignatures = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('signatures')
+        .select('*')
+        .order('signed_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Type cast the signature_data from Json to Point[][]
+      const typedSignatures = (data || []).map(sig => ({
+        ...sig,
+        signature_data: sig.signature_data as unknown as Point[][]
+      }));
+
+      setSignatures(typedSignatures);
+    } catch (error) {
+      console.error('Error loading signatures:', error);
+      toast.error("Failed to load signatures");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveSignature = async (signatureData: Point[][]) => {
+    setSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('save-signature', {
+        body: { signatureData }
+      });
+
+      if (error) throw error;
+
+      setShowSignature(false);
+      await loadSignatures(); // Reload signatures
+      toast.success("Signature added successfully!");
+    } catch (error) {
+      console.error('Error saving signature:', error);
+      toast.error("Failed to save signature. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -117,21 +165,26 @@ const PetitionPage = () => {
             {/* Signatures Section */}
             <div className="mt-8 pt-6 border-t-2 border-[#F97316]/30">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-[#F97316]">Signatures ({signatures.length})</h3>
+                <h3 className="text-lg font-semibold text-[#F97316]">
+                  Signatures {loading ? '' : `(${signatures.length})`}
+                </h3>
                 <Button 
                   onClick={() => setShowSignature(true)}
+                  disabled={saving}
                   className="bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316] font-bold"
                 >
-                  Sign the Letter
+                  {saving ? 'Saving...' : 'Sign the Letter'}
                 </Button>
               </div>
               
-              {signatures.length > 0 && (
+              {loading ? (
+                <p className="text-white/50 text-center py-8 font-mono">Loading signatures...</p>
+              ) : signatures.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {signatures.map((sig, index) => (
-                    <div key={index} className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60">
+                    <div key={sig.id} className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60">
                       <svg width="100%" height="100" viewBox="0 0 300 100" className="bg-black/50 rounded">
-                        {sig.map((stroke, strokeIndex) => (
+                        {sig.signature_data.map((stroke, strokeIndex) => (
                           <polyline
                             key={strokeIndex}
                             points={stroke.map(p => `${p.x},${p.y}`).join(' ')}
@@ -143,10 +196,14 @@ const PetitionPage = () => {
                           />
                         ))}
                       </svg>
-                      <p className="text-xs text-white/50 mt-1 font-mono">Signature #{index + 1}</p>
+                      <p className="text-xs text-white/50 mt-1 font-mono">
+                        Signature #{signatures.length - index}
+                      </p>
                     </div>
                   ))}
                 </div>
+              ) : (
+                <p className="text-white/50 text-center py-8 font-mono">Be the first to sign!</p>
               )}
             </div>
           </div>
