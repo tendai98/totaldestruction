@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SignatureCanvas } from "@/components/SignatureCanvas";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface Point {
   x: number;
@@ -18,7 +25,9 @@ interface StoredSignature {
 }
 
 const PetitionPage = () => {
+  const navigate = useNavigate();
   const [showSignature, setShowSignature] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [signatures, setSignatures] = useState<StoredSignature[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -62,8 +71,12 @@ const PetitionPage = () => {
       if (error) throw error;
 
       setShowSignature(false);
-      await loadSignatures(); // Reload signatures
-      toast.success("Signature added successfully!");
+      setShowThankYou(true);
+      
+      // Navigate to home after 3 seconds
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error) {
       console.error('Error saving signature:', error);
       toast.error("Failed to save signature. Please try again.");
@@ -217,6 +230,31 @@ const PetitionPage = () => {
           onCancel={() => setShowSignature(false)}
         />
       )}
+
+      {/* Thank You Dialog */}
+      <Dialog open={showThankYou} onOpenChange={setShowThankYou}>
+        <DialogContent className="bg-cyber-darkgray border-2 border-[#F97316] shadow-neon-orange max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-[#F97316] text-center">
+              Thank You for Signing!
+            </DialogTitle>
+            <DialogDescription className="text-white/80 text-center space-y-4 pt-4">
+              <p className="text-lg">
+                Your signature has been added to the petition.
+              </p>
+              <p>
+                Together, we're building pressure for a pro-poor, decentralized renewable energy future that puts African communities first.
+              </p>
+              <p className="font-semibold text-[#F97316]">
+                Join the #KickTotalOutOfAFCON campaign
+              </p>
+              <p className="text-sm text-white/60 font-mono">
+                Redirecting to home page...
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
