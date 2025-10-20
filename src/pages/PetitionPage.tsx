@@ -25,33 +25,33 @@ const PetitionPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-cyber-black">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-primary/20 bg-background/80 backdrop-blur-sm">
+      <nav className="fixed top-0 left-0 right-0 z-40 border-b-2 border-[#F97316] bg-cyber-darkgray shadow-neon-orange">
         <div className="container mx-auto px-4 py-4">
-          <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 text-[#F97316] hover:text-[#F97316]/80 transition-colors font-bold">
             <ArrowLeft className="w-5 h-5" />
-            <span className="font-semibold">Back to Home</span>
+            <span className="tracking-wider">BACK TO HOME</span>
           </Link>
         </div>
       </nav>
 
       {/* Content */}
       <main className="container mx-auto px-4 pt-24 pb-12 max-w-4xl">
-        <div className="glass-panel rounded-lg">
+        <div className="glass-panel rounded-lg border-2 border-[#F97316]/30">
           {/* Header */}
           <div className="mb-8">
-            <p className="text-muted-foreground mb-4">20 October 2025</p>
-            <p className="text-foreground mb-2">To:</p>
-            <p className="text-foreground font-semibold mb-1">President Patrice Motsepe</p>
-            <p className="text-foreground font-semibold mb-6">Confederation of African Football (CAF)</p>
-            <h1 className="text-3xl font-bold text-primary mb-6">
+            <p className="text-white/50 mb-4 font-mono">20 October 2025</p>
+            <p className="text-white/70 mb-2">To:</p>
+            <p className="text-white font-semibold mb-1">President Patrice Motsepe</p>
+            <p className="text-white font-semibold mb-6">Confederation of African Football (CAF)</p>
+            <h1 className="text-3xl font-bold text-[#F97316] mb-6 cyber-glitch">
               Terminate CAF's Sponsorship Deal with Total Energies — For the Sake of Our Future
             </h1>
           </div>
 
           {/* Letter Content */}
-          <div className="space-y-6 text-foreground leading-relaxed">
+          <div className="space-y-6 text-white/80 leading-relaxed">
             <p>Dear President Motsepe and the CAF Executive Committee,</p>
 
             <p>
@@ -66,28 +66,28 @@ const PetitionPage = () => {
 
             <div className="space-y-4">
               <div>
-                <h3 className="font-bold text-primary mb-2">Deliberate misinformation & greenwashing</h3>
+                <h3 className="font-bold text-[#F97316] mb-2">Deliberate misinformation & greenwashing</h3>
                 <p>
                   Total has repeatedly presented itself as a company committed to sustainability, while continuing to develop new fossil projects and delay meaningful climate action. Its PR campaigns are increasingly judged by independent regulators as "misleading." (Financial Times) Sponsorship of AFCON gives it a veneer of legitimacy and "clean credentials" at precisely the moment it is doing the opposite.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-bold text-primary mb-2">Human rights abuses and community harm on the continent</h3>
+                <h3 className="font-bold text-[#F97316] mb-2">Human rights abuses and community harm on the continent</h3>
                 <p>
                   In Cabo Delgado, Mozambique, Total's LNG project in Afungi has been tied to forced displacements, interruption of livelihoods, and serious allegations that security forces guarding the site detained civilians in containers, beat them, deprived them of food, and caused deaths. (360 Mozambique) In East Africa (EACOP, Uganda/Tanzania), the pipeline project threatens over 100,000 people with displacement, undermines water sources, and violates land rights, while compensation practices and safeguards have been widely criticized. (Greenpeace)
                 </p>
               </div>
 
               <div>
-                <h3 className="font-bold text-primary mb-2">Profits above public good</h3>
+                <h3 className="font-bold text-[#F97316] mb-2">Profits above public good</h3>
                 <p>
                   Total and peers in big oil extract massive profits while externalizing costs onto communities, ecosystems, and the climate. The resources spent lobbying, delaying emissions reductions, and resisting regulation could instead fund clean energy, health, education, and resilience across Africa. That they choose to sponsor AFCON and attempt to lull our youth into a false sense of security, instead of repairing the damage they've done to our continent, is morally bankrupt.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-bold text-primary mb-2">Co-opting African youth and sporting culture</h3>
+                <h3 className="font-bold text-[#F97316] mb-2">Co-opting African youth and sporting culture</h3>
                 <p>
                   CAF and AFCON have deep emotional resonance across the continent. By allowing Total to sponsor our game, we endorse their attempt to seduce our youth with the illusion of benevolence, while they continue extraction and environmental destruction behind the scenes. That is unacceptable. Football should unite us, not be sold as a fig leaf for exploitation. (Greenpeace)
                 </p>
@@ -115,10 +115,13 @@ const PetitionPage = () => {
             <p>Respectfully,</p>
 
             {/* Signatures Section */}
-            <div className="mt-8 pt-6 border-t border-primary/20">
+            <div className="mt-8 pt-6 border-t-2 border-[#F97316]/30">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-primary">Signatures ({signatures.length})</h3>
-                <Button onClick={() => setShowSignature(true)}>
+                <h3 className="text-lg font-semibold text-[#F97316]">Signatures ({signatures.length})</h3>
+                <Button 
+                  onClick={() => setShowSignature(true)}
+                  className="bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316] font-bold"
+                >
                   Sign the Letter
                 </Button>
               </div>
@@ -126,8 +129,8 @@ const PetitionPage = () => {
               {signatures.length > 0 && (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {signatures.map((sig, index) => (
-                    <div key={index} className="border border-primary/30 rounded p-2 bg-black/20">
-                      <svg width="100%" height="100" viewBox="0 0 300 100" className="bg-black/30 rounded">
+                    <div key={index} className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60">
+                      <svg width="100%" height="100" viewBox="0 0 300 100" className="bg-black/50 rounded">
                         {sig.map((stroke, strokeIndex) => (
                           <polyline
                             key={strokeIndex}
@@ -140,7 +143,7 @@ const PetitionPage = () => {
                           />
                         ))}
                       </svg>
-                      <p className="text-xs text-muted-foreground mt-1">Signature #{index + 1}</p>
+                      <p className="text-xs text-white/50 mt-1 font-mono">Signature #{index + 1}</p>
                     </div>
                   ))}
                 </div>

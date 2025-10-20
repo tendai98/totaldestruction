@@ -35,14 +35,14 @@ export const PetitionDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-cyber-black border-2 border-[#F97316] shadow-neon-orange">
         <DialogHeader>
-          <DialogTitle className="text-2xl flex items-center gap-2">
-            <FileText className="w-6 h-6 text-primary" />
+          <DialogTitle className="text-2xl flex items-center gap-2 text-white font-bold">
+            <FileText className="w-6 h-6 text-[#F97316]" />
             Open Letter to CAF: Kick Total Out of AFCON
           </DialogTitle>
-          <DialogDescription className="text-base leading-relaxed space-y-4 pt-4">
-            <p className="font-semibold text-foreground">
+          <DialogDescription className="text-base leading-relaxed space-y-4 pt-4 text-white/80">
+            <p className="font-semibold text-white">
               Join us in demanding CAF terminate its sponsorship deal with Total Energies.
             </p>
             
@@ -50,9 +50,9 @@ export const PetitionDialog = () => {
               As concerned African youth, we're calling on President Patrice Motsepe and CAF to end AFCON's sponsorship with Total Energies — a fossil fuel giant undermining our future through greenwashing, human rights abuses, and environmental destruction across Africa.
             </p>
 
-            <div className="bg-primary/10 border border-primary/30 rounded p-4 space-y-2">
-              <p className="font-semibold text-foreground">Why Total must be shown the red card:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
+            <div className="bg-cyber-darkgray/80 border border-[#F97316]/50 rounded p-4 space-y-2">
+              <p className="font-semibold text-[#F97316]">Why Total must be shown the red card:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm text-white/70">
                 <li>Deliberate misinformation & greenwashing campaigns</li>
                 <li>Human rights abuses in Mozambique and East Africa</li>
                 <li>Prioritizing profits over African communities</li>
@@ -60,18 +60,25 @@ export const PetitionDialog = () => {
               </ul>
             </div>
 
-            <p className="text-foreground">
+            <p className="text-white/80">
               Football should unite us — not be used as cover for exploitation. 
-              <span className="font-semibold text-primary"> Read the full letter and add your signature.</span>
+              <span className="font-semibold text-[#F97316]"> Read the full letter and add your signature.</span>
             </p>
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex gap-3 mt-4">
-          <Button onClick={handleClose} variant="outline" className="flex-1">
+          <Button 
+            onClick={handleClose} 
+            variant="outline" 
+            className="flex-1 border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black"
+          >
             Maybe Later
           </Button>
-          <Button onClick={handleViewLetter} className="flex-1">
+          <Button 
+            onClick={handleViewLetter} 
+            className="flex-1 bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316]"
+          >
             Read & Sign the Letter
           </Button>
         </div>

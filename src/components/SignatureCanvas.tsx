@@ -116,14 +116,14 @@ export const SignatureCanvas = ({ onSave, onCancel }: SignatureCanvasProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-background border border-primary/30 rounded-lg p-6 max-w-2xl w-full">
-        <h3 className="text-xl font-bold text-primary mb-4">Sign the Letter</h3>
-        <p className="text-muted-foreground mb-4">Draw your signature below:</p>
+    <div className="fixed inset-0 bg-cyber-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-cyber-darkgray border-2 border-[#F97316] rounded-lg p-6 max-w-2xl w-full shadow-neon-orange">
+        <h3 className="text-xl font-bold text-[#F97316] mb-4">Sign the Letter</h3>
+        <p className="text-white/70 mb-4">Draw your signature below:</p>
         
         <canvas
           ref={canvasRef}
-          className="w-full h-64 bg-black/50 border border-primary/30 rounded-md cursor-crosshair touch-none"
+          className="w-full h-64 bg-cyber-black border-2 border-[#F97316]/30 rounded-md cursor-crosshair touch-none"
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
@@ -134,16 +134,24 @@ export const SignatureCanvas = ({ onSave, onCancel }: SignatureCanvasProps) => {
         />
 
         <div className="flex gap-3 mt-4">
-          <Button onClick={clearCanvas} variant="outline" className="flex-1">
+          <Button 
+            onClick={clearCanvas} 
+            variant="outline" 
+            className="flex-1 border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black"
+          >
             Clear
           </Button>
-          <Button onClick={onCancel} variant="outline" className="flex-1">
+          <Button 
+            onClick={onCancel} 
+            variant="outline" 
+            className="flex-1 border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black"
+          >
             <X className="w-4 h-4 mr-2" />
             Cancel
           </Button>
           <Button 
             onClick={handleSave} 
-            className="flex-1"
+            className="flex-1 bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316] font-bold"
             disabled={allStrokes.length === 0 && currentStroke.length === 0}
           >
             <Check className="w-4 h-4 mr-2" />
