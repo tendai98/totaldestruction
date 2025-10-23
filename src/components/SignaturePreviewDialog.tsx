@@ -117,7 +117,7 @@ export const SignaturePreviewDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-cyber-darkgray border-2 border-[#F97316] shadow-neon-orange max-w-2xl h-[85vh] overflow-hidden flex flex-col">
+      <DialogContent className="bg-cyber-darkgray border-2 border-[#F97316] shadow-neon-orange max-w-xl h-[85vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold text-[#F97316] font-mono">
