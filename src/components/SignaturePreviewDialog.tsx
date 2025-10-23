@@ -101,7 +101,7 @@ export const SignaturePreviewDialog = ({
       addHashLine(`hash_${currentIndex}_${Date.now()}`, `${hash}`);
 
       currentIndex++;
-    }, 350);
+    }, 600);
 
     // Store interval ID for cleanup
     return () => clearInterval(scanInterval);
