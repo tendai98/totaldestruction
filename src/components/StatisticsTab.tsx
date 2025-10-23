@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
-import { Globe, MapPin, Users, Filter } from 'lucide-react';
+import { Globe, MapPin, Users, Filter, X } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import InteractiveWorldMap from './InteractiveWorldMap';
+import { Button } from '@/components/ui/button';
 
 interface LocationData {
   country?: string;
@@ -98,19 +100,31 @@ const StatisticsTab: React.FC = () => {
       {/* World Map Visual */}
       <Card className="mb-8 bg-cyber-black border-2 border-[#F97316] shadow-neon-orange">
         <div className="p-4">
-          <h3 className="text-xl font-bold text-white font-mono mb-4 flex items-center gap-2">
-            <Globe className="text-[#F97316]" />
-            GLOBAL SIGNATURE MAP
-          </h3>
-          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden min-h-[400px] bg-cyber-black">
-            <div className="absolute inset-0 flex items-center justify-center p-4">
-              <img 
-                src="/world.svg" 
-                alt="World Map" 
-                className="w-full h-auto max-h-[500px] opacity-60 hover:opacity-80 transition-opacity animate-flicker"
-                style={{ filter: 'brightness(0.8) contrast(1.2) hue-rotate(10deg)' }}
-              />
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-bold text-white font-mono flex items-center gap-2">
+                <Globe className="text-[#F97316]" />
+                GLOBAL SIGNATURE MAP
+              </h3>
+              <p className="text-cyber-blue font-mono text-sm mt-1">Click on a country to filter signatures</p>
             </div>
+            {selectedCountry !== 'all' && (
+              <Button
+                onClick={() => setSelectedCountry('all')}
+                variant="outline"
+                size="sm"
+                className="border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-cyber-black"
+              >
+                <X className="w-4 h-4 mr-1" />
+                Clear Filter
+              </Button>
+            )}
+          </div>
+          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden min-h-[400px] bg-cyber-black p-4">
+            <InteractiveWorldMap 
+              onCountryClick={(country) => setSelectedCountry(country)}
+              selectedCountry={selectedCountry === 'all' ? undefined : selectedCountry}
+            />
           </div>
         </div>
       </Card>
