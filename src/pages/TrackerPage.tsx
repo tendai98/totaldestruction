@@ -85,7 +85,7 @@ const TrackerPage: React.FC = () => {
                     className="flex items-center gap-2 ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
                   >
                     <FileText size={18} className="text-white" />
-                    <div className="hidden lg:inline-block w-[160px] overflow-hidden">
+                    <div className="hidden lg:inline-block w-[190px] overflow-hidden">
                       <span className={`tracking-wider font-bold text-white ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
                     </div>
                   </Link>
