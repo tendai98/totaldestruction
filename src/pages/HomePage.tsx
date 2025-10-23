@@ -6,6 +6,12 @@ import { BarChart2, Database, Layers, Map, Menu, X, Book, FileText } from 'lucid
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import { PetitionDialog } from '../components/PetitionDialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,8 +24,9 @@ const HomePage: React.FC = () => {
     useMatrixEffect("TRACKER", 1500, 25000);
   
   return (
-    <div className="min-h-screen bg-cyber-black">
-      <PetitionDialog />
+    <TooltipProvider>
+      <div className="min-h-screen bg-cyber-black">
+        <PetitionDialog />
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -49,33 +56,61 @@ const HomePage: React.FC = () => {
             </button>
           ) : (
             <div className="flex items-center gap-4">
-              <Link 
-                to="/tracker" 
-                className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
-              >
-                <Map size={18} className="text-white" />
-                <div className="hidden md:inline-block w-[80px] overflow-hidden">
-                  <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
-                </div>
-              </Link>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/tracker" 
+                    className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
+                  >
+                    <Map size={18} className="text-white" />
+                    <div className="hidden md:inline-block w-[80px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white ${trackerAnimating ? 'text-glitch' : ''}`}>{trackerText}</span>
+                    </div>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Environmental Impact Tracker</p>
+                </TooltipContent>
+              </Tooltip>
               
               <div className="hidden md:flex items-center gap-3">
-                <Link 
-                  to="/petition" 
-                  className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
-                >
-                  <FileText size={18} className="text-white" />
-                  <span className="tracking-wider font-bold">Sign Open Letter</span>
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
-                >
-                  <Book size={18} className="text-white" />
-                </Link>
-                <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
-                  <BarChart2 size={18} className="text-white" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link 
+                      to="/petition" 
+                      className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    >
+                      <FileText size={18} className="text-white" />
+                      <span className="tracking-wider font-bold">Sign Open Letter</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Sign the open letter to CAF</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link 
+                      to="/about" 
+                      className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                    >
+                      <Book size={18} className="text-white" />
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>About this campaign</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
+                      <BarChart2 size={18} className="text-white" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>View campaign statistics</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           )}
@@ -136,7 +171,8 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 };
 

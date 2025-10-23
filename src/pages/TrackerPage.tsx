@@ -5,6 +5,12 @@ import Dashboard from '../components/Dashboard';
 import { Home, Menu, Book, FileText } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const TrackerPage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,7 +23,8 @@ const TrackerPage: React.FC = () => {
     useMatrixEffect("HOME", 1500, 25000);
 
   return (
-    <div className="min-h-screen bg-cyber-black flex flex-col">
+    <TooltipProvider>
+      <div className="min-h-screen bg-cyber-black flex flex-col">
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -48,29 +55,50 @@ const TrackerPage: React.FC = () => {
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <Link 
-                to="/" 
-                className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
-              >
-                <Home size={18} className="text-white" />
-                <div className="hidden md:inline-block w-[60px] overflow-hidden">
-                  <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
-                </div>
-              </Link>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/" 
+                    className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
+                  >
+                    <Home size={18} className="text-white" />
+                    <div className="hidden md:inline-block w-[60px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+                    </div>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Return to homepage</p>
+                </TooltipContent>
+              </Tooltip>
               
-              <Link 
-                to="/petition" 
-                className="ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
-              >
-                <FileText size={18} className="text-white" />
-              </Link>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/petition" 
+                    className="ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                  >
+                    <FileText size={18} className="text-white" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Sign the open letter to CAF</p>
+                </TooltipContent>
+              </Tooltip>
               
-              <Link 
-                to="/about" 
-                className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
-              >
-                <Book size={18} className="text-white" />
-              </Link>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/about" 
+                    className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                  >
+                    <Book size={18} className="text-white" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>About this campaign</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           )}
         </div>
@@ -115,7 +143,8 @@ const TrackerPage: React.FC = () => {
       <div className="flex-1">
         <Dashboard />
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 };
 
