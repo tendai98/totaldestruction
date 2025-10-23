@@ -80,11 +80,10 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({
 
         // Add proper attributes for responsive sizing
         svgElement.setAttribute('width', '100%');
-        svgElement.setAttribute('height', '100%');
-        svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        svgElement.setAttribute('class', 'w-full h-full object-contain');
+        svgElement.setAttribute('height', 'auto');
+        svgElement.setAttribute('preserveAspectRatio', 'xMidYMin meet');
         svgElement.style.filter = 'brightness(0.8) contrast(1.2)';
-        svgElement.style.maxHeight = '400px';
+        svgElement.style.minHeight = '400px';
 
         // Get all path elements (countries)
         const paths = svgElement.querySelectorAll('path.landxx');
@@ -138,13 +137,18 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({
   }, [selectedCountry, onCountryClick]);
 
   return (
-    <div className="relative w-full h-full max-h-[400px] flex items-center justify-center">
-      <div ref={svgRef} className="w-full h-full max-w-full" />
+    <div className="relative w-full h-[400px] overflow-auto bg-cyber-black rounded border border-[#F97316]/30">
+      <div className="min-w-[800px] min-h-[400px] p-4">
+        <div ref={svgRef} className="w-full h-full" />
+      </div>
       {hoveredCountry && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-cyber-darkgray border-2 border-[#F97316] px-4 py-2 rounded shadow-neon-orange z-10">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-cyber-darkgray border-2 border-[#F97316] px-4 py-2 rounded shadow-neon-orange z-10 pointer-events-none">
           <p className="text-white font-mono font-bold text-sm whitespace-nowrap">{hoveredCountry}</p>
         </div>
       )}
+      <div className="absolute top-2 right-2 bg-cyber-darkgray/90 border border-[#F97316]/50 px-3 py-1 rounded text-xs text-cyber-blue font-mono pointer-events-none">
+        Scroll to explore
+      </div>
     </div>
   );
 };
