@@ -101,7 +101,7 @@ export const SignaturePreviewDialog = ({
       addHashLine(`hash_${currentIndex}_${Date.now()}`, `${hash}`);
 
       currentIndex++;
-    }, 100);
+    }, 350);
 
     // Store interval ID for cleanup
     return () => clearInterval(scanInterval);
@@ -188,8 +188,8 @@ export const SignaturePreviewDialog = ({
             </div>
           </div>
 
-          {/* Bottom - Streams side by side */}
-          <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
+          {/* Bottom - Streams side by side on larger screens, stacked on mobile */}
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-3 flex-1 min-h-0">
             {/* Left - Point stream */}
             <div className="flex flex-col min-h-0">
               <div className="text-xs text-white/50 mb-1 font-mono">
