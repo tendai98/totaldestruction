@@ -79,8 +79,12 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({
         if (!svgElement) return;
 
         // Add proper attributes for responsive sizing
-        svgElement.setAttribute('class', 'w-full h-auto max-h-[500px]');
+        svgElement.setAttribute('width', '100%');
+        svgElement.setAttribute('height', '100%');
+        svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        svgElement.setAttribute('class', 'w-full h-full object-contain');
         svgElement.style.filter = 'brightness(0.8) contrast(1.2)';
+        svgElement.style.maxHeight = '400px';
 
         // Get all path elements (countries)
         const paths = svgElement.querySelectorAll('path.landxx');
@@ -134,11 +138,11 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({
   }, [selectedCountry, onCountryClick]);
 
   return (
-    <div className="relative">
-      <div ref={svgRef} className="w-full" />
+    <div className="relative w-full h-full max-h-[400px] flex items-center justify-center">
+      <div ref={svgRef} className="w-full h-full max-w-full" />
       {hoveredCountry && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-cyber-darkgray border-2 border-[#F97316] px-4 py-2 rounded shadow-neon-orange">
-          <p className="text-white font-mono font-bold text-sm">{hoveredCountry}</p>
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-cyber-darkgray border-2 border-[#F97316] px-4 py-2 rounded shadow-neon-orange z-10">
+          <p className="text-white font-mono font-bold text-sm whitespace-nowrap">{hoveredCountry}</p>
         </div>
       )}
     </div>

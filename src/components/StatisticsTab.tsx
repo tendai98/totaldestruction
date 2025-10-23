@@ -120,7 +120,7 @@ const StatisticsTab: React.FC = () => {
               </Button>
             )}
           </div>
-          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden min-h-[400px] bg-cyber-black p-4">
+          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden bg-cyber-black p-2 md:p-4">
             <InteractiveWorldMap 
               onCountryClick={(country) => setSelectedCountry(country)}
               selectedCountry={selectedCountry === 'all' ? undefined : selectedCountry}
