@@ -20,6 +20,16 @@ interface TerminalLine {
   text: string;
 }
 
+interface PointLine {
+  id: string;
+  text: string;
+}
+
+interface HashLine {
+  id: string;
+  text: string;
+}
+
 export const SignaturePreviewDialog = ({
   open,
   onOpenChange,
@@ -28,16 +38,19 @@ export const SignaturePreviewDialog = ({
 }: SignaturePreviewDialogProps) => {
   const [scanX, setScanX] = useState(0);
   const [scanY, setScanY] = useState(0);
-  const [terminalLines, setTerminalLines] = useState<TerminalLine[]>([]);
+  const [pointLines, setPointLines] = useState<PointLine[]>([]);
+  const [hashLines, setHashLines] = useState<HashLine[]>([]);
   const [isScanning, setIsScanning] = useState(false);
-  const terminalRef = useRef<HTMLDivElement>(null);
+  const pointRef = useRef<HTMLDivElement>(null);
+  const hashRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open) {
       // Reset state when dialog opens
       setScanX(0);
       setScanY(0);
-      setTerminalLines([]);
+      setPointLines([]);
+      setHashLines([]);
       setIsScanning(true);
 
       // Start scanning animation
@@ -46,11 +59,14 @@ export const SignaturePreviewDialog = ({
   }, [open]);
 
   useEffect(() => {
-    // Auto-scroll terminal to bottom
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    // Auto-scroll terminals to bottom
+    if (pointRef.current) {
+      pointRef.current.scrollTop = pointRef.current.scrollHeight;
     }
-  }, [terminalLines]);
+    if (hashRef.current) {
+      hashRef.current.scrollTop = hashRef.current.scrollHeight;
+    }
+  }, [pointLines, hashLines]);
 
   const startScanning = () => {
     const allPoints: Point[] = [];
@@ -65,7 +81,8 @@ export const SignaturePreviewDialog = ({
       if (currentIndex >= allPoints.length) {
         clearInterval(scanInterval);
         setIsScanning(false);
-        addTerminalLine("SCAN_COMPLETE", "[SCAN COMPLETE]");
+        addPointLine("SCAN_COMPLETE", "[SCAN COMPLETE]");
+        addHashLine("SCAN_COMPLETE_HASH", "[SCAN COMPLETE]");
         return;
       }
 
@@ -73,20 +90,24 @@ export const SignaturePreviewDialog = ({
       setScanX(point.x);
       setScanY(point.y);
 
-      // Add point data to terminal
+      // Add point data to point terminal
       const pointStr = `X:${point.x.toFixed(2)} Y:${point.y.toFixed(2)}`;
-      addTerminalLine(`point_${currentIndex}`, `> Point ${currentIndex + 1}: ${pointStr}`);
+      addPointLine(`point_${currentIndex}`, `> Point ${currentIndex + 1}: ${pointStr}`);
 
-      // Generate and add MD5 hash
+      // Generate and add full MD5 hash to hash terminal
       const hash = CryptoJS.MD5(`${point.x},${point.y}`).toString();
-      addTerminalLine(`hash_${currentIndex}`, `  Hash: ${hash.substring(0, 16)}...`);
+      addHashLine(`hash_${currentIndex}`, `${hash}`);
 
       currentIndex++;
     }, 100);
   };
 
-  const addTerminalLine = (id: string, text: string) => {
-    setTerminalLines((prev) => [...prev, { id, text }]);
+  const addPointLine = (id: string, text: string) => {
+    setPointLines((prev) => [...prev, { id, text }]);
+  };
+
+  const addHashLine = (id: string, text: string) => {
+    setHashLines((prev) => [...prev, { id, text }]);
   };
 
   return (
@@ -100,15 +121,15 @@ export const SignaturePreviewDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="grid grid-cols-2 gap-4 h-full overflow-hidden">
-          {/* Left side - Signature with scanning lines */}
+        <div className="grid grid-cols-3 gap-4 h-full overflow-hidden">
+          {/* Left - Signature with scanning lines */}
           <div className="flex flex-col">
             <div className="text-xs text-white/50 mb-2 font-mono">VISUAL SCAN</div>
             <div className="relative border-2 border-[#F97316]/30 rounded bg-black/50 flex-1">
               <svg
                 width="100%"
                 height="100%"
-                viewBox="0 0 500 500"
+                viewBox="0 0 500 200"
                 preserveAspectRatio="xMidYMid meet"
               >
                 {/* Draw signature */}
@@ -132,7 +153,7 @@ export const SignaturePreviewDialog = ({
                       x1={scanX}
                       y1="0"
                       x2={scanX}
-                      y2="500"
+                      y2="200"
                       stroke="#00ff00"
                       strokeWidth="1"
                       opacity="0.6"
@@ -161,16 +182,38 @@ export const SignaturePreviewDialog = ({
             </div>
           </div>
 
-          {/* Right side - Terminal output */}
+          {/* Middle - Point stream */}
           <div className="flex flex-col">
             <div className="text-xs text-white/50 mb-2 font-mono">
-              POINT STREAM & HASH GENERATION
+              POINT STREAM
             </div>
             <div
-              ref={terminalRef}
+              ref={pointRef}
               className="flex-1 border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1"
             >
-              {terminalLines.map((line) => (
+              {pointLines.map((line) => (
+                <div key={line.id} className="animate-in fade-in duration-200">
+                  {line.text}
+                </div>
+              ))}
+              {isScanning && (
+                <div className="inline-block w-2 h-4 bg-[#00ff00] animate-pulse">
+                  &nbsp;
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right - Hash stream */}
+          <div className="flex flex-col">
+            <div className="text-xs text-white/50 mb-2 font-mono">
+              MD5 HASH STREAM
+            </div>
+            <div
+              ref={hashRef}
+              className="flex-1 border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1 break-all"
+            >
+              {hashLines.map((line) => (
                 <div key={line.id} className="animate-in fade-in duration-200">
                   {line.text}
                 </div>
