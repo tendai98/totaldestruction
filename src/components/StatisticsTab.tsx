@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
-import { Globe, MapPin, Users, Filter, X } from 'lucide-react';
+import { MapPin, Users, Filter } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import InteractiveWorldMap from './InteractiveWorldMap';
 import { Button } from '@/components/ui/button';
 
 interface LocationData {
@@ -94,38 +93,6 @@ const StatisticsTab: React.FC = () => {
           <Users className="w-12 h-12 mx-auto mb-4 text-[#F97316]" />
           <h2 className="text-4xl font-bold text-white font-mono mb-2">{totalSignatures}</h2>
           <p className="text-cyber-blue font-mono text-sm tracking-wider">TOTAL SIGNATURES</p>
-        </div>
-      </Card>
-
-      {/* World Map Visual */}
-      <Card className="mb-8 bg-cyber-black border-2 border-[#F97316] shadow-neon-orange">
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-xl font-bold text-white font-mono flex items-center gap-2">
-                <Globe className="text-[#F97316]" />
-                GLOBAL SIGNATURE MAP
-              </h3>
-              <p className="text-cyber-blue font-mono text-sm mt-1">Click on a country to filter signatures</p>
-            </div>
-            {selectedCountry !== 'all' && (
-              <Button
-                onClick={() => setSelectedCountry('all')}
-                variant="outline"
-                size="sm"
-                className="border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-cyber-black"
-              >
-                <X className="w-4 h-4 mr-1" />
-                Clear Filter
-              </Button>
-            )}
-          </div>
-          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden bg-cyber-black">
-            <InteractiveWorldMap 
-              onCountryClick={(country) => setSelectedCountry(country)}
-              selectedCountry={selectedCountry === 'all' ? undefined : selectedCountry}
-            />
-          </div>
         </div>
       </Card>
 
