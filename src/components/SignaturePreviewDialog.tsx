@@ -134,11 +134,6 @@ export const SignaturePreviewDialog = ({
               {name ? name.toUpperCase() : `SIGNATURE #${signatureNumber}`} - ANALYSIS
             </DialogTitle>
           </div>
-          {location && (location.city || location.country) && (
-            <div className="text-sm text-white/60 font-mono mt-1">
-              LOCATION: {[location.city, location.region, location.country].filter(Boolean).join(", ")}
-            </div>
-          )}
         </DialogHeader>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0">
