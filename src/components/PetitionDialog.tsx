@@ -15,9 +15,12 @@ export const PetitionDialog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user has seen the dialog before
+    // Check if user has seen the dialog or already signed
     const hasSeenDialog = localStorage.getItem("hasSeenPetitionDialog");
-    if (!hasSeenDialog) {
+    const hasSigned = document.cookie.includes("petition_signed=true");
+    
+    // Don't show dialog if user has already signed
+    if (!hasSeenDialog && !hasSigned) {
       setOpen(true);
     }
   }, []);

@@ -30,6 +30,13 @@ const PetitionPage = () => {
   const [saving, setSaving] = useState(false);
   const [selectedSignature, setSelectedSignature] = useState<StoredSignature | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [hasSigned, setHasSigned] = useState(false);
+
+  // Check if user has already signed
+  useEffect(() => {
+    const signed = document.cookie.includes("petition_signed=true");
+    setHasSigned(signed);
+  }, []);
 
   // Load signatures from database
   useEffect(() => {
@@ -74,13 +81,15 @@ const PetitionPage = () => {
 
       if (error) throw error;
 
+      // Set cookie to track that user has signed (expires in 1 year)
+      const expiryDate = new Date();
+      expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+      document.cookie = `petition_signed=true; expires=${expiryDate.toUTCString()}; path=/`;
+      
+      setHasSigned(true);
       setShowSignature(false);
       setShowThankYou(true);
-
-      // Navigate to home after 3 seconds
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      loadSignatures(); // Reload to show new signature
     } catch (error) {
       console.error("Error saving signature:", error);
       toast.error("Failed to save signature. Please try again.");
@@ -222,10 +231,10 @@ const PetitionPage = () => {
                 </h3>
                 <Button
                   onClick={() => setShowSignature(true)}
-                  disabled={saving}
-                  className="bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316] font-bold"
+                  disabled={saving || hasSigned}
+                  className="bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316] font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {saving ? "Saving..." : "Sign the Letter"}
+                  {hasSigned ? "Already Signed" : saving ? "Saving..." : "Sign the Letter"}
                 </Button>
               </div>
 
@@ -299,7 +308,21 @@ const PetitionPage = () => {
                 African communities first.
               </p>
               <p className="font-semibold text-[#F97316]">Join the #KickTotalOutOfAFCON campaign</p>
-              <p className="text-sm text-white/60 font-mono">Redirecting to home page...</p>
+              <div className="flex gap-3 justify-center pt-4">
+                <Button
+                  onClick={() => setShowThankYou(false)}
+                  variant="outline"
+                  className="border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10"
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => navigate("/")}
+                  className="bg-[#F97316] text-cyber-black hover:bg-[#F97316]/90 border-2 border-[#F97316]"
+                >
+                  Return Home
+                </Button>
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
