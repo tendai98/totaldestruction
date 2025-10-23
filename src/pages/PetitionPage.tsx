@@ -228,7 +228,7 @@ const PetitionPage = () => {
                       <svg
                         width="50%"
                         height="60"
-                        viewBox="0 0 900 500"
+                        viewBox="0 0 500 200"
                         className="bg-black/50 rounded"
                         preserveAspectRatio="xMidYMid meet"
                       >
