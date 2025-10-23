@@ -131,7 +131,7 @@ export const SignaturePreviewDialog = ({
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold text-[#F97316] font-mono">
-              {name ? name.toUpperCase() : `SIGNATURE #${signatureNumber}`} - ANALYSIS
+              SIGNATURE ANALYSIS
             </DialogTitle>
           </div>
         </DialogHeader>
