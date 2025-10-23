@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
 import CryptoJS from "crypto-js";
 
@@ -195,21 +196,20 @@ export const SignaturePreviewDialog = ({
               <div className="text-xs text-white/50 mb-1 font-mono">
                 POINT STREAM
               </div>
-              <div
-                ref={pointRef}
-                className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90 p-2 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1"
-              >
-                {pointLines.map((line) => (
-                  <div key={line.id} className="animate-in fade-in duration-200">
-                    {line.text}
-                  </div>
-                ))}
-                {isScanning && (
-                  <div className="inline-block w-2 h-4 bg-[#00ff00] animate-pulse">
-                    &nbsp;
-                  </div>
-                )}
-              </div>
+              <ScrollArea className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90">
+                <div ref={pointRef} className="p-2 font-mono text-xs text-[#00ff00] space-y-1">
+                  {pointLines.map((line) => (
+                    <div key={line.id} className="animate-in fade-in duration-200">
+                      {line.text}
+                    </div>
+                  ))}
+                  {isScanning && (
+                    <div className="inline-block w-2 h-4 bg-[#00ff00] animate-pulse">
+                      &nbsp;
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
             </div>
 
             {/* Right - Hash stream */}
@@ -217,21 +217,20 @@ export const SignaturePreviewDialog = ({
               <div className="text-xs text-white/50 mb-1 font-mono">
                 MD5 HASH STREAM
               </div>
-              <div
-                ref={hashRef}
-                className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90 p-2 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1 break-all"
-              >
-                {hashLines.map((line) => (
-                  <div key={line.id} className="animate-in fade-in duration-200">
-                    {line.text}
-                  </div>
-                ))}
-                {isScanning && (
-                  <div className="inline-block w-2 h-4 bg-[#00ff00] animate-pulse">
-                    &nbsp;
-                  </div>
-                )}
-              </div>
+              <ScrollArea className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90">
+                <div ref={hashRef} className="p-2 font-mono text-xs text-[#00ff00] space-y-1 break-all">
+                  {hashLines.map((line) => (
+                    <div key={line.id} className="animate-in fade-in duration-200">
+                      {line.text}
+                    </div>
+                  ))}
+                  {isScanning && (
+                    <div className="inline-block w-2 h-4 bg-[#00ff00] animate-pulse">
+                      &nbsp;
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
             </div>
           </div>
         </div>
