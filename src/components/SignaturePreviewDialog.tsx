@@ -14,6 +14,13 @@ interface SignaturePreviewDialogProps {
   onOpenChange: (open: boolean) => void;
   signatureData: Point[][];
   signatureNumber: number;
+  name?: string;
+  location?: {
+    country?: string;
+    city?: string;
+    region?: string;
+    country_code?: string;
+  };
 }
 
 interface TerminalLine {
@@ -36,6 +43,8 @@ export const SignaturePreviewDialog = ({
   onOpenChange,
   signatureData,
   signatureNumber,
+  name,
+  location,
 }: SignaturePreviewDialogProps) => {
   const [scanX, setScanX] = useState(0);
   const [scanY, setScanY] = useState(0);
@@ -122,9 +131,14 @@ export const SignaturePreviewDialog = ({
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold text-[#F97316] font-mono">
-              SIGNATURE #{signatureNumber} - ANALYSIS
+              {name ? name.toUpperCase() : `SIGNATURE #${signatureNumber}`} - ANALYSIS
             </DialogTitle>
           </div>
+          {location && (location.city || location.country) && (
+            <div className="text-sm text-white/60 font-mono mt-1">
+              LOCATION: {[location.city, location.region, location.country].filter(Boolean).join(", ")}
+            </div>
+          )}
         </DialogHeader>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0">

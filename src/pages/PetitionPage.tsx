@@ -17,6 +17,13 @@ interface StoredSignature {
   id: string;
   signature_data: Point[][];
   signed_at: string;
+  name?: string;
+  location?: {
+    country?: string;
+    city?: string;
+    region?: string;
+    country_code?: string;
+  };
 }
 
 const PetitionPage = () => {
@@ -44,6 +51,7 @@ const PetitionPage = () => {
       const typedSignatures = (data || []).map((sig) => ({
         ...sig,
         signature_data: sig.signature_data as unknown as Point[][],
+        location: sig.location as unknown as { country?: string; city?: string; region?: string; country_code?: string; } | undefined,
       }));
 
       setSignatures(typedSignatures);
@@ -60,11 +68,11 @@ const PetitionPage = () => {
     setShowPreview(true);
   };
 
-  const handleSaveSignature = async (signatureData: Point[][]) => {
+  const handleSaveSignature = async (signatureData: Point[][], name: string) => {
     setSaving(true);
     try {
       const { data, error } = await supabase.functions.invoke("save-signature", {
-        body: { signatureData },
+        body: { signatureData, name },
       });
 
       if (error) throw error;
@@ -254,7 +262,7 @@ const PetitionPage = () => {
                         ))}
                       </svg>
                       <p className="text-xs text-white/50 mt-1 font-mono text-center">
-                        Signature #{signatures.length - index}
+                        {sig.name || `Signature #${signatures.length - index}`}
                       </p>
                     </div>
                   ))}
@@ -277,6 +285,8 @@ const PetitionPage = () => {
           onOpenChange={setShowPreview}
           signatureData={selectedSignature.signature_data}
           signatureNumber={signatures.length - signatures.indexOf(selectedSignature)}
+          name={selectedSignature.name}
+          location={selectedSignature.location}
         />
       )}
 

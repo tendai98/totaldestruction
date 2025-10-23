@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 import { X, Check } from "lucide-react";
 
 interface Point {
@@ -8,7 +10,7 @@ interface Point {
 }
 
 interface SignatureCanvasProps {
-  onSave: (signatureData: Point[][]) => void;
+  onSave: (signatureData: Point[][], name: string) => void;
   onCancel: () => void;
 }
 
@@ -17,6 +19,7 @@ export const SignatureCanvas = ({ onSave, onCancel }: SignatureCanvasProps) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentStroke, setCurrentStroke] = useState<Point[]>([]);
   const [allStrokes, setAllStrokes] = useState<Point[][]>([]);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -112,13 +115,29 @@ export const SignatureCanvas = ({ onSave, onCancel }: SignatureCanvasProps) => {
 
   const handleSave = () => {
     const finalStrokes = currentStroke.length > 0 ? [...allStrokes, currentStroke] : allStrokes;
-    onSave(finalStrokes);
+    onSave(finalStrokes, name.trim());
   };
 
   return (
     <div className="fixed inset-0 bg-cyber-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-cyber-darkgray border-2 border-[#F97316] rounded-lg p-6 max-w-2xl w-full shadow-neon-orange">
         <h3 className="text-xl font-bold text-[#F97316] mb-4">Sign the Letter</h3>
+        
+        <div className="mb-4">
+          <Label htmlFor="signer-name" className="text-white/90 mb-2 block">
+            Your Name or Alias (Optional)
+          </Label>
+          <Input
+            id="signer-name"
+            type="text"
+            placeholder="Enter your name or alias"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="bg-cyber-black border-[#F97316]/30 text-white placeholder:text-white/40"
+            maxLength={100}
+          />
+        </div>
+
         <p className="text-white/70 mb-4">Draw your signature below:</p>
         
         <canvas

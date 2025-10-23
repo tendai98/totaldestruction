@@ -17,16 +17,25 @@ export type Database = {
       signatures: {
         Row: {
           id: string
+          ip_address: string | null
+          location: Json | null
+          name: string | null
           signature_data: Json
           signed_at: string | null
         }
         Insert: {
           id?: string
+          ip_address?: string | null
+          location?: Json | null
+          name?: string | null
           signature_data: Json
           signed_at?: string | null
         }
         Update: {
           id?: string
+          ip_address?: string | null
+          location?: Json | null
+          name?: string | null
           signature_data?: Json
           signed_at?: string | null
         }

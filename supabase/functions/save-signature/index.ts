@@ -12,13 +12,41 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { signatureData } = await req.json();
+    const { signatureData, name } = await req.json();
 
     if (!signatureData || !Array.isArray(signatureData)) {
       return new Response(
         JSON.stringify({ error: 'Invalid signature data' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
+    }
+
+    // Get client IP address
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+
+    console.log('Client IP:', clientIp);
+
+    // Get location from IP using ipapi.co (free, no API key needed)
+    let location = null;
+    try {
+      if (clientIp !== 'unknown') {
+        const geoResponse = await fetch(`https://ipapi.co/${clientIp}/json/`);
+        if (geoResponse.ok) {
+          const geoData = await geoResponse.json();
+          location = {
+            country: geoData.country_name,
+            city: geoData.city,
+            region: geoData.region,
+            country_code: geoData.country_code
+          };
+          console.log('Location data:', location);
+        }
+      }
+    } catch (geoError) {
+      console.error('Geolocation error:', geoError);
+      // Continue without location data
     }
 
     // Create Supabase client
@@ -30,7 +58,10 @@ Deno.serve(async (req) => {
     const { data, error } = await supabase
       .from('signatures')
       .insert({
-        signature_data: signatureData
+        signature_data: signatureData,
+        name: name || null,
+        location: location,
+        ip_address: clientIp
       })
       .select()
       .single();
