@@ -194,21 +194,21 @@ const PetitionPage = () => {
               ) : signatures.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {signatures.map((sig, index) => (
-                    <div key={sig.id} className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60">
-                      <svg width="100%" height="100" viewBox="0 0 300 100" className="bg-black/50 rounded">
+                    <div key={sig.id} className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60 flex flex-col items-center">
+                      <svg width="100%" height="80" viewBox="0 0 1500 500" className="bg-black/50 rounded" preserveAspectRatio="xMidYMid meet">
                         {sig.signature_data.map((stroke, strokeIndex) => (
                           <polyline
                             key={strokeIndex}
                             points={stroke.map(p => `${p.x},${p.y}`).join(' ')}
                             fill="none"
                             stroke="#f97316"
-                            strokeWidth="2"
+                            strokeWidth="3"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
                         ))}
                       </svg>
-                      <p className="text-xs text-white/50 mt-1 font-mono">
+                      <p className="text-xs text-white/50 mt-1 font-mono text-center">
                         Signature #{signatures.length - index}
                       </p>
                     </div>
