@@ -60,12 +60,12 @@ export const SignaturePreviewDialog = ({
   }, [open]);
 
   useEffect(() => {
-    // Auto-scroll terminals to bottom
+    // Auto-scroll terminals to bottom with smooth behavior
     if (pointRef.current) {
-      pointRef.current.scrollTop = pointRef.current.scrollHeight;
+      pointRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
     if (hashRef.current) {
-      hashRef.current.scrollTop = hashRef.current.scrollHeight;
+      hashRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [pointLines, hashLines]);
 
