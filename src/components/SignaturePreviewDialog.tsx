@@ -79,10 +79,12 @@ export const SignaturePreviewDialog = ({
     let currentIndex = 0;
     const scanInterval = setInterval(() => {
       if (currentIndex >= allPoints.length) {
-        clearInterval(scanInterval);
-        setIsScanning(false);
-        addPointLine("SCAN_COMPLETE", "[SCAN COMPLETE]");
-        addHashLine("SCAN_COMPLETE_HASH", "[SCAN COMPLETE]");
+        // Reset and loop
+        currentIndex = 0;
+        setPointLines([]);
+        setHashLines([]);
+        setScanX(0);
+        setScanY(0);
         return;
       }
 
@@ -92,14 +94,17 @@ export const SignaturePreviewDialog = ({
 
       // Add point data to point terminal
       const pointStr = `X:${point.x.toFixed(2)} Y:${point.y.toFixed(2)}`;
-      addPointLine(`point_${currentIndex}`, `> Point ${currentIndex + 1}: ${pointStr}`);
+      addPointLine(`point_${currentIndex}_${Date.now()}`, `> Point ${currentIndex + 1}: ${pointStr}`);
 
       // Generate and add full MD5 hash to hash terminal
       const hash = CryptoJS.MD5(`${point.x},${point.y}`).toString();
-      addHashLine(`hash_${currentIndex}`, `${hash}`);
+      addHashLine(`hash_${currentIndex}_${Date.now()}`, `${hash}`);
 
       currentIndex++;
     }, 100);
+
+    // Store interval ID for cleanup
+    return () => clearInterval(scanInterval);
   };
 
   const addPointLine = (id: string, text: string) => {
