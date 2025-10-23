@@ -18,12 +18,7 @@ interface StoredSignature {
   signature_data: Point[][];
   signed_at: string;
   name?: string;
-  location?: {
-    country?: string;
-    city?: string;
-    region?: string;
-    country_code?: string;
-  };
+  country?: string;
 }
 
 const PetitionPage = () => {
@@ -43,7 +38,10 @@ const PetitionPage = () => {
 
   const loadSignatures = async () => {
     try {
-      const { data, error } = await supabase.from("signatures").select("*").order("signed_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("public_signatures")
+        .select("id, signature_data, signed_at, name, country")
+        .order("signed_at", { ascending: false });
 
       if (error) throw error;
 
@@ -51,7 +49,6 @@ const PetitionPage = () => {
       const typedSignatures = (data || []).map((sig) => ({
         ...sig,
         signature_data: sig.signature_data as unknown as Point[][],
-        location: sig.location as unknown as { country?: string; city?: string; region?: string; country_code?: string; } | undefined,
       }));
 
       setSignatures(typedSignatures);
@@ -286,7 +283,7 @@ const PetitionPage = () => {
           signatureData={selectedSignature.signature_data}
           signatureNumber={signatures.length - signatures.indexOf(selectedSignature)}
           name={selectedSignature.name}
-          location={selectedSignature.location}
+          country={selectedSignature.country}
         />
       )}
 

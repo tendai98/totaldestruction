@@ -31,31 +31,38 @@ const StatisticsTab: React.FC = () => {
   const fetchStatistics = async () => {
     try {
       const { data, error } = await supabase
-        .from('signatures')
-        .select('location');
+        .from('public_signatures')
+        .select('country');
 
       if (error) throw error;
 
       setTotalSignatures(data.length);
 
-      // Aggregate by country and city
-      const locationMap = new Map<string, number>();
+      // Aggregate by country
+      const locationData: SignatureLocation[] = [];
       
-      data.forEach((sig) => {
-        const loc = sig.location as LocationData | null;
-        if (loc?.country) {
-          const key = `${loc.country}|${loc.city || 'Unknown City'}`;
-          locationMap.set(key, (locationMap.get(key) || 0) + 1);
+      data.forEach((signature) => {
+        if (signature.country) {
+          const country = signature.country;
+          
+          const existing = locationData.find(
+            (item) => item.country === country
+          );
+          
+          if (existing) {
+            existing.count += 1;
+          } else {
+            locationData.push({
+              country: country,
+              city: '', // No longer displaying city data for privacy
+              count: 1,
+            });
+          }
         }
       });
 
-      // Convert to array and sort by count
-      const stats = Array.from(locationMap.entries())
-        .map(([key, count]) => {
-          const [country, city] = key.split('|');
-          return { country, city, count };
-        })
-        .sort((a, b) => b.count - a.count);
+      // Sort by count
+      const stats = locationData.sort((a, b) => b.count - a.count);
 
       setLocationStats(stats);
     } catch (error) {
@@ -147,7 +154,6 @@ const StatisticsTab: React.FC = () => {
                     </div>
                     <div>
                       <p className="text-white font-mono font-bold">{stat.country}</p>
-                      <p className="text-cyber-blue text-sm font-mono">{stat.city}</p>
                     </div>
                   </div>
                   <div className="text-[#F97316] font-mono font-bold text-lg">

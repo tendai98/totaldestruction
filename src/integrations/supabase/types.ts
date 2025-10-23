@@ -43,7 +43,30 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_signatures: {
+        Row: {
+          country: string | null
+          id: string | null
+          name: string | null
+          signature_data: Json | null
+          signed_at: string | null
+        }
+        Insert: {
+          country?: never
+          id?: string | null
+          name?: string | null
+          signature_data?: Json | null
+          signed_at?: string | null
+        }
+        Update: {
+          country?: never
+          id?: string | null
+          name?: string | null
+          signature_data?: Json | null
+          signed_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

@@ -15,12 +15,7 @@ interface SignaturePreviewDialogProps {
   signatureData: Point[][];
   signatureNumber: number;
   name?: string;
-  location?: {
-    country?: string;
-    city?: string;
-    region?: string;
-    country_code?: string;
-  };
+  country?: string;
 }
 
 interface TerminalLine {
@@ -44,7 +39,7 @@ export const SignaturePreviewDialog = ({
   signatureData,
   signatureNumber,
   name,
-  location,
+  country,
 }: SignaturePreviewDialogProps) => {
   const [scanX, setScanX] = useState(0);
   const [scanY, setScanY] = useState(0);
