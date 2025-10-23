@@ -226,7 +226,7 @@ const PetitionPage = () => {
                       className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60 flex flex-col items-center h-28"
                     >
                       <svg
-                        width="100%"
+                        width="80%"
                         height="60"
                         viewBox="0 0 900 100"
                         className="bg-black/50 rounded"
