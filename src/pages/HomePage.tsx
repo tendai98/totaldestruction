@@ -62,9 +62,10 @@ const HomePage: React.FC = () => {
               <div className="hidden md:flex items-center gap-3">
                 <Link 
                   to="/petition" 
-                  className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                  className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
                 >
                   <FileText size={18} className="text-white" />
+                  <span className="tracking-wider font-bold">Sign Open Letter</span>
                 </Link>
                 <Link 
                   to="/about" 
