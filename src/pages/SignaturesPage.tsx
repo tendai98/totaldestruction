@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Map, Book, FileText } from 'lucide-react';
+import { Menu, X, Map, Book, FileText, Home } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import StatisticsTab from '../components/StatisticsTab';
@@ -59,6 +59,20 @@ const SignaturesPage: React.FC = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link 
+                      to="/" 
+                      className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                    >
+                      <Home size={18} />
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Back to Home</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link 
                       to="/tracker" 
                       className="flex items-center gap-2 bg-cyber-darkgray border-2 border-[#F97316] text-white px-4 py-2 hover:bg-[#F97316] hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-[#F97316]/30 after:top-1 after:left-1 after:-z-10"
                     >
@@ -111,6 +125,15 @@ const SignaturesPage: React.FC = () => {
           {isMobile && menuOpen && (
             <div className="absolute top-[72px] left-0 right-0 bg-cyber-black/95 backdrop-blur-md z-50 border-b border-[#F97316]">
               <div className="container mx-auto py-4 px-4 space-y-4">
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue px-4 py-3 hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Home size={18} />
+                  <span className="tracking-wider font-bold">HOME</span>
+                </Link>
+                
                 <Link 
                   to="/tracker" 
                   className="flex items-center gap-2 bg-cyber-darkgray border border-[#F97316] text-white px-4 py-3 hover:bg-[#F97316] hover:text-cyber-black transition-colors w-full"
