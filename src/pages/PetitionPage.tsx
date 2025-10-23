@@ -132,7 +132,7 @@ const PetitionPage = () => {
 
             <p>
               The planet is burning. The climate crisis is being fuelled in large part by the extraction, burning, and
-              lobbying of oil and gas companies. It would be a betrayal of African youth and our collective heritage to
+              lobbying of oil and gas companies. It would be a betrayal of African youth and our collective future to
               allow our beloved game to be used by such actors as a vehicle for greenwashing.
             </p>
 
