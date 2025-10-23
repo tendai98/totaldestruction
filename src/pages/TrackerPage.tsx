@@ -54,22 +54,22 @@ const TrackerPage: React.FC = () => {
           {isMobile ? (
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+              className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors min-w-[44px]"
               aria-label="Toggle menu"
             >
-              <Menu size={18} />
+              <Menu size={20} />
             </button>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link 
                     to="/" 
-                    className="flex items-center gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10"
+                    className="flex items-center gap-1 md:gap-2 bg-cyber-darkgray border-2 border-cyber-blue text-cyber-blue px-2 md:px-4 py-2 hover:bg-cyber-blue hover:text-cyber-black transition-colors relative after:content-[''] after:absolute after:w-full after:h-full after:border after:border-cyber-blue/30 after:top-1 after:left-1 after:-z-10 min-w-[44px]"
                   >
-                    <Home size={18} className="text-white" />
-                    <div className="hidden md:inline-block w-[60px] overflow-hidden">
-                      <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
+                    <Home size={18} className="text-white flex-shrink-0" />
+                    <div className="hidden md:inline-block max-w-[60px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white text-sm ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
                     </div>
                   </Link>
                 </TooltipTrigger>
@@ -82,11 +82,11 @@ const TrackerPage: React.FC = () => {
                 <TooltipTrigger asChild>
                   <Link 
                     to="/petition" 
-                    className="flex items-center gap-2 ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    className="flex items-center gap-1 md:gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors min-w-[44px]"
                   >
-                    <FileText size={18} className="text-white" />
-                    <div className="hidden lg:inline-block w-[190px] overflow-hidden">
-                      <span className={`tracking-wider font-bold text-white ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
+                    <FileText size={18} className="text-white flex-shrink-0" />
+                    <div className="hidden xl:inline-block max-w-[190px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white text-sm whitespace-nowrap ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
                     </div>
                   </Link>
                 </TooltipTrigger>
@@ -99,11 +99,11 @@ const TrackerPage: React.FC = () => {
                 <TooltipTrigger asChild>
                   <Link 
                     to="/signatures"
-                    className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    className="flex items-center gap-1 md:gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors min-w-[44px]"
                   >
-                    <FileSignature size={18} className="text-white" />
-                    <div className="hidden lg:inline-block w-[120px] overflow-hidden">
-                      <span className={`tracking-wider font-bold text-white ${signaturesAnimating ? 'text-glitch' : ''}`}>{signaturesText}</span>
+                    <FileSignature size={18} className="text-white flex-shrink-0" />
+                    <div className="hidden xl:inline-block max-w-[120px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white text-sm whitespace-nowrap ${signaturesAnimating ? 'text-glitch' : ''}`}>{signaturesText}</span>
                     </div>
                   </Link>
                 </TooltipTrigger>
@@ -116,9 +116,9 @@ const TrackerPage: React.FC = () => {
                 <TooltipTrigger asChild>
                   <Link 
                     to="/about" 
-                    className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors"
+                    className="p-2 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors min-w-[44px]"
                   >
-                    <Book size={18} className="text-white" />
+                    <Book size={18} className="text-white flex-shrink-0" />
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -134,38 +134,41 @@ const TrackerPage: React.FC = () => {
             <div className="container mx-auto py-4 px-4">
               <Link 
                 to="/" 
-                className="flex items-center gap-2 mb-4 px-4 py-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full"
+                className="flex items-center gap-2 mb-3 px-4 py-3 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full min-h-[48px]"
                 onClick={() => setMenuOpen(false)}
               >
-                <Home size={18} className="text-white" />
-                <div className="inline-block w-[60px] overflow-hidden">
+                <Home size={20} className="text-white flex-shrink-0" />
+                <div className="inline-block overflow-hidden">
                   <span className={`tracking-wider font-bold text-white ${homeAnimating ? 'text-glitch' : ''}`}>{homeText}</span>
                 </div>
               </Link>
               
-              <div className="flex gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <Link 
                   to="/petition"
-                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                  className="p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex flex-col items-center justify-center gap-1 min-h-[64px]"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <FileText size={18} className="text-white" />
+                  <FileText size={20} className="text-white" />
+                  <span className="text-xs font-kode-mono">LETTER</span>
                 </Link>
                 
                 <Link 
                   to="/signatures"
-                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                  className="p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex flex-col items-center justify-center gap-1 min-h-[64px]"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <FileSignature size={18} className="text-white" />
+                  <FileSignature size={20} className="text-white" />
+                  <span className="text-xs font-kode-mono">SIGNS</span>
                 </Link>
                 
                 <Link 
                   to="/about"
-                  className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
+                  className="p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex flex-col items-center justify-center gap-1 min-h-[64px]"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <Book size={18} className="text-white" />
+                  <Book size={20} className="text-white" />
+                  <span className="text-xs font-kode-mono">ABOUT</span>
                 </Link>
               </div>
             </div>

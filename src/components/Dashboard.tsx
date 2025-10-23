@@ -49,25 +49,25 @@ const Dashboard: React.FC = () => {
         
         {/* Options Panel - Below on mobile, right side on desktop */}
         {!selectedCountry && (
-          <div className="w-full md:w-[40%] bg-cyber-darkgray/50 p-4 overflow-y-auto border-l border-cyber-blue/20 max-h-[40vh] md:max-h-full">
-            <div className="mb-6">
-              <h2 className="text-xl text-[#F97316] mb-2 font-bold tracking-wider font-orbitron">REGION INFORMATION</h2>
-              <p className="text-white/70 text-sm mb-4">Select a country on the map to view environmental incident reports.</p>
+          <div className="w-full md:w-[40%] bg-cyber-darkgray/50 p-3 sm:p-4 overflow-y-auto border-l border-cyber-blue/20 max-h-[40vh] md:max-h-full">
+            <div className="mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl text-[#F97316] mb-2 font-bold tracking-wider font-orbitron">REGION INFORMATION</h2>
+              <p className="text-white/70 text-xs sm:text-sm mb-3 sm:mb-4">Select a country on the map to view environmental incident reports.</p>
               
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="cyber-border p-3 flex flex-col items-center">
-                  <div className="text-3xl text-[#F97316] font-bold">{articles.length}</div>
-                  <div className="text-xs text-white/70">TOTAL INCIDENTS</div>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="cyber-border p-2 sm:p-3 flex flex-col items-center">
+                  <div className="text-2xl sm:text-3xl text-[#F97316] font-bold">{articles.length}</div>
+                  <div className="text-[10px] sm:text-xs text-white/70">TOTAL INCIDENTS</div>
                 </div>
-                <div className="cyber-border-red p-3 flex flex-col items-center">
-                  <div className="text-3xl text-cyber-red font-bold">12</div>
-                  <div className="text-xs text-white/70">CRITICAL ALERTS</div>
+                <div className="cyber-border-red p-2 sm:p-3 flex flex-col items-center">
+                  <div className="text-2xl sm:text-3xl text-cyber-red font-bold">12</div>
+                  <div className="text-[10px] sm:text-xs text-white/70">CRITICAL ALERTS</div>
                 </div>
               </div>
               
-              <div className="cyber-border-blue p-3 mb-4">
-                <h3 className="text-cyber-blue text-sm mb-2 font-kode-mono">REGION STATS</h3>
-                <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="cyber-border-blue p-2 sm:p-3 mb-3 sm:mb-4">
+                <h3 className="text-cyber-blue text-xs sm:text-sm mb-2 font-kode-mono">REGION STATS</h3>
+                <div className="grid grid-cols-2 gap-1 sm:gap-2 text-[10px] sm:text-xs">
                   <div className="text-white/70">MONITORING:</div>
                   <div className="text-[#F97316]">ACTIVE</div>
                   <div className="text-white/70">LAST UPDATE:</div>
@@ -77,9 +77,9 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
               
-              <div className="cyber-border-yellow p-3">
-                <h3 className="text-cyber-yellow text-sm mb-2 font-kode-mono">MAP LEGEND</h3>
-                <div className="grid grid-cols-2 gap-2 text-xs mb-1">
+              <div className="cyber-border-yellow p-2 sm:p-3">
+                <h3 className="text-cyber-yellow text-xs sm:text-sm mb-2 font-kode-mono">MAP LEGEND</h3>
+                <div className="grid grid-cols-2 gap-1 sm:gap-2 text-[10px] sm:text-xs mb-1">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-cyber-red opacity-60"></div>
                     <span className="text-white/70">DEFAULT</span>
