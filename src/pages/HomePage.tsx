@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
+import StatisticsTab from '../components/StatisticsTab';
 import { BarChart2, Database, Layers, Map, Menu, X, Book, FileText } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import { PetitionDialog } from '../components/PetitionDialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Tooltip,
   TooltipContent,
@@ -15,6 +17,7 @@ import {
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('articles');
   const isMobile = useIsMobile();
   
   const { displayText: logoText, isAnimating: logoAnimating } = 
@@ -103,7 +106,10 @@ const HomePage: React.FC = () => {
                 </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <button className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors">
+                    <button 
+                      onClick={() => setActiveTab('statistics')}
+                      className="p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    >
                       <BarChart2 size={18} className="text-white" />
                     </button>
                   </TooltipTrigger>
@@ -145,7 +151,13 @@ const HomePage: React.FC = () => {
                 >
                   <Book size={18} className="text-white" />
                 </Link>
-                <button className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center">
+                <button 
+                  onClick={() => {
+                    setActiveTab('statistics');
+                    setMenuOpen(false);
+                  }}
+                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                >
                   <BarChart2 size={18} className="text-white" />
                 </button>
               </div>
@@ -155,7 +167,30 @@ const HomePage: React.FC = () => {
       </div>
       
       <div className="cyber-grid py-6 md:py-10 px-4 md:px-0">
-        <Articles />
+        <div className="container mx-auto">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-cyber-darkgray border-2 border-[#F97316]">
+              <TabsTrigger 
+                value="articles"
+                className="data-[state=active]:bg-[#F97316] data-[state=active]:text-cyber-black text-white font-mono font-bold"
+              >
+                ARTICLES
+              </TabsTrigger>
+              <TabsTrigger 
+                value="statistics"
+                className="data-[state=active]:bg-[#F97316] data-[state=active]:text-cyber-black text-white font-mono font-bold"
+              >
+                STATISTICS
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="articles">
+              <Articles />
+            </TabsContent>
+            <TabsContent value="statistics">
+              <StatisticsTab />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
       
       <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-4 text-center">
