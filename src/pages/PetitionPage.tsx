@@ -6,6 +6,7 @@ import { SignatureCanvas } from "@/components/SignatureCanvas";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { SignaturePreviewDialog } from "@/components/SignaturePreviewDialog";
 
 interface Point {
   x: number;
@@ -25,6 +26,8 @@ const PetitionPage = () => {
   const [signatures, setSignatures] = useState<StoredSignature[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [selectedSignature, setSelectedSignature] = useState<StoredSignature | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   // Load signatures from database
   useEffect(() => {
@@ -50,6 +53,11 @@ const PetitionPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSignatureClick = (sig: StoredSignature) => {
+    setSelectedSignature(sig);
+    setShowPreview(true);
   };
 
   const handleSaveSignature = async (signatureData: Point[][]) => {
@@ -223,7 +231,8 @@ const PetitionPage = () => {
                   {signatures.map((sig, index) => (
                     <div
                       key={sig.id}
-                      className="border-2 border-[#F97316]/30 rounded p-1 bg-cyber-darkgray/60 flex flex-col items-center"
+                      className="border-2 border-[#F97316]/30 rounded p-1 bg-cyber-darkgray/60 flex flex-col items-center cursor-pointer hover:border-[#F97316]/60 transition-colors"
+                      onClick={() => handleSignatureClick(sig)}
                     >
                       <svg
                         width="120px"
@@ -260,6 +269,16 @@ const PetitionPage = () => {
 
       {/* Signature Canvas Modal */}
       {showSignature && <SignatureCanvas onSave={handleSaveSignature} onCancel={() => setShowSignature(false)} />}
+
+      {/* Signature Preview Dialog */}
+      {selectedSignature && (
+        <SignaturePreviewDialog
+          open={showPreview}
+          onOpenChange={setShowPreview}
+          signatureData={selectedSignature.signature_data}
+          signatureNumber={signatures.length - signatures.indexOf(selectedSignature)}
+        />
+      )}
 
       {/* Thank You Dialog */}
       <Dialog open={showThankYou} onOpenChange={setShowThankYou}>
