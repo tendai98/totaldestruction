@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SignatureCanvas } from "@/components/SignatureCanvas";
-import { SignaturePreviewDialog } from "@/components/SignaturePreviewDialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -26,8 +25,6 @@ const PetitionPage = () => {
   const [signatures, setSignatures] = useState<StoredSignature[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [selectedSignature, setSelectedSignature] = useState<StoredSignature | null>(null);
-  const [showPreview, setShowPreview] = useState(false);
 
   // Load signatures from database
   useEffect(() => {
@@ -226,16 +223,12 @@ const PetitionPage = () => {
                   {signatures.map((sig, index) => (
                     <div
                       key={sig.id}
-                      onClick={() => {
-                        setSelectedSignature(sig);
-                        setShowPreview(true);
-                      }}
-                      className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60 flex flex-col items-center h-28 cursor-pointer hover:border-[#F97316] hover:bg-cyber-darkgray/80 transition-all"
+                      className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60 flex flex-col items-center h-28"
                     >
                       <svg
                         width="100%"
                         height="60"
-                        viewBox="0 0 500 500"
+                        viewBox="0 0 1500 500"
                         className="bg-black/50 rounded"
                         preserveAspectRatio="xMidYMid meet"
                       >
@@ -267,16 +260,6 @@ const PetitionPage = () => {
 
       {/* Signature Canvas Modal */}
       {showSignature && <SignatureCanvas onSave={handleSaveSignature} onCancel={() => setShowSignature(false)} />}
-
-      {/* Signature Preview Dialog */}
-      {selectedSignature && (
-        <SignaturePreviewDialog
-          open={showPreview}
-          onOpenChange={setShowPreview}
-          signatureData={selectedSignature.signature_data}
-          signatureNumber={signatures.length - signatures.indexOf(selectedSignature)}
-        />
-      )}
 
       {/* Thank You Dialog */}
       <Dialog open={showThankYou} onOpenChange={setShowThankYou}>
