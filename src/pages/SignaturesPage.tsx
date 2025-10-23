@@ -20,6 +20,9 @@ const SignaturesPage: React.FC = () => {
     
   const { displayText: trackerText, isAnimating: trackerAnimating } = 
     useMatrixEffect("TRACKER", 1500, 25000);
+    
+  const { displayText: letterText, isAnimating: letterAnimating } = 
+    useMatrixEffect("SIGN OPEN LETTER", 1800, 25000);
 
   return (
     <TooltipProvider>
@@ -78,7 +81,9 @@ const SignaturesPage: React.FC = () => {
                         className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
                       >
                         <FileText size={18} className="text-white" />
-                        <span className="tracking-wider font-bold">Sign Open Letter</span>
+                        <div className="hidden lg:inline-block w-[160px] overflow-hidden">
+                          <span className={`tracking-wider font-bold text-white ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
+                        </div>
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent>

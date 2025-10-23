@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
-import { Home, Menu, Book, FileText } from 'lucide-react';
+import { Home, Menu, Book, FileText, FileSignature } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import {
@@ -21,6 +21,12 @@ const TrackerPage: React.FC = () => {
     
   const { displayText: homeText, isAnimating: homeAnimating } = 
     useMatrixEffect("HOME", 1500, 25000);
+    
+  const { displayText: letterText, isAnimating: letterAnimating } = 
+    useMatrixEffect("SIGN OPEN LETTER", 1800, 25000);
+    
+  const { displayText: signaturesText, isAnimating: signaturesAnimating } = 
+    useMatrixEffect("SIGNATURES", 1600, 25000);
 
   return (
     <TooltipProvider>
@@ -76,13 +82,33 @@ const TrackerPage: React.FC = () => {
                 <TooltipTrigger asChild>
                   <Link 
                     to="/petition" 
-                    className="ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    className="flex items-center gap-2 ml-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
                   >
                     <FileText size={18} className="text-white" />
+                    <div className="hidden lg:inline-block w-[160px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
+                    </div>
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Sign the open letter to CAF</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/signatures"
+                    className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                  >
+                    <FileSignature size={18} className="text-white" />
+                    <div className="hidden lg:inline-block w-[120px] overflow-hidden">
+                      <span className={`tracking-wider font-bold text-white ${signaturesAnimating ? 'text-glitch' : ''}`}>{signaturesText}</span>
+                    </div>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View petition signatures</p>
                 </TooltipContent>
               </Tooltip>
               
@@ -105,7 +131,7 @@ const TrackerPage: React.FC = () => {
         
         {isMobile && menuOpen && (
           <div className="absolute top-[72px] left-0 right-0 bg-cyber-black/95 backdrop-blur-md z-50 border-b border-[#F97316] transition-all duration-300">
-            <div className="container mx-auto py-4">
+            <div className="container mx-auto py-4 px-4">
               <Link 
                 to="/" 
                 className="flex items-center gap-2 mb-4 px-4 py-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full"
@@ -117,23 +143,31 @@ const TrackerPage: React.FC = () => {
                 </div>
               </Link>
               
-              <Link 
-                to="/petition"
-                className="flex items-center gap-2 mb-4 px-4 py-2 border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors w-full"
-                onClick={() => setMenuOpen(false)}
-              >
-                <FileText size={18} className="text-white" />
-                <span>Sign Petition</span>
-              </Link>
-              
-              <Link 
-                to="/about"
-                className="flex items-center gap-2 mb-4 px-4 py-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors w-full"
-                onClick={() => setMenuOpen(false)}
-              >
-                <Book size={18} className="text-white" />
-                <span>About</span>
-              </Link>
+              <div className="flex gap-2">
+                <Link 
+                  to="/petition"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FileText size={18} className="text-white" />
+                </Link>
+                
+                <Link 
+                  to="/signatures"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FileSignature size={18} className="text-white" />
+                </Link>
+                
+                <Link 
+                  to="/about"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Book size={18} className="text-white" />
+                </Link>
+              </div>
             </div>
           </div>
         )}

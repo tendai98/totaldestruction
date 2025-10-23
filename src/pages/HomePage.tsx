@@ -22,6 +22,12 @@ const HomePage: React.FC = () => {
     
   const { displayText: trackerText, isAnimating: trackerAnimating } = 
     useMatrixEffect("TRACKER", 1500, 25000);
+    
+  const { displayText: letterText, isAnimating: letterAnimating } = 
+    useMatrixEffect("SIGN OPEN LETTER", 1800, 25000);
+    
+  const { displayText: signaturesText, isAnimating: signaturesAnimating } = 
+    useMatrixEffect("SIGNATURES", 1600, 25000);
   
   return (
     <TooltipProvider>
@@ -81,11 +87,29 @@ const HomePage: React.FC = () => {
                       className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
                     >
                       <FileText size={18} className="text-white" />
-                      <span className="tracking-wider font-bold">Sign Open Letter</span>
+                      <div className="hidden lg:inline-block w-[160px] overflow-hidden">
+                        <span className={`tracking-wider font-bold text-white ${letterAnimating ? 'text-glitch' : ''}`}>{letterText}</span>
+                      </div>
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Sign the open letter to CAF</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link 
+                      to="/signatures"
+                      className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
+                    >
+                      <FileSignature size={18} className="text-white" />
+                      <div className="hidden lg:inline-block w-[120px] overflow-hidden">
+                        <span className={`tracking-wider font-bold text-white ${signaturesAnimating ? 'text-glitch' : ''}`}>{signaturesText}</span>
+                      </div>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>View petition signatures</p>
                   </TooltipContent>
                 </Tooltip>
                 <Tooltip>
@@ -99,20 +123,6 @@ const HomePage: React.FC = () => {
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>About this campaign</p>
-                  </TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link 
-                      to="/signatures"
-                      className="flex items-center gap-2 p-2 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors"
-                    >
-                      <FileSignature size={18} className="text-white" />
-                      <span className="tracking-wider font-bold">Signatures</span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View petition signatures</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -143,18 +153,18 @@ const HomePage: React.FC = () => {
                   <FileText size={18} className="text-white" />
                 </Link>
                 <Link
-                  to="/about"
-                  className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <Book size={18} className="text-white" />
-                </Link>
-                <Link
                   to="/signatures"
                   className="flex-1 p-3 bg-cyber-darkgray border border-[#F97316] text-white hover:bg-[#F97316] hover:text-cyber-black transition-colors flex items-center justify-center"
                   onClick={() => setMenuOpen(false)}
                 >
                   <FileSignature size={18} className="text-white" />
+                </Link>
+                <Link
+                  to="/about"
+                  className="flex-1 p-3 bg-cyber-darkgray border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-colors flex items-center justify-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Book size={18} className="text-white" />
                 </Link>
               </div>
             </div>

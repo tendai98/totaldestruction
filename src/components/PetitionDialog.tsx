@@ -25,6 +25,7 @@ export const PetitionDialog = () => {
   const handleClose = () => {
     localStorage.setItem("hasSeenPetitionDialog", "true");
     setOpen(false);
+    navigate("/petition");
   };
 
   const handleViewLetter = () => {
