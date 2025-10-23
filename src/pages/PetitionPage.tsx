@@ -223,11 +223,11 @@ const PetitionPage = () => {
                   {signatures.map((sig, index) => (
                     <div
                       key={sig.id}
-                      className="border-2 border-[#F97316]/30 rounded p-2 bg-cyber-darkgray/60 flex flex-col items-center h-28"
+                      className="border-2 border-[#F97316]/30 rounded p-1 bg-cyber-darkgray/60 flex flex-col items-center"
                     >
                       <svg
-                        width="50%"
-                        height="60"
+                        width="120px"
+                        height="40"
                         viewBox="0 0 500 200"
                         className="bg-black/50 rounded"
                         preserveAspectRatio="xMidYMid meet"
