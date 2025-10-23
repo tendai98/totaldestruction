@@ -112,7 +112,7 @@ export const SignaturePreviewDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-cyber-darkgray border-2 border-[#F97316] shadow-neon-orange max-w-6xl h-[80vh]">
+      <DialogContent className="bg-cyber-darkgray border-2 border-[#F97316] shadow-neon-orange max-w-6xl h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold text-[#F97316] font-mono">
@@ -121,16 +121,17 @@ export const SignaturePreviewDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="grid grid-cols-3 gap-4 h-[calc(80vh-120px)]">
+        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
           {/* Left - Signature with scanning lines */}
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col min-h-0">
             <div className="text-xs text-white/50 mb-2 font-mono">VISUAL SCAN</div>
-            <div className="relative border-2 border-[#F97316]/30 rounded bg-black/50 h-full">
+            <div className="relative border-2 border-[#F97316]/30 rounded bg-black/50 flex-1 min-h-0 overflow-hidden">
               <svg
                 width="100%"
                 height="100%"
                 viewBox="0 0 500 200"
                 preserveAspectRatio="xMidYMid meet"
+                className="w-full h-full"
               >
                 {/* Draw signature */}
                 {signatureData.map((stroke, strokeIndex) => (
@@ -183,13 +184,13 @@ export const SignaturePreviewDialog = ({
           </div>
 
           {/* Middle - Point stream */}
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col min-h-0">
             <div className="text-xs text-white/50 mb-2 font-mono">
               POINT STREAM
             </div>
             <div
               ref={pointRef}
-              className="h-full border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1"
+              className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1"
             >
               {pointLines.map((line) => (
                 <div key={line.id} className="animate-in fade-in duration-200">
@@ -205,13 +206,13 @@ export const SignaturePreviewDialog = ({
           </div>
 
           {/* Right - Hash stream */}
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col min-h-0">
             <div className="text-xs text-white/50 mb-2 font-mono">
               MD5 HASH STREAM
             </div>
             <div
               ref={hashRef}
-              className="h-full border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1 break-all"
+              className="flex-1 min-h-0 border-2 border-[#F97316]/30 rounded bg-black/90 p-4 overflow-y-auto font-mono text-xs text-[#00ff00] space-y-1 break-all"
             >
               {hashLines.map((line) => (
                 <div key={line.id} className="animate-in fade-in duration-200">
