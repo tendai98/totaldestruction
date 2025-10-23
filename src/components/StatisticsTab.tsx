@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
-import { Globe, MapPin, Users } from 'lucide-react';
+import { Globe, MapPin, Users, Filter } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface LocationData {
   country?: string;
@@ -20,6 +21,7 @@ const StatisticsTab: React.FC = () => {
   const [totalSignatures, setTotalSignatures] = useState(0);
   const [locationStats, setLocationStats] = useState<SignatureLocation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCountry, setSelectedCountry] = useState<string>('all');
 
   useEffect(() => {
     fetchStatistics();
@@ -62,6 +64,18 @@ const StatisticsTab: React.FC = () => {
     }
   };
 
+  // Get unique countries for filter
+  const countries = useMemo(() => {
+    const uniqueCountries = Array.from(new Set(locationStats.map(s => s.country))).sort();
+    return uniqueCountries;
+  }, [locationStats]);
+
+  // Filter location stats based on selected country
+  const filteredStats = useMemo(() => {
+    if (selectedCountry === 'all') return locationStats;
+    return locationStats.filter(stat => stat.country === selectedCountry);
+  }, [locationStats, selectedCountry]);
+
   if (loading) {
     return (
       <div className="container mx-auto py-8 px-4">
@@ -82,18 +96,21 @@ const StatisticsTab: React.FC = () => {
       </Card>
 
       {/* World Map Visual */}
-      <Card className="mb-8 bg-cyber-darkgray border-2 border-cyber-blue">
+      <Card className="mb-8 bg-cyber-black border-2 border-[#F97316] shadow-neon-orange">
         <div className="p-4">
           <h3 className="text-xl font-bold text-white font-mono mb-4 flex items-center gap-2">
-            <Globe className="text-cyber-blue" />
+            <Globe className="text-[#F97316]" />
             GLOBAL SIGNATURE MAP
           </h3>
-          <div className="w-full overflow-x-auto">
-            <img 
-              src="/world.svg" 
-              alt="World Map" 
-              className="w-full h-auto opacity-80 hover:opacity-100 transition-opacity"
-            />
+          <div className="relative w-full cyber-grid scanning-effect rounded-lg overflow-hidden min-h-[400px] bg-cyber-black">
+            <div className="absolute inset-0 flex items-center justify-center p-4">
+              <img 
+                src="/world.svg" 
+                alt="World Map" 
+                className="w-full h-auto max-h-[500px] opacity-60 hover:opacity-80 transition-opacity animate-flicker"
+                style={{ filter: 'brightness(0.8) contrast(1.2) hue-rotate(10deg)' }}
+              />
+            </div>
           </div>
         </div>
       </Card>
@@ -101,16 +118,44 @@ const StatisticsTab: React.FC = () => {
       {/* Location Statistics */}
       <Card className="bg-cyber-darkgray border-2 border-[#F97316]">
         <div className="p-6">
-          <h3 className="text-xl font-bold text-white font-mono mb-6 flex items-center gap-2">
-            <MapPin className="text-[#F97316]" />
-            SIGNATURES BY LOCATION
-          </h3>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <h3 className="text-xl font-bold text-white font-mono flex items-center gap-2">
+              <MapPin className="text-[#F97316]" />
+              SIGNATURES BY LOCATION
+            </h3>
+            
+            {/* Country Filter */}
+            <div className="flex items-center gap-2">
+              <Filter className="text-cyber-blue w-4 h-4" />
+              <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                <SelectTrigger className="w-[200px] bg-cyber-black border-cyber-blue text-white font-mono">
+                  <SelectValue placeholder="Filter by country" />
+                </SelectTrigger>
+                <SelectContent className="bg-cyber-darkgray border-cyber-blue z-50">
+                  <SelectItem value="all" className="text-white font-mono hover:bg-[#F97316] hover:text-cyber-black cursor-pointer">
+                    All Countries
+                  </SelectItem>
+                  {countries.map((country) => (
+                    <SelectItem 
+                      key={country} 
+                      value={country}
+                      className="text-white font-mono hover:bg-[#F97316] hover:text-cyber-black cursor-pointer"
+                    >
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           
-          {locationStats.length === 0 ? (
-            <p className="text-cyber-blue font-mono text-center py-8">No location data available yet.</p>
+          {filteredStats.length === 0 ? (
+            <p className="text-cyber-blue font-mono text-center py-8">
+              {selectedCountry === 'all' ? 'No location data available yet.' : 'No signatures from this country yet.'}
+            </p>
           ) : (
             <div className="space-y-3">
-              {locationStats.map((stat, index) => (
+              {filteredStats.map((stat, index) => (
                 <div 
                   key={index}
                   className="flex items-center justify-between p-4 bg-cyber-black border border-cyber-blue/30 hover:border-[#F97316] transition-colors"
