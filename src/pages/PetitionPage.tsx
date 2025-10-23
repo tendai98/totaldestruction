@@ -219,7 +219,7 @@ const PetitionPage = () => {
               {loading ? (
                 <p className="text-white/50 text-center py-8 font-mono">Loading signatures...</p>
               ) : signatures.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="flex flex-wrap gap-4">
                   {signatures.map((sig, index) => (
                     <div
                       key={sig.id}
