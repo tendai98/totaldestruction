@@ -126,9 +126,9 @@ export const SignaturePreviewDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0">
+        <div className="flex flex-col gap-3 flex-1 min-h-0 items-center">
           {/* Top - Signature with scanning lines */}
-          <div className="flex flex-col min-h-0 h-[35%]">
+          <div className="flex flex-col min-h-0 h-[35%] w-full max-w-md">
             <div className="text-xs text-white/50 mb-1 font-mono">VISUAL SCAN</div>
             <div className="relative border-2 border-[#F97316]/30 rounded bg-black/50 flex-1 min-h-0 overflow-hidden">
               <svg
@@ -188,10 +188,10 @@ export const SignaturePreviewDialog = ({
             </div>
           </div>
 
-          {/* Bottom - Streams side by side */}
-          <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
-            {/* Left - Point stream */}
-            <div className="flex flex-col min-h-0">
+          {/* Bottom - Streams stacked */}
+          <div className="flex flex-col gap-3 flex-1 min-h-0 w-full max-w-md">
+            {/* Point stream */}
+            <div className="flex flex-col min-h-0 flex-1">
               <div className="text-xs text-white/50 mb-1 font-mono">
                 POINT STREAM
               </div>
@@ -212,8 +212,8 @@ export const SignaturePreviewDialog = ({
               </div>
             </div>
 
-            {/* Right - Hash stream */}
-            <div className="flex flex-col min-h-0">
+            {/* Hash stream */}
+            <div className="flex flex-col min-h-0 flex-1">
               <div className="text-xs text-white/50 mb-1 font-mono">
                 MD5 HASH STREAM
               </div>
