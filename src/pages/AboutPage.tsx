@@ -32,6 +32,9 @@ const AboutPage: React.FC = () => {
         <div className="flex-1 text-center">
           <span className="text-xl md:text-2xl font-bold tracking-wider font-orbitron text-white">ABOUT <span className="text-[#F97316]">TOTAL DESTRUCTION</span></span>
         </div>
+        <div className="hidden md:block">
+          <SocialLinks />
+        </div>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-10">
         <div className="w-full max-w-2xl bg-cyber-darkgray/60 rounded-xl shadow-lg p-6 md:p-10 border border-cyber-red/20">
@@ -55,10 +58,6 @@ const AboutPage: React.FC = () => {
             {glitchEffects[7].displayText}
           </p>
         </div>
-      </div>
-      
-      <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-6 text-center">
-        <SocialLinks />
       </div>
     </div>
   );

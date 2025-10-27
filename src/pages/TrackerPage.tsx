@@ -34,7 +34,7 @@ const TrackerPage: React.FC = () => {
       <div className="min-h-screen bg-cyber-black flex flex-col">
       <div className="bg-cyber-darkgray border-b-2 border-[#F97316] p-4 shadow-neon-orange">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-1">
             <div className="w-10 h-10 md:w-12 md:h-12 relative">
               <img 
                 src="/lovable-uploads/fba348a5-0041-47be-817f-d536c340cf44.png" 
@@ -50,6 +50,9 @@ const TrackerPage: React.FC = () => {
               </div>
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyber-green shadow-neon-green"></span>
             </Link>
+            <div className="hidden lg:block ml-4">
+              <SocialLinks />
+            </div>
           </div>
           
           {isMobile ? (
@@ -180,10 +183,6 @@ const TrackerPage: React.FC = () => {
       {/* Main Content */}
       <div className="flex-1">
         <Dashboard />
-      </div>
-      
-      <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-6 text-center">
-        <SocialLinks />
       </div>
       </div>
     </TooltipProvider>

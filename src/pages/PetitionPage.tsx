@@ -103,7 +103,7 @@ const PetitionPage = () => {
     <div className="min-h-screen bg-cyber-black">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 border-b-2 border-[#F97316] bg-cyber-darkgray shadow-neon-orange">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-[#F97316] hover:text-[#F97316]/80 transition-colors font-bold"
@@ -111,6 +111,9 @@ const PetitionPage = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="tracking-wider">BACK TO HOME</span>
           </Link>
+          <div className="hidden md:block">
+            <SocialLinks />
+          </div>
         </div>
       </nav>
 
@@ -278,11 +281,6 @@ const PetitionPage = () => {
                 <p className="text-white/50 text-center py-8 font-mono">Be the first to sign!</p>
               )}
             </div>
-          </div>
-
-          {/* Social Media Links */}
-          <div className="mt-8 pt-6 border-t-2 border-[#F97316]/30">
-            <SocialLinks />
           </div>
         </div>
       </main>
