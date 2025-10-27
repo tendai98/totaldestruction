@@ -4,6 +4,7 @@ import { Menu, X, Map, Book, FileText, Home } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import StatisticsTab from '../components/StatisticsTab';
+import { SocialLinks } from '../components/SocialLinks';
 import {
   Tooltip,
   TooltipContent,
@@ -174,6 +175,10 @@ const SignaturesPage: React.FC = () => {
           <div className="container mx-auto px-4 md:px-0">
             <p className="text-white/50 text-xs font-mono">TOTAL<span className="text-[#F97316]">DESTRUCTION</span> // ENVIRONMENTAL MONITORING SYSTEM V1.0</p>
             <p className="mt-2 text-cyber-blue text-xs font-mono">COPYRIGHT © 2025 // DATA LAST UPDATED: 04-07-2025</p>
+            
+            <div className="mt-4 mb-4">
+              <SocialLinks />
+            </div>
             
             <div className="mt-4 flex flex-wrap justify-center gap-4 md:gap-6 text-xs">
               <Link to="/about" className="text-white/70 hover:text-[#F97316] transition-colors font-bold">ABOUT</Link>

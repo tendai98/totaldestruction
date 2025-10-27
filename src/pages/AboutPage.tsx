@@ -3,6 +3,7 @@ import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useMatrixEffect } from "../hooks/matrix";
+import { SocialLinks } from "../components/SocialLinks";
 
 const aboutText = [
   "TotalEnergies is wrecking Africa. From oil spills to land grabs, gas expansion to community displacement, destroyed biodiversity to exacerbating war — they’re the continent’s biggest hydrocarbon polluter. Now, they’re pushing false climate solutions like LNG, locking Africans into decades of dirty energy.",
@@ -54,6 +55,10 @@ const AboutPage: React.FC = () => {
             {glitchEffects[7].displayText}
           </p>
         </div>
+      </div>
+      
+      <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-6 text-center">
+        <SocialLinks />
       </div>
     </div>
   );

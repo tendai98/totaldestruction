@@ -5,6 +5,7 @@ import Dashboard from '../components/Dashboard';
 import { Home, Menu, Book, FileText, FileSignature } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
+import { SocialLinks } from '../components/SocialLinks';
 import {
   Tooltip,
   TooltipContent,
@@ -179,6 +180,10 @@ const TrackerPage: React.FC = () => {
       {/* Main Content */}
       <div className="flex-1">
         <Dashboard />
+      </div>
+      
+      <div className="bg-cyber-darkgray border-t-2 border-[#F97316] p-6 text-center">
+        <SocialLinks />
       </div>
       </div>
     </TooltipProvider>
