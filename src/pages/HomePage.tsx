@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Articles from '../components/Articles';
-import { FileSignature, Map, Menu, X, Book, FileText } from 'lucide-react';
+import { FileSignature, Map, Menu, X, Book, FileText, Share2 } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useMatrixEffect } from '../hooks/matrix';
 import { PetitionDialog } from '../components/PetitionDialog';
@@ -13,6 +13,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,7 +57,17 @@ const HomePage: React.FC = () => {
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#F97316] shadow-neon-orange"></span>
             </Link>
             <div className="hidden lg:block ml-4">
-              <SocialLinks />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-cyber-darkgray border border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-cyber-black transition-colors">
+                    <Share2 size={16} />
+                    <span className="text-xs font-bold">SOCIALS</span>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-cyber-darkgray border border-[#F97316] p-4">
+                  <SocialLinks />
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           
