@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
+import { SocialLinks } from "@/components/SocialLinks";
 
 export const PetitionDialog = () => {
   const [open, setOpen] = useState(false);
@@ -68,6 +69,8 @@ export const PetitionDialog = () => {
               Football should unite us — not be used as cover for exploitation. 
               <span className="font-semibold text-[#F97316]"> Read the full letter and add your signature.</span>
             </p>
+
+            <SocialLinks className="pt-3" />
           </DialogDescription>
         </DialogHeader>
 

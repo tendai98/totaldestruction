@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { SignaturePreviewDialog } from "@/components/SignaturePreviewDialog";
+import { SocialLinks } from "@/components/SocialLinks";
 
 interface Point {
   x: number;
@@ -278,6 +279,11 @@ const PetitionPage = () => {
               )}
             </div>
           </div>
+
+          {/* Social Media Links */}
+          <div className="mt-8 pt-6 border-t-2 border-[#F97316]/30">
+            <SocialLinks />
+          </div>
         </div>
       </main>
 
@@ -307,7 +313,9 @@ const PetitionPage = () => {
                 Together, we're building pressure for a pro-poor, decentralized renewable energy future that puts
                 African communities first.
               </p>
-              <p className="font-semibold text-[#F97316]">Join the #KickTotalOutOfAFCON campaign</p>
+              
+              <SocialLinks className="pt-4" />
+              
               <div className="flex gap-3 justify-center pt-4">
                 <Button
                   onClick={() => setShowThankYou(false)}
