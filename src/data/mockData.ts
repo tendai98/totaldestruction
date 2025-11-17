@@ -112,7 +112,7 @@ export const articles: Article[] = [
     description: "Nigeria's regulator canceled approval of TotalEnergies' $860 million sale of its 10% stake in onshore SPDC fields. The decision forces TotalEnergies to retain a share in a joint venture plagued by chronic spills. Total still faces liability for hundreds of oil spills in the Niger Delta from theft, sabotage and aging pipelines.",
     date: "2025-09-23",
     source: "Reuters",
-    url: "https://www.reuters.com/",
+    url: "https://www.reuters.com/business/energy/nigerian-regulator-pulls-approval-totalenergies-860-million-asset-sale-chappal-2025-09-23",
     countryId: "nga",
     tags: ["oil spills", "Niger Delta", "Nigeria", "asset sale"]
   },
