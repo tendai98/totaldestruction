@@ -82,7 +82,7 @@ export const articles: Article[] = [
     description: "Satellite analysis reveals TotalEnergies' oil project encroaching deep into protected areas. About 630 km² of forest has been cleared near Murchison Falls National Park, and 22% of a feeder line cuts through a Ramsar-designated wetland, posing serious spill risks to freshwater fisheries and wildlife.",
     date: "2025-09-17",
     source: "Mongabay",
-    url: "https://www.mongabay.com/",
+    url: "https://news.mongabay.com/custom-story/2025/09/satellite-images-reveal-oil-project-surge-in-ugandan-park-and-wetland",
     countryId: "nga",
     tags: ["satellite imagery", "Murchison Falls", "wetlands"]
   },
