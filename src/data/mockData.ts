@@ -122,7 +122,7 @@ export const articles: Article[] = [
     description: "Climate Whistleblowers' 'GreenFakes' series reveals how environmental consultancies colluded with TotalEnergies to downplay project impacts. Leaked documents show Total-funded audits watering down biodiversity risks of its megaprojects in Africa, enabling TotalEnergies to tout net-gain biodiversity claims while drilling in parks.",
     date: "2025-02-21",
     source: "Climate Whistleblowers",
-    url: "https://climatewhistleblowers.org/",
+    url: "https://www.climatewhistleblowers.org/greenfakes-investigation-greenwashing-audits",
     countryId: "nga",
     tags: ["environmental audit", "greenwashing", "biodiversity"]
   },
