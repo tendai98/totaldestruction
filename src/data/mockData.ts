@@ -92,7 +92,7 @@ export const articles: Article[] = [
     description: "Reports describe forced displacements and violence tied to TotalEnergies' $20 billion LNG project in Cabo Delgado, northern Mozambique. Investigators found thousands of hectares seized 'at all costs,' with some villagers beaten, shot or buried alive and given tiny, infertile plots far from their homes.",
     date: "2025-05-31",
     source: "Drilled",
-    url: "https://www.drilledpodcast.com/",
+    url: "https://drilled.media/news/total-mozambique",
     countryId: "moz",
     tags: ["Mozambique", "LNG", "insurgency", "land grabbing"]
   },
