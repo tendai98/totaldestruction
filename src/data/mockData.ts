@@ -132,7 +132,7 @@ export const articles: Article[] = [
     description: "Global Witness reported that communities opposing TotalEnergies' EACOP pipeline face intimidation. In Tanzania and Uganda, police summoned critics repeatedly, seized phones for 'inspections,' and interrogated villagers. Tanzanian activist Richard Senkondo was forced into hiding under threat of arrest.",
     date: "2024-04-18",
     source: "Global Witness",
-    url: "https://www.globalwitness.org/",
+    url: "https://globalwitness.org/en/press-releases/concern-grows-for-tanzanian-communities-opposing-totalenergies-oil-pipeline",
     countryId: "tza",
     tags: ["human rights", "EACOP", "activism", "harassment"]
   },
